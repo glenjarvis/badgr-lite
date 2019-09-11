@@ -34,7 +34,6 @@ jobs:
           name: run tests
           command: |
             python tests.py
-            pylint *.py
 
       #- store_artifacts:
       #    path: test-reports
