@@ -21,6 +21,9 @@ jobs:
           name: install dependencies
           command: |
              pipenv install
+             pipenv check
+             source /home/circleci/.local/share/virtualenvs/repo-eQF46Ow3/bin/activate
+             echo "Testing Repo name: $CIRCLE_PR_REPONAME"
 
       - save_cache:
           paths:
