@@ -33,7 +33,7 @@ jobs:
       - run:
           name: run tests
           command: |
-            echo "hello world"
+            python tests.py
 
       #- store_artifacts:
       #    path: test-reports
