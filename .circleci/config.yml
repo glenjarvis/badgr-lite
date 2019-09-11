@@ -22,11 +22,8 @@ jobs:
           command: |
              pipenv install
              pipenv check
-             source ~/.local/share/virtualenvs/repo-eQF46Ow3/bin/activate
-             echo "Testing Repo name: $CIRCLE_PROJECT_REPONAME"
-             echo "Testing Project Username: $CIRCLE_PROJECT_USERNAME"
-             echo "Testing HOME: $HOME"
-             echo "Testing CIRCLE_WORKING_DIRECTORY: $CIRCLE_WORKING_DIRECTORY"
+             # It is currently unknown where eQF46Ow3 comes from
+             source $HOME/.local/share/virtualenvs/repo-eQF46Ow3/bin/activate
 
       - save_cache:
           paths:
