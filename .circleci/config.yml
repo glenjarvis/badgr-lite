@@ -22,8 +22,9 @@ jobs:
           command: |
              pipenv install
              pipenv check
-             source /home/circleci/.local/share/virtualenvs/repo-eQF46Ow3/bin/activate
-             echo "Testing Repo name: $CIRCLE_PR_REPONAME"
+             source ~/.local/share/virtualenvs/repo-eQF46Ow3/bin/activate
+             echo "Testing Repo name: $CIRCLE_PROJECT_REPONAME"
+             echo "Testing Project Username: $CIRCLE_PROJECT_USERNAME"
 
       - save_cache:
           paths:
