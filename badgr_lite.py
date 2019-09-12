@@ -3,6 +3,8 @@
 import json
 import os
 
+import requests
+
 
 class TokenFileNotFoundError(BaseException):
     """Token file not found
@@ -13,6 +15,10 @@ class TokenFileNotFoundError(BaseException):
         - Checking the filename is correct
         - Ensuring the filename exists and is in JSON format
     """
+
+
+class TokenExpired(BaseException):
+    """Token expired"""
 
 
 class BadgrLite:
@@ -27,6 +33,15 @@ class BadgrLite:
 
         with open(token_file, 'r') as token_handler:
             self._token_data = json.load(token_handler)
+
+    def communicate_with_server(self, url):
+        """Communicate with the server"""
+        headers = {'Authorization': 'Bearer {}'.format(
+            self._token_data['access_token'])}
+        response = requests.get(url, headers=headers)
+        if response.status_code == 401:
+            raise TokenExpired
+        raise TokenExpired
 
     def get_badges(self):
         """Get list of badges from Server

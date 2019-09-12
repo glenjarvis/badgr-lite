@@ -5,7 +5,7 @@ import os
 from tempfile import mkdtemp
 import unittest
 
-from badgr_lite import BadgrLite, TokenFileNotFoundError
+from badgr_lite import BadgrLite, TokenFileNotFoundError, TokenExpired
 
 
 class BadgrLiteTestBase(unittest.TestCase):
@@ -25,6 +25,8 @@ class BadgrLiteTestBase(unittest.TestCase):
                  "token_type": "Bearer"}
             ))
 
+        self.badgr = BadgrLite(token_file=self.sample_token_file)
+
     def tearDown(self):
         """Remove temporary files"""
         # tearDown should be a class not a function; pylint: disable=R0201
@@ -39,12 +41,8 @@ class TestBadgrLiteInstantiation(BadgrLiteTestBase):
     def test_instantiates_badgr_lite_class(self):
         """It instantiates a BadgrLite class"""
 
-        BadgrLite(token_file=self.sample_token_file)
-
     def test_takes_a_token_file(self):
         """It takes a token file argument"""
-
-        BadgrLite(token_file=self.sample_token_file)
 
     def test_verifies_token_file_exists(self):
         """It verifies token file exists"""
@@ -60,11 +58,17 @@ class TestBadgrLiteInstantiation(BadgrLiteTestBase):
     def test_verifies_bearer_token(self):
         """It has a bearer token when instantiated"""
 
-        badgr = BadgrLite(token_file=self.sample_token_file)
-
         # _token_data isn't meant to be exposed; pylint: disable=W0212
-        self.assertEqual(badgr._token_data['token_type'], "Bearer")
-        self.assertEqual(badgr._token_data['access_token'], self._sample_token)
+        self.assertEqual(self.badgr._token_data['token_type'], "Bearer")
+        self.assertEqual(self.badgr._token_data['access_token'],
+                         self._sample_token)
+
+    def test_raises_token_expired_when_applicable(self):
+        """It raises TokenExpired when applicable"""
+
+        with self.assertRaises(TokenExpired):
+            sample_url = 'https://api.badgr.io/v2/badgeclasses'
+            self.badgr.communicate_with_server(sample_url)
 
 
 class TestBadgrLiteMethods(BadgrLiteTestBase):
