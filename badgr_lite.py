@@ -16,8 +16,8 @@ class TokenFileNotFoundError(BaseException):
 
 
 class BadgrLite:
+    """BadgrLite: Automate without the overhead of badgr-server"""
     # pylint: disable=R0903
-    # pylint: disable=C0111
 
     def __init__(self, token_file):
         if not os.path.exists(token_file):
@@ -26,4 +26,4 @@ class BadgrLite:
                 TokenFileNotFoundError.__doc__)
 
         with open(token_file, 'r') as token_handler:
-            self.token = json.load(token_handler)
+            self._token_data = json.load(token_handler)
