@@ -5,10 +5,11 @@ verify_ssl = true
 
 [dev-packages]
 pylint = "*"
+vcrpy = "*"
+pycodestyle = "*"
 
 [packages]
 requests = "*"
-pycodestyle = "*"
 
 [requires]
 python_version = "3.7"

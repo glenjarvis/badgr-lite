@@ -5,6 +5,7 @@ import os
 from tempfile import mkdtemp
 import unittest
 from unittest.mock import patch
+import vcr
 
 from badgr_lite import (BadgrLite, TokenFileNotFoundError,
                         TokenAndRefreshExpired)
@@ -70,15 +71,17 @@ class TestBadgrLiteInstantiation(BadgrLiteTestBase):
     def test_attempts_to_refresh_token_when_appropriate(self, mock):
         """It attempts to refresh token when http 401 has been received"""
 
-        with self.assertRaises(TokenAndRefreshExpired):
-            self.badgr.communicate_with_server(self._sample_url)
+        with vcr.use_cassette('vcr_cassettes/no_valid_auth_token.yaml'):
+            with self.assertRaises(TokenAndRefreshExpired):
+                self.badgr.communicate_with_server(self._sample_url)
         self.assertTrue(mock.called)
 
     def test_raises_token_expired_when_applicable(self):
         """It raises TokenExpired when applicable"""
 
-        with self.assertRaises(TokenAndRefreshExpired):
-            self.badgr.communicate_with_server(self._sample_url)
+        with vcr.use_cassette('vcr_cassettes/no_valid_auth_token.yaml'):
+            with self.assertRaises(TokenAndRefreshExpired):
+                self.badgr.communicate_with_server(self._sample_url)
 
 
 class TestBadgrLiteMethods(BadgrLiteTestBase):
