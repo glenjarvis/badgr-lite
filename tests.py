@@ -8,7 +8,12 @@ class TestBadgrLiteMethods(unittest.TestCase):
     # pylint: disable=C0111
 
     def test_instantiates_badgr_lite_class(self):
-        BadgrLite()
+        """It instantiates a BadgrLite class"""
+        BadgrLite(token_file=None)
+
+    def test_takes_a_token_file(self):
+        """It takes a token file argument"""
+        BadgrLite(token_file='./test_token_file.json')
 
 if __name__ == '__main__':
     unittest.main()

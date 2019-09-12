@@ -3,4 +3,6 @@
 class BadgrLite:
     # pylint: disable=R0903
     # pylint: disable=C0111
-    pass
+
+    def __init__(self, token_file):
+        pass
