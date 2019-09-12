@@ -4,8 +4,9 @@ import json
 import os
 from tempfile import mkdtemp
 import unittest
+from unittest.mock import patch
 
-from badgr_lite import BadgrLite, TokenFileNotFoundError, TokenExpired
+from badgr_lite import BadgrLite, TokenFileNotFoundError
 
 
 class BadgrLiteTestBase(unittest.TestCase):
@@ -63,12 +64,13 @@ class TestBadgrLiteInstantiation(BadgrLiteTestBase):
         self.assertEqual(self.badgr._token_data['access_token'],
                          self._sample_token)
 
-    def test_raises_token_expired_when_applicable(self):
-        """It raises TokenExpired when applicable"""
+    @patch('badgr_lite.BadgrLite.refresh_token')
+    def test_attempts_to_refresh_token_when_appropriate(self, mock):
+        """It attemps to refresh token when http 401 has been received"""
 
-        with self.assertRaises(TokenExpired):
-            sample_url = 'https://api.badgr.io/v2/badgeclasses'
-            self.badgr.communicate_with_server(sample_url)
+        sample_url = 'https://api.badgr.io/v2/badgeclasses'
+        self.badgr.communicate_with_server(sample_url)
+        self.assertTrue(mock.called)
 
 
 class TestBadgrLiteMethods(BadgrLiteTestBase):
@@ -77,8 +79,7 @@ class TestBadgrLiteMethods(BadgrLiteTestBase):
     def test_should_give_a_list_for_badges(self):
         """It should give a list for badges"""
 
-        badgr = BadgrLite(token_file=self.sample_token_file)
-        self.assertTrue(isinstance(badgr.badges, list))
+        self.assertTrue(isinstance(self.badgr.badges, list))
 
 
 if __name__ == '__main__':
