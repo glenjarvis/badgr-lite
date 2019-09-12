@@ -1,5 +1,6 @@
 """BadgrLite module for automating Badr awards (assertions)"""
 
+import json
 import os
 
 
@@ -23,3 +24,6 @@ class BadgrLite:
             raise TokenFileNotFoundError(
                 "Token File Not Found.",
                 TokenFileNotFoundError.__doc__)
+
+        with open(token_file, 'r') as token_handler:
+            self.token = json.load(token_handler)
