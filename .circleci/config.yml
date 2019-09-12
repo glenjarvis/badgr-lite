@@ -22,8 +22,6 @@ jobs:
           command: |
              pipenv install --dev
              pipenv check
-             # It is currently unknown where eQF46Ow3 comes from
-             source $HOME/.local/share/virtualenvs/repo-eQF46Ow3/bin/activate
 
       - save_cache:
           paths:
@@ -33,6 +31,8 @@ jobs:
       - run:
           name: Run Tests
           command: |
+            # It is currently unknown where eQF46Ow3 comes from
+            source $HOME/.local/share/virtualenvs/repo-eQF46Ow3/bin/activate
             python test_badgr_lite.py
 
       #- store_artifacts:
