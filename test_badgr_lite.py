@@ -6,7 +6,8 @@ from tempfile import mkdtemp
 import unittest
 from unittest.mock import patch
 
-from badgr_lite import BadgrLite, TokenFileNotFoundError
+from badgr_lite import (BadgrLite, TokenFileNotFoundError,
+                        TokenAndRefreshExpired)
 
 
 class BadgrLiteTestBase(unittest.TestCase):
@@ -17,6 +18,7 @@ class BadgrLiteTestBase(unittest.TestCase):
 
         self._tempdir = mkdtemp()
         self._sample_token = "FVQ__sample_token__QYzzRracgjH"
+        self._sample_url = 'https://api.badgr.io/v2/badgeclasses'
         self.sample_token_file =\
             os.path.join(self._tempdir, "sample_token_file.json")
 
@@ -66,11 +68,17 @@ class TestBadgrLiteInstantiation(BadgrLiteTestBase):
 
     @patch('badgr_lite.BadgrLite.refresh_token')
     def test_attempts_to_refresh_token_when_appropriate(self, mock):
-        """It attemps to refresh token when http 401 has been received"""
+        """It attempts to refresh token when http 401 has been received"""
 
-        sample_url = 'https://api.badgr.io/v2/badgeclasses'
-        self.badgr.communicate_with_server(sample_url)
+        with self.assertRaises(TokenAndRefreshExpired):
+            self.badgr.communicate_with_server(self._sample_url)
         self.assertTrue(mock.called)
+
+    def test_raises_token_expired_when_applicable(self):
+        """It raises TokenExpired when applicable"""
+
+        with self.assertRaises(TokenAndRefreshExpired):
+            self.badgr.communicate_with_server(self._sample_url)
 
 
 class TestBadgrLiteMethods(BadgrLiteTestBase):

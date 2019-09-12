@@ -17,8 +17,15 @@ class TokenFileNotFoundError(BaseException):
     """
 
 
-class TokenExpired(BaseException):
-    """Token expired"""
+class TokenAndRefreshExpired(BaseException):
+    """Token expired
+
+     The token has expired. We tried refreshing the token from the refresh
+     token and are still not able to get authorization to work correctly.
+
+     Use `prime_initial_token` (see Installation instructions) to reconfigure
+     tokens.
+     """
 
 
 class BadgrLite:
@@ -61,6 +68,9 @@ class BadgrLite:
         response = requests.get(url, headers=self.prepare_headers())
         if response.status_code == 401:
             self.refresh_token()
+            response = requests.get(url, headers=self.prepare_headers())
+            if response.status_code == 401:
+                raise TokenAndRefreshExpired
 
     def get_badges(self):
         """Get list of badges from Server
