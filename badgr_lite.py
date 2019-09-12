@@ -27,3 +27,14 @@ class BadgrLite:
 
         with open(token_file, 'r') as token_handler:
             self._token_data = json.load(token_handler)
+
+    def get_badges(self):
+        """Get list of badges from Server
+
+        Example API usage:
+        curl 'https://api.badgr.io/v2/badgeclasses'
+            -H "Authorization: Bearer zEVAGKxdbw7i3gTD1hNqyb0l13mDmO"
+        """
+        # WIP; pylint: disable=R0201
+        return []
+    badges = property(get_badges)
