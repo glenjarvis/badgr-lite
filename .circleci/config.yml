@@ -33,7 +33,7 @@ jobs:
       - run:
           name: run tests
           command: |
-            python tests.py
+            python badgr_lite.py
 
       #- store_artifacts:
       #    path: test-reports

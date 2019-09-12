@@ -8,6 +8,7 @@ pylint = "*"
 
 [packages]
 requests = "*"
+pycodestyle = "*"
 
 [requires]
 python_version = "3.7"
