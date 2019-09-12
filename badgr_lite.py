@@ -49,12 +49,16 @@ class BadgrLite:
             }
         """
 
+    def prepare_headers(self):
+        """Prepare headers for communication with the server"""
+
+        return {'Authorization': 'Bearer {}'.format(
+            self._token_data['access_token'])}
+
     def communicate_with_server(self, url):
         """Communicate with the server"""
 
-        headers = {'Authorization': 'Bearer {}'.format(
-            self._token_data['access_token'])}
-        response = requests.get(url, headers=headers)
+        response = requests.get(url, headers=self.prepare_headers())
         if response.status_code == 401:
             self.refresh_token()
 
