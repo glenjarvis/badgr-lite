@@ -1,4 +1,5 @@
 """BadgrLite module for automating Badr awards (assertions)"""
+# pylint: disable=R1710
 
 import json
 import os
@@ -85,6 +86,8 @@ class BadgrLite:
             response = requests.get(url, headers=self.prepare_headers())
             if response.status_code == 401:
                 raise TokenAndRefreshExpired
+        if response.status_code == 200:
+            return response.json()
 
     def get_badges(self):
         """Get list of badges from Server
@@ -93,6 +96,7 @@ class BadgrLite:
         curl 'https://api.badgr.io/v2/badgeclasses'
             -H "Authorization: Bearer zEVAGKxdbw7i3gTD1hNqyb0l13mDmO"
         """
-        # WIP; pylint: disable=R0201
-        return []
+        return self.communicate_with_server(
+            'https://api.badgr.io/v2/badgeclasses')['result']
+
     badges = property(get_badges)

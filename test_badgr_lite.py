@@ -101,7 +101,8 @@ class TestBadgrLiteMethods(BadgrLiteTestBase):
     def test_should_give_a_list_for_badges(self):
         """It should give a list for badges"""
 
-        self.assertTrue(isinstance(self.badgr.badges, list))
+        with vcr.use_cassette('vcr_cassettes/badge_retrieval.yaml'):
+            self.assertTrue(isinstance(self.badgr.badges, list))
 
 
 if __name__ == '__main__':
