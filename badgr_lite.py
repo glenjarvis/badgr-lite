@@ -12,7 +12,7 @@ class Badge:
 
     # WIP: pylint: disable=R0903
 
-    def __init__(self, entries):
+    def __init__(self, attrs):
         pass
 
 

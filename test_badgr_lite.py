@@ -1,5 +1,8 @@
 """badgr_lite unit tests"""
 
+# Ignore methods that could be functions; pylint: disable=R0201
+
+
 import json
 import os
 from tempfile import mkdtemp
@@ -34,7 +37,6 @@ class BadgrLiteTestBase(unittest.TestCase):
 
     def tearDown(self):
         """Remove temporary files"""
-        # tearDown should be a class not a function; pylint: disable=R0201
 
         os.remove(self.sample_token_file)
         os.rmdir(self._tempdir)
@@ -95,8 +97,12 @@ class TestBadgrLiteInstantiation(BadgrLiteTestBase):
                                 self.badgr._token_data['access_token'])
 
 
-class TestBadgrLiteMethods(BadgrLiteTestBase):
-    """TestBadgrLite Methods"""
+class TestBadgrLiteBadgeMethods(BadgrLiteTestBase):
+    """TestBadgrLite Badge related Methods"""
+
+    def test_instantiates_badge(self):
+        """It instantiates a Badge class"""
+        Badge({})
 
     def test_should_give_a_list_for_badges(self):
         """It should give a list for badges"""
