@@ -7,6 +7,15 @@ import os
 import requests
 
 
+class Badge:
+    """Pythonic representation of API BadgeClass"""
+
+    # WIP: pylint: disable=R0903
+
+    def __init__(self, entries):
+        pass
+
+
 class TokenFileNotFoundError(BaseException):
     """Token file not found
 
@@ -96,7 +105,9 @@ class BadgrLite:
         curl 'https://api.badgr.io/v2/badgeclasses'
             -H "Authorization: Bearer zEVAGKxdbw7i3gTD1hNqyb0l13mDmO"
         """
-        return self.communicate_with_server(
+        raw_data = self.communicate_with_server(
             'https://api.badgr.io/v2/badgeclasses')['result']
+
+        return [Badge(b) for b in raw_data]
 
     badges = property(get_badges)

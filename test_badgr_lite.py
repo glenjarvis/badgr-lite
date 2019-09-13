@@ -8,7 +8,7 @@ from unittest.mock import patch
 import vcr
 
 from badgr_lite import (BadgrLite, TokenFileNotFoundError,
-                        TokenAndRefreshExpired)
+                        TokenAndRefreshExpired, Badge)
 
 
 class BadgrLiteTestBase(unittest.TestCase):
@@ -103,6 +103,12 @@ class TestBadgrLiteMethods(BadgrLiteTestBase):
 
         with vcr.use_cassette('vcr_cassettes/badge_retrieval.yaml'):
             self.assertTrue(isinstance(self.badgr.badges, list))
+
+    def test_should_contain_badge_classes(self):
+        """It should contain badge classes"""
+
+        with vcr.use_cassette('vcr_cassettes/badge_retrieval.yaml'):
+            self.assertTrue(isinstance(self.badgr.badges[0], Badge))
 
 
 if __name__ == '__main__':
