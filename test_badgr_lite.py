@@ -87,8 +87,12 @@ class TestBadgrLiteInstantiation(BadgrLiteTestBase):
     def test_refreshes_token_when_expired(self):
         """It refreshes the token when it is expired"""
 
+        # _token_data isn't meant to be exposed; pylint: disable=W0212
+        original_token = self.badgr._token_data['access_token']
         with vcr.use_cassette('vcr_cassettes/expired_auth_token.yaml'):
             self.badgr.communicate_with_server(self._sample_url)
+            self.assertNotEqual(original_token,
+                                self.badgr._token_data['access_token'])
 
 
 class TestBadgrLiteMethods(BadgrLiteTestBase):
