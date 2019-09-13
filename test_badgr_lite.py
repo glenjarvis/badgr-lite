@@ -104,6 +104,15 @@ class TestBadgrLiteBadgeMethods(BadgrLiteTestBase):
         """It instantiates a Badge class"""
         Badge({})
 
+    def test_has_required_attrs(self):
+        """It has a list of required attributes for initialization"""
+        for attr in ['entity_id', 'open_badge_id', 'created_at',
+                     'created_by', 'issuer', 'issuer_open_badge_id', 'name',
+                     'image', 'description', 'criteria_url',
+                     'criteria_narrative', 'alignments', 'tags', 'expires',
+                     'extensions']:
+            self.assertIn(attr, Badge.REQUIRED_ATTRS)
+
     def test_should_give_a_list_for_badges(self):
         """It should give a list for badges"""
 

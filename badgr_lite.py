@@ -2,15 +2,37 @@
 # pylint: disable=R1710
 
 import json
+import re
 import os
 
 import requests
+
+
+def pythonic(name):
+    """Convert camelCase identifier to pythonic identifier
+
+    Citaton: (https://stackoverflow.com/questions/1175208/
+              elegant-python-function-to-convert-camelcase-
+              to-snake-case/17328907)
+
+    The Badgr API returns attributes in camel case (e.g., issuerOpenBadgeId).
+    We wish to also see those attributes in a pythonic way
+    (e.g., issuer_open_badgee_id).
+    """
+    regex_s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
+    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', regex_s1).lower()
 
 
 class Badge:
     """Pythonic representation of API BadgeClass"""
 
     # WIP: pylint: disable=R0903
+    JSON_ATTRS = ['entityType', 'entityId', 'openBadgeId', 'createdAt',
+                  'createdBy', 'issuer', 'issuerOpenBadgeId', 'name', 'image',
+                  'description', 'criteriaUrl', 'criteriaNarrative',
+                  'alignments', 'tags', 'expires', 'extensions']
+
+    REQUIRED_ATTRS = [pythonic(attr) for attr in JSON_ATTRS]
 
     def __init__(self, attrs):
         pass
