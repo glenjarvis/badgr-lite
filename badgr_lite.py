@@ -8,7 +8,7 @@ import os
 import requests
 
 
-def pythonic(name):
+def pythonic(name: str) -> str:
     """Convert camelCase identifier to pythonic identifier
 
     Citaton: (https://stackoverflow.com/questions/1175208/
@@ -24,7 +24,20 @@ def pythonic(name):
 
 
 class Badge:
-    """Pythonic representation of API BadgeClass"""
+    """Pythonic representation of API BadgeClass
+
+    Given a dictionary when instantiating the object, create a Pythonic
+    representation of a OpenBadge.
+
+    The JSON object given by the Badgr API, loaded as a dict, can be used to
+    instantiate the Badge class.
+
+    JSON style attributes (e.g., `issuerOpenBadgeId`) are maintainced. However,
+    the pythonic representation of the same object (e.g.,
+    `issuer_open_badge_id`) is also created. This way Python consumers
+    unfamiliar with the Badgr API will still have attributes that `git in their
+    brain`.
+    """
 
     # WIP: pylint: disable=R0903
     JSON_ATTRS = ['entityType', 'entityId', 'openBadgeId', 'createdAt',
@@ -34,14 +47,14 @@ class Badge:
 
     REQUIRED_ATTRS = [pythonic(attr) for attr in JSON_ATTRS]
 
-    def __init__(self, attrs):
+    def __init__(self, attrs: dict) -> None:
         pass
 
 
 class TokenFileNotFoundError(BaseException):
     """Token file not found
 
-    The token_file argument that you passed into BadgrLite is not found.
+    The token_filename argument that you passed into BadgrLite is not found.
     Please consider:
         - Using using `prime_initial_token` (see Installation instructions)
         - Checking the filename is correct
@@ -64,17 +77,17 @@ class BadgrLite:
     """BadgrLite: Automate without the overhead of badgr-server"""
     # pylint: disable=R0903
 
-    def __init__(self, token_file):
-        self.token_file = token_file
-        if not os.path.exists(token_file):
+    def __init__(self, token_filename: str) -> None:
+        self.token_filename = token_filename
+        if not os.path.exists(token_filename):
             raise TokenFileNotFoundError(
                 "Token File Not Found.",
                 TokenFileNotFoundError.__doc__)
 
-        with open(token_file, 'r') as token_handler:
+        with open(token_filename, 'r') as token_handler:
             self._token_data = json.load(token_handler)
 
-    def refresh_token(self):
+    def refresh_token(self) -> None:
         """
         curl -X POST 'https://api.badgr.io/o/token' \
            -d "grant_type=refresh_token&
@@ -99,16 +112,16 @@ class BadgrLite:
             assert response.status_code == 200
             raw_data = response.json()
             self._token_data = raw_data
-            with open(self.token_file, 'w') as token_handler:
+            with open(self.token_filename, 'w') as token_handler:
                 token_handler.write(json.dumps(raw_data))
 
-    def prepare_headers(self):
+    def prepare_headers(self) -> dict:
         """Prepare headers for communication with the server"""
 
         return {'Authorization': 'Bearer {}'.format(
             self._token_data['access_token'])}
 
-    def communicate_with_server(self, url):
+    def communicate_with_server(self, url: str) -> dict:
         """Communicate with the server"""
 
         response = requests.get(url, headers=self.prepare_headers())
@@ -117,10 +130,10 @@ class BadgrLite:
             response = requests.get(url, headers=self.prepare_headers())
             if response.status_code == 401:
                 raise TokenAndRefreshExpired
-        if response.status_code == 200:
-            return response.json()
+        assert response.status_code == 200
+        return response.json()
 
-    def get_badges(self):
+    def get_badges(self) -> list:
         """Get list of badges from Server
 
         Example API usage:

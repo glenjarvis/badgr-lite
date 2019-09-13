@@ -33,7 +33,7 @@ class BadgrLiteTestBase(unittest.TestCase):
                  "refresh_token": "vK__sample_refresh_token__AlPZ"}
             ))
 
-        self.badgr = BadgrLite(token_file=self.sample_token_file)
+        self.badgr = BadgrLite(token_filename=self.sample_token_file)
 
     def tearDown(self):
         """Remove temporary files"""
@@ -55,12 +55,12 @@ class TestBadgrLiteInstantiation(BadgrLiteTestBase):
         """It verifies token file exists"""
 
         with self.assertRaises(TokenFileNotFoundError):
-            BadgrLite(token_file='./non_existent_token_file.json')
+            BadgrLite(token_filename='./non_existent_token_file.json')
 
     def test_verifies_token_file_contains_json(self):
         """It verifies token file exists"""
 
-        BadgrLite(token_file=self.sample_token_file)
+        BadgrLite(token_filename=self.sample_token_file)
 
     def test_verifies_bearer_token(self):
         """It has a bearer token when instantiated"""

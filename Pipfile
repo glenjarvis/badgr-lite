@@ -7,6 +7,7 @@ verify_ssl = true
 pylint = "*"
 vcrpy = "*"
 pycodestyle = "*"
+mypy = "*"
 
 [packages]
 requests = "*"
