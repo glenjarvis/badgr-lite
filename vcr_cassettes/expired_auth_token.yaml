@@ -1,0 +1,276 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer FVQ__sample_token__QYzzRracgjH
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.22.0
+    method: GET
+    uri: https://api.badgr.io/v2/badgeclasses
+  response:
+    body:
+      string: '{"status":{"description":"no valid auth token found","success":false},"validationErrors":[],"fieldErrors":{},"result":[]}'
+    headers:
+      Allow:
+      - GET, POST, HEAD, OPTIONS
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '121'
+      Content-Security-Policy:
+      - default-src https://*.badgr.ws https://*.badgr.io https://www.google-analytics.com
+        https://ajax.googleapis.com https://ajax.googleapis.com; script-src 'unsafe-inline'
+        https://*.badgr.ws https://*.badgr.io https://online.swagger.io ;img-src https://*.badgr.ws
+        https://*.badgr.io https://online.swagger.io data:; style-src 'unsafe-inline'
+        https://*.badgr.ws https://*.badgr.io https://fonts.googleapis.com; style-src-elem
+        'unsafe-inline' https://*.badgr.ws https://*.badgr.io https://fonts.googleapis.com;
+        font-src https://*.badgr.ws https://*.badgr.io https://fonts.gstatic.com;
+        object-src 'none'
+      Content-Type:
+      - application/ld+json
+      Date:
+      - Fri, 13 Sep 2019 01:45:41 GMT
+      Server:
+      - Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips mod_wsgi/3.4 Python/2.7.5
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+      Vary:
+      - Accept,Authorization,Cookie,Origin
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-XSS-Protection:
+      - 1; mode=block
+    status:
+      code: 401
+      message: Unauthorized
+- request:
+    body: grant_type=refresh_token&refresh_token=vK__sample_refresh_token__AlPZ
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '69'
+      Content-Type:
+      - application/x-www-form-urlencoded
+      User-Agent:
+      - python-requests/2.22.0
+    method: POST
+    uri: https://api.badgr.io/o/token
+  response:
+    body:
+      string: '{"access_token": "j6FqMvDJgEGzCaRpdC79ri147YdcXu", "token_type": "Bearer",
+        "expires_in": 86400, "refresh_token": "dldMujTSV3GZRr1tlzDyRFlw9oTI3X", "scope":
+        "rw:profile rw:issuer rw:backpack"}'
+    headers:
+      Cache-Control:
+      - no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '191'
+      Content-Security-Policy:
+      - default-src https://*.badgr.ws https://*.badgr.io https://www.google-analytics.com
+        https://ajax.googleapis.com https://ajax.googleapis.com; script-src 'unsafe-inline'
+        https://*.badgr.ws https://*.badgr.io https://online.swagger.io ;img-src https://*.badgr.ws
+        https://*.badgr.io https://online.swagger.io data:; style-src 'unsafe-inline'
+        https://*.badgr.ws https://*.badgr.io https://fonts.googleapis.com; style-src-elem
+        'unsafe-inline' https://*.badgr.ws https://*.badgr.io https://fonts.googleapis.com;
+        font-src https://*.badgr.ws https://*.badgr.io https://fonts.gstatic.com;
+        object-src 'none'
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 13 Sep 2019 01:45:42 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips mod_wsgi/3.4 Python/2.7.5
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+      Vary:
+      - Authorization,Cookie,Origin
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-XSS-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer j6FqMvDJgEGzCaRpdC79ri147YdcXu
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.22.0
+    method: GET
+    uri: https://api.badgr.io/v2/badgeclasses
+  response:
+    body:
+      string: "{\"status\":{\"description\":\"ok\",\"success\":true},\"result\":[{\"\
+        entityType\":\"BadgeClass\",\"entityId\":\"cTjxL52HQBiSgIp5JuVq5w\",\"openBadgeId\"\
+        :\"https://api.badgr.io/public/badges/cTjxL52HQBiSgIp5JuVq5w\",\"createdAt\"\
+        :\"2019-09-04T19:03:24Z\",\"createdBy\":\"LjhaHDrCT7K6EdwC_vVVIA\",\"issuer\"\
+        :\"5Dm1JnO_STiXQ26x5yD4Kg\",\"issuerOpenBadgeId\":\"https://api.badgr.io/public/issuers/5Dm1JnO_STiXQ26x5yD4Kg\"\
+        ,\"name\":\"Bay Area Python Interest Group TDD Participant\",\"image\":\"\
+        https://media.badgr.io/uploads/badges/issuer_badgeclass_488caee0-6fb7-42b5-b94e-d4ea0ac7d22d.png\"\
+        ,\"description\":\"There are often many buzzwords that are used incorrectly\
+        \ and abused. Often people hear the phrase Test Driven Development (TDD) and\
+        \ think this is just a term that means \u201CTesting your code.\u201D Although\
+        \ Testing your code is important, Test Driven Development is a special paradigm\
+        \ that is often used in certain companies.\\n\\nAfter this talk, you may decide\
+        \ that full Test Driven Development (TDD) isn\u2019t for you (or, it may be\
+        \ a turning point for you). Regardless, you should fully understand the paradigms\
+        \ and what it is - as it will come up in discussions some time in your career.\\\
+        n\\nTo make it accessible to everyone, we will start this talk with an introduction\
+        \ to Unit Tests and testing frameworks (e.g, unittest, pytest, nose, etc.)\
+        \ We do a few very basic live demonstrations of both succeeding and failing\
+        \ unit tests.\\n\\nWe quickly, however ramp up building a data structure (e.g.,\
+        \ stack, queue, tree, etc.) using a full Red, Green, Refactor TDD cycle (cycles\
+        \ within Test Driven Development). This will be somewhat interactive and there\
+        \ will be a plenty of slides with Python code.\",\"criteriaUrl\":\"http://glenjarvis.com/talks/baypiggies-pigs-pythons-and-goats\"\
+        ,\"criteriaNarrative\":\"Recipient is expected to attend and participate in\
+        \ the Bay Area Python Interest Group (BAyPIGgies) talk [Pigs, Pythons and\
+        \ Goats: The Animal Guide to TDD](https://www.meetup.com/BAyPIGgies/events/264236536/).\
+        \ Recipients who are not present but watch the video recording are also able\
+        \ to earn this badge.\",\"alignments\":[],\"tags\":[\"python\",\"tdd\"],\"\
+        expires\":{\"amount\":null,\"duration\":null},\"extensions\":{}},{\"entityType\"\
+        :\"BadgeClass\",\"entityId\":\"5YhFytMUQb2loOMEy63gQA\",\"openBadgeId\":\"\
+        https://api.badgr.io/public/badges/5YhFytMUQb2loOMEy63gQA\",\"createdAt\"\
+        :\"2019-09-04T20:45:48Z\",\"createdBy\":\"LjhaHDrCT7K6EdwC_vVVIA\",\"issuer\"\
+        :\"5Dm1JnO_STiXQ26x5yD4Kg\",\"issuerOpenBadgeId\":\"https://api.badgr.io/public/issuers/5Dm1JnO_STiXQ26x5yD4Kg\"\
+        ,\"name\":\"Bay Area Python Interest Group TDD Quizmaster\",\"image\":\"https://media.badgr.io/uploads/badges/issuer_badgeclass_b75cd5f6-c2d7-46f3-8624-79447bf092f2.png\"\
+        ,\"description\":\"You have shown that you understand the lecture components\
+        \ of Test Driven Development.\\n\\nQuiz questions touched on topics such as:\\\
+        n\\n- The Red, Green, Refactor cycle\\n- How to build a basic data structure\
+        \ with TDD\\n- What are basic Python testing frameworks\\n- How to integrate\
+        \ testing frameworks into pull requests.\\n- etc.\",\"criteriaUrl\":null,\"\
+        criteriaNarrative\":\"Recipient has passed a randomized order of 10 on-line\
+        \ quiz questions with a score of 80% or better at https://glenjarvis.com/\\\
+        n\\nThe quiz questions revolved around these topics:\\n\\n- The Red, Green,\
+        \ Refactor cycle\\n- How to build a basic data structure with TDD\\n- What\
+        \ are basic Python testing frameworks\\n- How to integrate testing frameworks\
+        \ into pull requests.\\n- etc.\",\"alignments\":[],\"tags\":[],\"expires\"\
+        :{\"amount\":null,\"duration\":null},\"extensions\":{}},{\"entityType\":\"\
+        BadgeClass\",\"entityId\":\"yzExTDvOTnOx_R3YhwPf3A\",\"openBadgeId\":\"https://api.badgr.io/public/badges/yzExTDvOTnOx_R3YhwPf3A\"\
+        ,\"createdAt\":\"2019-09-04T20:54:32Z\",\"createdBy\":\"LjhaHDrCT7K6EdwC_vVVIA\"\
+        ,\"issuer\":\"5Dm1JnO_STiXQ26x5yD4Kg\",\"issuerOpenBadgeId\":\"https://api.badgr.io/public/issuers/5Dm1JnO_STiXQ26x5yD4Kg\"\
+        ,\"name\":\"Test Driven Development Fundamentals Champion\",\"image\":\"https://media.badgr.io/uploads/badges/issuer_badgeclass_01b86498-a190-4d37-8e4c-02b43280afb5.png\"\
+        ,\"description\":\"Test Driven Development (TDD) is a term used by software\
+        \ developers. Many developers think that they are using TDD by keeping a high\
+        \ percentage of test coverage for their code.\\n\\nHowever, Test Driven Development\
+        \ is actually a paradigm that is used to evolve the software design of your\
+        \ project. \\n\\nAll modern software developers should understand the TDD\
+        \ paradigm even if they decide it is has too high of an upfront development\
+        \ cost and isn't a good choice for their team.\\n\\nAt completion, you will\
+        \ understand:\\n\\n- The Red, Green, Refactor TDD cycle\\n- How this Red,\
+        \ Green, Refactor cycle can be used to build a data structure\\n- How automated\
+        \ tests can help with code reviews and pull requests\\n- What are the basic\
+        \ testing frameworks in Python (unittest, pytest, nose, etc.)\",\"criteriaUrl\"\
+        :\"https://glenjarvis.com/talks/animal-guide-tdd/\",\"criteriaNarrative\"\
+        :\"Recipient proved they attended the Bay Area Python Interest Group talk\
+        \ [Pigs, Pythons and Goats: The Animal Guide to TDD](https://www.meetup.com/BAyPIGgies/events/264236536/)\
+        \ or watched its recorded video.\\n\\nFurther, recipient passed the online\
+        \ exam at \\n\\n\\nRecipient has passed a randomized order of 10 on-line quiz\
+        \ questions with a score of 80% or better at https://glenjarvis.com/talks/animal-guide-tdd/quiz/badge-quiz/\\\
+        n\\nThe quiz questions revolved around these topics:\\n\\n- The Red, Green,\
+        \ Refactor cycle\\n- How to build a basic data structure with TDD\\n- What\
+        \ are basic Python testing frameworks\\n- How to integrate testing frameworks\
+        \ into pull requests.\\n- etc.\",\"alignments\":[],\"tags\":[],\"expires\"\
+        :{\"amount\":null,\"duration\":null},\"extensions\":{}},{\"entityType\":\"\
+        BadgeClass\",\"entityId\":\"yNjcY70FSn603SO9vMGhBA\",\"openBadgeId\":\"https://api.badgr.io/public/badges/yNjcY70FSn603SO9vMGhBA\"\
+        ,\"createdAt\":\"2019-09-04T21:40:22Z\",\"createdBy\":\"LjhaHDrCT7K6EdwC_vVVIA\"\
+        ,\"issuer\":\"5Dm1JnO_STiXQ26x5yD4Kg\",\"issuerOpenBadgeId\":\"https://api.badgr.io/public/issuers/5Dm1JnO_STiXQ26x5yD4Kg\"\
+        ,\"name\":\"Install Python with Virtual Environments\",\"image\":\"https://media.badgr.io/uploads/badges/issuer_badgeclass_ce70f56a-2cd2-4e3f-bc6c-3816320ff089.png\"\
+        ,\"description\":\"Installing Python should be easier than it sometimes is.\
+        \ Learn how to ease the burden of getting started by understanding how virtual\
+        \ environments work. Understand the python command line option `-m` and how\
+        \ to use `python3 -m venv`.\\n\\nUnderstand Pip and how it can be used to\
+        \ install packages.\\n\\nAs a bonus, learn what PEP standards are, and how\
+        \ the new Pip PEP standard will be changing in the near future.\\n\\nLearn\
+        \ how Pipenv will, in the short term, solve the problems of installation and\
+        \ already is compliant with the future standard.\",\"criteriaUrl\":null,\"\
+        criteriaNarrative\":\"Installing Python should be easier than it sometimes\
+        \ is. Learn how to ease the burden of getting started by understanding how\
+        \ virtual environments work. Understand the python command line option `-m`\
+        \ and how to use `python3 -m venv`.\\n\\nUnderstand Pip and how it can be\
+        \ used to install packages.\\n\\nAs a bonus, learn what PEP standards are,\
+        \ and how the new Pip PEP standard will be changing in the near future.\\\
+        n\\nLearn how Pipenv will, in the short term, solve the problems of installation\
+        \ and already is compliant with the future standard.\",\"alignments\":[],\"\
+        tags\":[],\"expires\":{\"amount\":null,\"duration\":null},\"extensions\":{}},{\"\
+        entityType\":\"BadgeClass\",\"entityId\":\"2TfNNqMLT8CoAhfGKqSv6Q\",\"openBadgeId\"\
+        :\"https://api.badgr.io/public/badges/2TfNNqMLT8CoAhfGKqSv6Q\",\"createdAt\"\
+        :\"2019-09-06T23:21:48Z\",\"createdBy\":\"LjhaHDrCT7K6EdwC_vVVIA\",\"issuer\"\
+        :\"5Dm1JnO_STiXQ26x5yD4Kg\",\"issuerOpenBadgeId\":\"https://api.badgr.io/public/issuers/5Dm1JnO_STiXQ26x5yD4Kg\"\
+        ,\"name\":\"Test Badge Only - This will be deleted\",\"image\":\"https://media.badgr.io/uploads/badges/issuer_badgeclass_6fc830a7-744e-40a3-8410-55a6c9f3ef15.png\"\
+        ,\"description\":\"This badge is not intended be a final badge. It is expected\
+        \ to be deleted.\\n\\nHowever, we need to test the API to create assertions\
+        \ against a badge.\",\"criteriaUrl\":null,\"criteriaNarrative\":\"Testing\
+        \ only\",\"alignments\":[],\"tags\":[],\"expires\":{\"amount\":null,\"duration\"\
+        :null},\"extensions\":{}},{\"entityType\":\"BadgeClass\",\"entityId\":\"YN0CIo4NR7-GgrliDJzoTw\"\
+        ,\"openBadgeId\":\"https://api.badgr.io/public/badges/YN0CIo4NR7-GgrliDJzoTw\"\
+        ,\"createdAt\":\"2019-09-09T21:46:19Z\",\"createdBy\":\"LjhaHDrCT7K6EdwC_vVVIA\"\
+        ,\"issuer\":\"5Dm1JnO_STiXQ26x5yD4Kg\",\"issuerOpenBadgeId\":\"https://api.badgr.io/public/issuers/5Dm1JnO_STiXQ26x5yD4Kg\"\
+        ,\"name\":\"Fivvr badge\",\"image\":\"https://media.badgr.io/uploads/badges/issuer_badgeclass_f019ff9f-2e7d-48ec-859d-6f119cb3438e.png\"\
+        ,\"description\":\"This is a temporary badge for communicating with Fivvr.\"\
+        ,\"criteriaUrl\":null,\"criteriaNarrative\":\"This is temporary and won't\
+        \ be awarded as is.\",\"alignments\":[],\"tags\":[],\"expires\":{\"amount\"\
+        :null,\"duration\":null},\"extensions\":{}}]}"
+    headers:
+      Allow:
+      - GET, POST, HEAD, OPTIONS
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '8793'
+      Content-Security-Policy:
+      - default-src https://*.badgr.ws https://*.badgr.io https://www.google-analytics.com
+        https://ajax.googleapis.com https://ajax.googleapis.com; script-src 'unsafe-inline'
+        https://*.badgr.ws https://*.badgr.io https://online.swagger.io ;img-src https://*.badgr.ws
+        https://*.badgr.io https://online.swagger.io data:; style-src 'unsafe-inline'
+        https://*.badgr.ws https://*.badgr.io https://fonts.googleapis.com; style-src-elem
+        'unsafe-inline' https://*.badgr.ws https://*.badgr.io https://fonts.googleapis.com;
+        font-src https://*.badgr.ws https://*.badgr.io https://fonts.gstatic.com;
+        object-src 'none'
+      Content-Type:
+      - application/ld+json
+      Date:
+      - Fri, 13 Sep 2019 01:45:42 GMT
+      Server:
+      - Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips mod_wsgi/3.4 Python/2.7.5
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+      Vary:
+      - Accept,Authorization,Origin
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-XSS-Protection:
+      - 1; mode=block
+    status:
+      code: 200
+      message: OK
+version: 1

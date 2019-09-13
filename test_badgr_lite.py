@@ -26,7 +26,8 @@ class BadgrLiteTestBase(unittest.TestCase):
         with open(self.sample_token_file, 'w') as stf_h:
             stf_h.write(json.dumps(
                 {"access_token": self._sample_token,
-                 "token_type": "Bearer"}
+                 "token_type": "Bearer",
+                 "refresh_token": "vK__sample_refresh_token__AlPZ"}
             ))
 
         self.badgr = BadgrLite(token_file=self.sample_token_file)
@@ -71,7 +72,7 @@ class TestBadgrLiteInstantiation(BadgrLiteTestBase):
     def test_attempts_to_refresh_token_when_appropriate(self, mock):
         """It attempts to refresh token when http 401 has been received"""
 
-        with vcr.use_cassette('vcr_cassettes/no_valid_auth_token.yaml'):
+        with vcr.use_cassette('vcr_cassettes/attempt_refresh_token.yaml'):
             with self.assertRaises(TokenAndRefreshExpired):
                 self.badgr.communicate_with_server(self._sample_url)
         self.assertTrue(mock.called)
@@ -82,6 +83,12 @@ class TestBadgrLiteInstantiation(BadgrLiteTestBase):
         with vcr.use_cassette('vcr_cassettes/no_valid_auth_token.yaml'):
             with self.assertRaises(TokenAndRefreshExpired):
                 self.badgr.communicate_with_server(self._sample_url)
+
+    def test_refreshes_token_when_expired(self):
+        """It refreshes the token when it is expired"""
+
+        with vcr.use_cassette('vcr_cassettes/expired_auth_token.yaml'):
+            self.badgr.communicate_with_server(self._sample_url)
 
 
 class TestBadgrLiteMethods(BadgrLiteTestBase):

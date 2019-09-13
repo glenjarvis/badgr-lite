@@ -55,6 +55,20 @@ class BadgrLite:
                 "scope": "rw:profile rw:issuer rw:backpack"
             }
         """
+        response = requests.post(
+            'https://api.badgr.io/o/token',
+            data={'grant_type': 'refresh_token',
+                  'refresh_token': self._token_data['refresh_token']})
+
+        # An else after a raise is perfectly valid here; pylint: disable=R1720
+        if response.status_code == 401:
+            raise TokenAndRefreshExpired
+        else:
+            assert response.status_code == 200
+            raw_data = response.json()
+            self._token_data = raw_data
+            with open(self.token_file, 'w') as token_handler:
+                token_handler.write(json.dumps(raw_data))
 
     def prepare_headers(self):
         """Prepare headers for communication with the server"""

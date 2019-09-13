@@ -36,7 +36,7 @@ interactions:
       Content-Type:
       - application/ld+json
       Date:
-      - Fri, 13 Sep 2019 01:19:08 GMT
+      - Fri, 13 Sep 2019 01:26:33 GMT
       Server:
       - Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips mod_wsgi/3.4 Python/2.7.5
       Strict-Transport-Security:
@@ -53,32 +53,30 @@ interactions:
       code: 401
       message: Unauthorized
 - request:
-    body: grant_type=refresh_token&refresh_token=teNufnhOsG5QBrL0j9U46lYeI6STRo
+    body: null
     headers:
       Accept:
       - '*/*'
       Accept-Encoding:
       - gzip, deflate
+      Authorization:
+      - Bearer FVQ__sample_token__QYzzRracgjH
       Connection:
       - keep-alive
-      Content-Length:
-      - '69'
-      Content-Type:
-      - application/x-www-form-urlencoded
       User-Agent:
       - python-requests/2.22.0
-    method: POST
-    uri: https://api.badgr.io/o/token
+    method: GET
+    uri: https://api.badgr.io/v2/badgeclasses
   response:
     body:
-      string: '{"error": "invalid_grant"}'
+      string: '{"status":{"description":"no valid auth token found","success":false},"validationErrors":[],"fieldErrors":{},"result":[]}'
     headers:
-      Cache-Control:
-      - no-store
+      Allow:
+      - GET, POST, HEAD, OPTIONS
       Connection:
       - keep-alive
       Content-Length:
-      - '26'
+      - '121'
       Content-Security-Policy:
       - default-src https://*.badgr.ws https://*.badgr.io https://www.google-analytics.com
         https://ajax.googleapis.com https://ajax.googleapis.com; script-src 'unsafe-inline'
@@ -89,17 +87,15 @@ interactions:
         font-src https://*.badgr.ws https://*.badgr.io https://fonts.gstatic.com;
         object-src 'none'
       Content-Type:
-      - application/json
+      - application/ld+json
       Date:
-      - Fri, 13 Sep 2019 01:19:08 GMT
-      Pragma:
-      - no-cache
+      - Fri, 13 Sep 2019 01:26:34 GMT
       Server:
       - Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips mod_wsgi/3.4 Python/2.7.5
       Strict-Transport-Security:
       - max-age=63072000; includeSubDomains; preload
       Vary:
-      - Authorization,Cookie,Origin
+      - Accept,Authorization,Cookie,Origin
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
