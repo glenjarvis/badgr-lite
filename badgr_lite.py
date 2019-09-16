@@ -23,34 +23,6 @@ def pythonic(name: str) -> str:
     return re.sub('([a-z0-9])([A-Z])', r'\1_\2', regex_s1).lower()
 
 
-class Badge:
-    """Pythonic representation of API BadgeClass
-
-    Given a dictionary when instantiating the object, create a Pythonic
-    representation of a OpenBadge.
-
-    The JSON object given by the Badgr API, loaded as a dict, can be used to
-    instantiate the Badge class.
-
-    JSON style attributes (e.g., `issuerOpenBadgeId`) are maintainced. However,
-    the pythonic representation of the same object (e.g.,
-    `issuer_open_badge_id`) is also created. This way Python consumers
-    unfamiliar with the Badgr API will still have attributes that `git in their
-    brain`.
-    """
-
-    # WIP: pylint: disable=R0903
-    JSON_ATTRS = ['entityType', 'entityId', 'openBadgeId', 'createdAt',
-                  'createdBy', 'issuer', 'issuerOpenBadgeId', 'name', 'image',
-                  'description', 'criteriaUrl', 'criteriaNarrative',
-                  'alignments', 'tags', 'expires', 'extensions']
-
-    REQUIRED_ATTRS = [pythonic(attr) for attr in JSON_ATTRS]
-
-    def __init__(self, attrs: dict) -> None:
-        pass
-
-
 class TokenFileNotFoundError(BaseException):
     """Token file not found
 
@@ -71,6 +43,55 @@ class TokenAndRefreshExpired(BaseException):
      Use `prime_initial_token` (see Installation instructions) to reconfigure
      tokens.
      """
+
+
+class RequiredBadgeAttributesMissing(BaseException):
+    """Required Badge Attributes Missing"""
+
+
+class Badge:
+    """Pythonic representation of API BadgeClass
+
+    Given a dictionary when instantiating the object, create a Pythonic
+    representation of a OpenBadge.
+
+    The JSON object given by the Badgr API, loaded as a dict, can be used to
+    instantiate the Badge class.
+
+    JSON style attributes (e.g., `issuerOpenBadgeId`) are maintainced. However,
+    the pythonic representation of the same object (e.g.,
+    `issuer_open_badge_id`) is also created. This way Python consumers
+    unfamiliar with the Badgr API will still have attributes that `git in their
+    brain`.
+    """
+    # pylint: disable=R0903
+
+    JSON_ATTRS = ['entityType', 'entityId', 'openBadgeId', 'createdAt',
+                  'createdBy', 'issuer', 'issuerOpenBadgeId', 'name', 'image',
+                  'description', 'criteriaUrl', 'criteriaNarrative',
+                  'alignments', 'tags', 'expires', 'extensions']
+
+    REQUIRED_ATTRS = [pythonic(attr) for attr in JSON_ATTRS]
+
+    def __init__(self, attrs: dict) -> None:
+        """Initialize with single dictionary
+
+        All keys in REQUIRED_ATTRS are required to initialize properly.
+        """
+        self._attrs = attrs
+        self._add_pythonic_attrs()
+
+        missing_but_required = set(self.REQUIRED_ATTRS) - set(attrs.keys())
+        if missing_but_required:
+            raise RequiredBadgeAttributesMissing(
+                ", ".join(missing_but_required))
+
+    def _add_pythonic_attrs(self):
+        pythonic_attrs = {}
+        for key in self._attrs.keys():
+            pythonic_attrs[pythonic(key)] = self._attrs[key]
+
+        self._attrs.update(pythonic_attrs)
 
 
 class BadgrLite:
@@ -144,5 +165,4 @@ class BadgrLite:
             'https://api.badgr.io/v2/badgeclasses')['result']
 
         return [Badge(b) for b in raw_data]
-
     badges = property(get_badges)
