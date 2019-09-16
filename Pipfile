@@ -8,6 +8,7 @@ pylint = "*"
 vcrpy = "*"
 pycodestyle = "*"
 mypy = "*"
+flake8 = "*"
 
 [packages]
 requests = "*"
