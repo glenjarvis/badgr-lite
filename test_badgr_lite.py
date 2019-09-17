@@ -241,6 +241,13 @@ class TestBadgrLiteBadgeMethods(BadgrLiteTestBase):
         badge = self.get_sample_badge()
         self.assertIsInstance(badge.name, str)
 
+    def test_badge_should_have_image(self):
+        """It should have an image attribute"""
+
+        badge = self.get_sample_badge()
+        # It's a string, even though it often looks like a URL
+        self.assertIsInstance(badge.image, str)
+
 
 if __name__ == '__main__':
     unittest.main()
