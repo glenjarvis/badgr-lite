@@ -248,6 +248,12 @@ class TestBadgrLiteBadgeMethods(BadgrLiteTestBase):
         # It's a string, even though it often looks like a URL
         self.assertIsInstance(badge.image, str)
 
+    def test_badge_should_have_alignments(self):
+        """It should have an alignments attribute"""
+
+        badge = self.get_sample_badge()
+        self.assertIsInstance(badge.alignments, list)
+
 
 if __name__ == '__main__':
     unittest.main()
