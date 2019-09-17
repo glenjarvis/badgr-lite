@@ -180,6 +180,12 @@ class TestBadgrLiteBadgeMethods(BadgrLiteTestBase):
         with vcr.use_cassette('vcr_cassettes/badge_retrieval.yaml'):
             self.assertTrue(isinstance(badgr.badges[0], Badge))
 
+    def test_badge_should_have_entity_id(self):
+        badgr = self.get_badgr_setup()
+        with vcr.use_cassette('vcr_cassettes/badge_retrieval.yaml'):
+            badge = badgr.badges[0]
+            self.assertIsInstance(badge.entity_id, str)
+
 
 if __name__ == '__main__':
     unittest.main()

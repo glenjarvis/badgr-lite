@@ -58,8 +58,8 @@ class Badge:
     The JSON object given by the Badgr API, loaded as a dict, can be used to
     instantiate the Badge class.
 
-    JSON style attributes (e.g., `issuerOpenBadgeId`) are maintainced. However,
-    the pythonic representation of the same object (e.g.,
+    JSON style attributes (e.g., `issuerOpenBadgeId`) are maintainced.
+    However, the pythonic representation of the same object (e.g.,
     `issuer_open_badge_id`) is also created. This way Python consumers
     unfamiliar with the Badgr API will still have attributes that `git in their
     brain`.
@@ -86,12 +86,19 @@ class Badge:
             raise RequiredBadgeAttributesMissing(
                 ", ".join(missing_but_required))
 
+    def __str__(self):
+        return "{}: {}".format(self._attrs['entity_id'], self._attrs['name'])
+
     def _add_pythonic_attrs(self):
         pythonic_attrs = {}
         for key in self._attrs.keys():
             pythonic_attrs[pythonic(key)] = self._attrs[key]
 
         self._attrs.update(pythonic_attrs)
+
+    @property
+    def entity_id(self):
+        return self._attrs['entity_id']
 
 
 class BadgrLite:
@@ -154,7 +161,8 @@ class BadgrLite:
         assert response.status_code == 200
         return response.json()
 
-    def get_badges(self) -> list:
+    @property
+    def badges(self) -> list:
         """Get list of badges from Server
 
         Example API usage:
@@ -165,4 +173,3 @@ class BadgrLite:
             'https://api.badgr.io/v2/badgeclasses')['result']
 
         return [Badge(b) for b in raw_data]
-    badges = property(get_badges)
