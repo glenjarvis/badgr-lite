@@ -297,6 +297,20 @@ class TestBadgrLiteBadgeMethods(BadgrLiteTestBase):
         # It's a string, even though it is used as a URL
         self.assertIsInstance(badge.tags, list)
 
+    def test_badge_should_have_extensions(self):
+        """It should have an extensions attribute
+
+        There are ways of extending OpenBadges:
+
+        https://www.imsglobal.org/sites/default/
+            files/Badges/OBv2p0Final/extensions/index.html
+
+        However, we currently only ensure that the attribute exists.
+        """
+
+        badge = self.get_sample_badge()
+        self.assertTrue(hasattr(badge, 'extensions'))
+
 
 if __name__ == '__main__':
     unittest.main()
