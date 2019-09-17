@@ -46,80 +46,7 @@ class BadgrLiteTestBase(unittest.TestCase):
         return BadgrLite(token_filename=self.sample_token_file)
 
 
-class TestBadgrLiteInstantiation(BadgrLiteTestBase):
-    """Test BadgrLite Instantiation"""
-
-    def test_instantiates_badgr_lite_class(self):
-        """It instantiates a BadgrLite class"""
-        badgr = self.get_badgr_setup()
-        self.assertIsInstance(badgr, BadgrLite)
-
-    def test_takes_a_token_file(self):
-        """It takes a token file argument"""
-        with self.assertRaises(TypeError):
-            # TypeError: __init__() missing 1 required
-            # positional argument: 'token_filename'
-
-            # Intentionally no args; pylint: disable=E1120
-            BadgrLite()
-
-    def test_verifies_token_file_exists(self):
-        """It verifies token file exists"""
-
-        with self.assertRaises(TokenFileNotFoundError):
-            BadgrLite(token_filename='./non_existent_token_file.json')
-
-    def test_verifies_token_file_contains_json(self):
-        """It verifies token file exists"""
-
-        with open(self.sample_token_file, 'w') as stf_h:
-            stf_h.write("Bad JSON")
-
-        with self.assertRaises(json.decoder.JSONDecodeError):
-            BadgrLite(token_filename=self.sample_token_file)
-
-    def test_verifies_bearer_token(self):
-        """It has a bearer token when instantiated"""
-
-        badgr = self.get_badgr_setup()
-
-        # _token_data isn't meant to be exposed; pylint: disable=W0212
-        self.assertEqual(badgr._token_data['token_type'], "Bearer")
-        self.assertEqual(badgr._token_data['access_token'],
-                         self._sample_token)
-
-    @unittest.mock.patch('badgr_lite.BadgrLite.refresh_token')
-    def test_attempts_to_refresh_token_when_appropriate(self, mock):
-        """It attempts to refresh token when http 401 has been received"""
-
-        badgr = self.get_badgr_setup()
-        with vcr.use_cassette('vcr_cassettes/attempt_refresh_token.yaml'):
-            with self.assertRaises(TokenAndRefreshExpired):
-                badgr.communicate_with_server(self._sample_url)
-        self.assertTrue(mock.called)
-
-    def test_raises_token_expired_when_applicable(self):
-        """It raises TokenExpired when applicable"""
-
-        badgr = self.get_badgr_setup()
-        with vcr.use_cassette('vcr_cassettes/no_valid_auth_token.yaml'):
-            with self.assertRaises(TokenAndRefreshExpired):
-                badgr.communicate_with_server(self._sample_url)
-
-    def test_refreshes_token_when_expired(self):
-        """It refreshes the token when it is expired"""
-
-        badgr = self.get_badgr_setup()
-
-        # _token_data isn't meant to be exposed; pylint: disable=W0212
-        original_token = badgr._token_data['access_token']
-        with vcr.use_cassette('vcr_cassettes/expired_auth_token.yaml'):
-            badgr.communicate_with_server(self._sample_url)
-            self.assertNotEqual(original_token,
-                                badgr._token_data['access_token'])
-
-
-class TestBadgrLiteBadgeMethods(BadgrLiteTestBase):
+class TestBadgeMethods(BadgrLiteTestBase):
     """TestBadgrLite Badge related Methods"""
 
     def get_sample_attrs(self):
@@ -310,6 +237,79 @@ class TestBadgrLiteBadgeMethods(BadgrLiteTestBase):
 
         badge = self.get_sample_badge()
         self.assertTrue(hasattr(badge, 'extensions'))
+
+
+class TestBadgrLiteInstantiation(BadgrLiteTestBase):
+    """Test BadgrLite Instantiation"""
+
+    def test_instantiates_badgr_lite_class(self):
+        """It instantiates a BadgrLite class"""
+        badgr = self.get_badgr_setup()
+        self.assertIsInstance(badgr, BadgrLite)
+
+    def test_takes_a_token_file(self):
+        """It takes a token file argument"""
+        with self.assertRaises(TypeError):
+            # TypeError: __init__() missing 1 required
+            # positional argument: 'token_filename'
+
+            # Intentionally no args; pylint: disable=E1120
+            BadgrLite()
+
+    def test_verifies_token_file_exists(self):
+        """It verifies token file exists"""
+
+        with self.assertRaises(TokenFileNotFoundError):
+            BadgrLite(token_filename='./non_existent_token_file.json')
+
+    def test_verifies_token_file_contains_json(self):
+        """It verifies token file exists"""
+
+        with open(self.sample_token_file, 'w') as stf_h:
+            stf_h.write("Bad JSON")
+
+        with self.assertRaises(json.decoder.JSONDecodeError):
+            BadgrLite(token_filename=self.sample_token_file)
+
+    def test_verifies_bearer_token(self):
+        """It has a bearer token when instantiated"""
+
+        badgr = self.get_badgr_setup()
+
+        # _token_data isn't meant to be exposed; pylint: disable=W0212
+        self.assertEqual(badgr._token_data['token_type'], "Bearer")
+        self.assertEqual(badgr._token_data['access_token'],
+                         self._sample_token)
+
+    @unittest.mock.patch('badgr_lite.BadgrLite.refresh_token')
+    def test_attempts_to_refresh_token_when_appropriate(self, mock):
+        """It attempts to refresh token when http 401 has been received"""
+
+        badgr = self.get_badgr_setup()
+        with vcr.use_cassette('vcr_cassettes/attempt_refresh_token.yaml'):
+            with self.assertRaises(TokenAndRefreshExpired):
+                badgr.communicate_with_server(self._sample_url)
+        self.assertTrue(mock.called)
+
+    def test_raises_token_expired_when_applicable(self):
+        """It raises TokenExpired when applicable"""
+
+        badgr = self.get_badgr_setup()
+        with vcr.use_cassette('vcr_cassettes/no_valid_auth_token.yaml'):
+            with self.assertRaises(TokenAndRefreshExpired):
+                badgr.communicate_with_server(self._sample_url)
+
+    def test_refreshes_token_when_expired(self):
+        """It refreshes the token when it is expired"""
+
+        badgr = self.get_badgr_setup()
+
+        # _token_data isn't meant to be exposed; pylint: disable=W0212
+        original_token = badgr._token_data['access_token']
+        with vcr.use_cassette('vcr_cassettes/expired_auth_token.yaml'):
+            badgr.communicate_with_server(self._sample_url)
+            self.assertNotEqual(original_token,
+                                badgr._token_data['access_token'])
 
 
 if __name__ == '__main__':
