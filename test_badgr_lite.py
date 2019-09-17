@@ -276,6 +276,12 @@ class TestBadgrLiteBadgeMethods(BadgrLiteTestBase):
         badge = self.get_sample_badge()
         self.assertTrue(hasattr(badge, 'expires'))
 
+    def test_badge_should_have_criteria_narrative(self):
+        """It should have a criteria narrative attribute"""
+
+        badge = self.get_sample_badge()
+        self.assertIsInstance(badge.criteria_narrative, str)
+
 
 if __name__ == '__main__':
     unittest.main()
