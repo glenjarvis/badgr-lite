@@ -216,6 +216,12 @@ class TestBadgrLiteBadgeMethods(BadgrLiteTestBase):
         badge = self.get_sample_badge()
         self.assertIsInstance(badge.created_by, str)
 
+    def test_badge_should_have_description(self):
+        """It should have a description attribute"""
+
+        badge = self.get_sample_badge()
+        self.assertIsInstance(badge.description, str)
+
 
 if __name__ == '__main__':
     unittest.main()
