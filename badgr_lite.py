@@ -79,9 +79,11 @@ class Badge:
         All keys in REQUIRED_ATTRS are required to initialize properly.
         """
         self._attrs = attrs
-        self._add_pythonic_attrs()
+        self._add_dynamic_attrs()
 
-        missing_but_required = set(self.REQUIRED_ATTRS) - set(attrs.keys())
+        pythonic_attrs = [pythonic(k) for k in attrs.keys()]
+        missing_but_required = set(self.REQUIRED_ATTRS) - set(pythonic_attrs)
+
         if missing_but_required:
             raise RequiredBadgeAttributesMissing(
                 ", ".join(missing_but_required))
@@ -89,16 +91,9 @@ class Badge:
     def __str__(self):
         return "{}: {}".format(self._attrs['entity_id'], self._attrs['name'])
 
-    def _add_pythonic_attrs(self):
-        pythonic_attrs = {}
+    def _add_dynamic_attrs(self):
         for key in self._attrs.keys():
-            pythonic_attrs[pythonic(key)] = self._attrs[key]
-
-        self._attrs.update(pythonic_attrs)
-
-    @property
-    def entity_id(self):
-        return self._attrs['entity_id']
+            setattr(self, pythonic(key), self._attrs[key])
 
 
 class BadgrLite:

@@ -45,28 +45,6 @@ class BadgrLiteTestBase(unittest.TestCase):
 
         return BadgrLite(token_filename=self.sample_token_file)
 
-    def get_sample_attrs(self):
-        """Return dictionary of test attributes for creating Badge"""
-
-        return {
-            'entity_type': 'BadgeClass',
-            'entity_id': 'cTjxL52HQBiSgIp5JuVq5x',
-            'open_badge_id': 'https://api.badgr.io/public/badges/cTjxL52HQBiSgIp5JuVq5x',
-            'created_at': '2019-09-04T19:03:24Z',
-            'created_by': 'Lj__badge_creator__VIB',
-            'description': 'sample badge description',
-            'issuer': '5D__sample_issuer__4Kg',
-            'issuer_open_badge_id': 'https://api.badgr.io/public/issuers/5D__sample_issuer__4Kg',
-            'name': 'Sample badge for Unit Tests',
-            'image': 'https://media.badgr.io/uploads/badges/issuer_badgeclass_488caae0-6fb7-42b5-b94e-d4ea0ac7d22d.png',
-            'alignments': [],
-            'expires': {'amount': None, 'duration': None},
-            'criteria_narrative': 'Sample criteria narrative text',
-            'criteria_url': 'http://example.com/',
-            'tags': ['python', 'unit-test'],
-            'extensions': {}
-        }
-
 
 class TestBadgrLiteInstantiation(BadgrLiteTestBase):
     """Test BadgrLite Instantiation"""
@@ -144,13 +122,48 @@ class TestBadgrLiteInstantiation(BadgrLiteTestBase):
 class TestBadgrLiteBadgeMethods(BadgrLiteTestBase):
     """TestBadgrLite Badge related Methods"""
 
+    def get_sample_attrs(self):
+        """Return dictionary of test attributes for creating Badge"""
+
+        return {
+            'entity_type': 'BadgeClass',
+            'entity_id': 'cTjxL52HQBiSgIp5JuVq5x',
+            'open_badge_id': 'https://api.badgr.io/public/'
+                             'badges/cTjxL52HQBiSgIp5JuVq5x',
+            'created_at': '2019-09-04T19:03:24Z',
+            'created_by': 'Lj__badge_creator__VIB',
+            'description': 'sample badge description',
+            'issuer': '5D__sample_issuer__4Kg',
+            'issuer_open_badge_id': 'https://api.badgr.io/'
+                                    'public/issuers/5D__sample_issuer__4Kg',
+            'name': 'Sample badge for Unit Tests',
+            'image': 'https://media.badgr.io/uploads/badges/'
+                     'issuer_badgeclass_'
+                     '488caae0-6fb7-42b5-b94e-d4ea0ac7d22d.png',
+            'alignments': [],
+            'expires': {'amount': None, 'duration': None},
+            'criteria_narrative': 'Sample criteria narrative text',
+            'criteria_url': 'http://example.com/',
+            'tags': ['python', 'unit-test'],
+            'extensions': {}
+        }
+
+    def get_sample_badge(self):
+        """Fetch single badge for other tests"""
+
+        badgr = self.get_badgr_setup()
+        with vcr.use_cassette('vcr_cassettes/badge_retrieval.yaml'):
+            return badgr.badges[0]
+
     def test_instantiates_badge(self):
         """It instantiates a Badge class"""
+
         attrs = self.get_sample_attrs()
         self.assertIsInstance(Badge(attrs), Badge)
 
     def test_has_required_attrs(self):
         """It has a list of required attributes for initialization"""
+
         for attr in ['entity_id', 'open_badge_id', 'created_at',
                      'created_by', 'issuer', 'issuer_open_badge_id', 'name',
                      'image', 'description', 'criteria_url',
@@ -181,10 +194,16 @@ class TestBadgrLiteBadgeMethods(BadgrLiteTestBase):
             self.assertTrue(isinstance(badgr.badges[0], Badge))
 
     def test_badge_should_have_entity_id(self):
-        badgr = self.get_badgr_setup()
-        with vcr.use_cassette('vcr_cassettes/badge_retrieval.yaml'):
-            badge = badgr.badges[0]
-            self.assertIsInstance(badge.entity_id, str)
+        """It should have an entity_id"""
+
+        badge = self.get_sample_badge()
+        self.assertIsInstance(badge.entity_id, str)
+
+    def test_badge_should_have_open_badge_id(self):
+        """It should have an open_badge_id"""
+
+        badge = self.get_sample_badge()
+        self.assertIsInstance(badge.open_badge_id, str)
 
 
 if __name__ == '__main__':
