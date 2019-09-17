@@ -254,6 +254,28 @@ class TestBadgrLiteBadgeMethods(BadgrLiteTestBase):
         badge = self.get_sample_badge()
         self.assertIsInstance(badge.alignments, list)
 
+    def test_badge_should_have_expires(self):
+        """It should have an expires attribute
+
+        At the time of this writing, there isn't enough clarity about what the
+        actual value of expires should be. The only assertion that can be made
+        with confidence is that it exists.
+
+        According to the OpenBadges FAQ (https://openbadges.org/faq/),
+
+        "Some badges contain links to detailed evidence, expiration dates,
+        searchable tags, and alignments to educational standards or
+        frameworks."
+
+        This would make one expect that it should be a datetime. However,
+        instead of a datestring, the Badgr API returns:
+
+        'expires': {'amount': None, 'duration': None},
+        """
+
+        badge = self.get_sample_badge()
+        self.assertTrue(hasattr(badge, 'expires'))
+
 
 if __name__ == '__main__':
     unittest.main()
