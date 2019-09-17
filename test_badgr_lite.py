@@ -282,6 +282,13 @@ class TestBadgrLiteBadgeMethods(BadgrLiteTestBase):
         badge = self.get_sample_badge()
         self.assertIsInstance(badge.criteria_narrative, str)
 
+    def test_badge_should_have_criteria_url(self):
+        """It should have a criteria url attribute"""
+
+        badge = self.get_sample_badge()
+        # It's a string, even though it is used as a URL
+        self.assertIsInstance(badge.criteria_url, str)
+
 
 if __name__ == '__main__':
     unittest.main()
