@@ -1,6 +1,7 @@
 """badgr_lite unit tests"""
 
 # Ignore methods that could be functions; pylint: disable=R0201
+# Ignore when there are too many test methods; pylint: disable=R0904
 
 import datetime
 import json
@@ -288,6 +289,13 @@ class TestBadgrLiteBadgeMethods(BadgrLiteTestBase):
         badge = self.get_sample_badge()
         # It's a string, even though it is used as a URL
         self.assertIsInstance(badge.criteria_url, str)
+
+    def test_badge_should_have_tags(self):
+        """It should have a tags attribute"""
+
+        badge = self.get_sample_badge()
+        # It's a string, even though it is used as a URL
+        self.assertIsInstance(badge.tags, list)
 
 
 if __name__ == '__main__':
