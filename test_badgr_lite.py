@@ -2,17 +2,16 @@
 
 # Ignore methods that could be functions; pylint: disable=R0201
 
-
+import datetime
 import json
 import os
 from tempfile import mkdtemp
 import unittest
-from unittest.mock import patch
 import vcr
 
-from badgr_lite import (BadgrLite, TokenFileNotFoundError,
-                        RequiredBadgeAttributesMissing,
-                        TokenAndRefreshExpired, Badge)
+from badgr_lite import (
+        BadgrLite, TokenFileNotFoundError, RequiredBadgeAttributesMissing,
+        TokenAndRefreshExpired, Badge)
 
 
 class BadgrLiteTestBase(unittest.TestCase):
@@ -88,7 +87,7 @@ class TestBadgrLiteInstantiation(BadgrLiteTestBase):
         self.assertEqual(badgr._token_data['access_token'],
                          self._sample_token)
 
-    @patch('badgr_lite.BadgrLite.refresh_token')
+    @unittest.mock.patch('badgr_lite.BadgrLite.refresh_token')
     def test_attempts_to_refresh_token_when_appropriate(self, mock):
         """It attempts to refresh token when http 401 has been received"""
 
@@ -194,16 +193,22 @@ class TestBadgrLiteBadgeMethods(BadgrLiteTestBase):
             self.assertTrue(isinstance(badgr.badges[0], Badge))
 
     def test_badge_should_have_entity_id(self):
-        """It should have an entity_id"""
+        """It should have an entity_id attribute"""
 
         badge = self.get_sample_badge()
         self.assertIsInstance(badge.entity_id, str)
 
     def test_badge_should_have_open_badge_id(self):
-        """It should have an open_badge_id"""
+        """It should have an open_badge_id attribute"""
 
         badge = self.get_sample_badge()
         self.assertIsInstance(badge.open_badge_id, str)
+
+    def test_badge_should_have_created_at(self):
+        """It should have a created_at attribute"""
+
+        badge = self.get_sample_badge()
+        self.assertIsInstance(badge.created_at, datetime.datetime)
 
 
 if __name__ == '__main__':

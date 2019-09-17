@@ -1,11 +1,16 @@
 """BadgrLite module for automating Badr awards (assertions)"""
 # pylint: disable=R1710
 
+import datetime
 import json
 import re
 import os
 
+import pytz
 import requests
+
+
+UTC = pytz.timezone("UTC")
 
 
 def pythonic(name: str) -> str:
@@ -93,7 +98,13 @@ class Badge:
 
     def _add_dynamic_attrs(self):
         for key in self._attrs.keys():
-            setattr(self, pythonic(key), self._attrs[key])
+            pythonic_key = pythonic(key)
+            if pythonic_key == "created_at" and \
+                    isinstance(self._attrs[key], str):
+                self._attrs[key] = datetime.datetime.strptime(
+                    self._attrs[key], '%Y-%m-%dT%H:%M:%SZ')
+                self._attrs[key] = UTC.localize(self._attrs[key])
+            setattr(self, pythonic_key, self._attrs[key])
 
 
 class BadgrLite:

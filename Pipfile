@@ -12,6 +12,7 @@ flake8 = "*"
 
 [packages]
 requests = "*"
+pytz = "*"
 
 [requires]
 python_version = "3.7"
