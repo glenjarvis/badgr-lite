@@ -210,6 +210,12 @@ class TestBadgrLiteBadgeMethods(BadgrLiteTestBase):
         badge = self.get_sample_badge()
         self.assertIsInstance(badge.created_at, datetime.datetime)
 
+    def test_badge_should_have_created_by(self):
+        """It should have a created_by attribute"""
+
+        badge = self.get_sample_badge()
+        self.assertIsInstance(badge.created_by, str)
+
 
 if __name__ == '__main__':
     unittest.main()
