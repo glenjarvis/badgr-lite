@@ -222,6 +222,12 @@ class TestBadgrLiteBadgeMethods(BadgrLiteTestBase):
         badge = self.get_sample_badge()
         self.assertIsInstance(badge.description, str)
 
+    def test_badge_should_have_issuer(self):
+        """It should have an issuer attribute"""
+
+        badge = self.get_sample_badge()
+        self.assertIsInstance(badge.issuer, str)
+
 
 if __name__ == '__main__':
     unittest.main()
