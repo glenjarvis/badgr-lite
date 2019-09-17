@@ -235,6 +235,12 @@ class TestBadgrLiteBadgeMethods(BadgrLiteTestBase):
         # It's a string, even though it often looks like a URL
         self.assertIsInstance(badge.issuer_open_badge_id, str)
 
+    def test_badge_should_have_name(self):
+        """It should have a name attribute"""
+
+        badge = self.get_sample_badge()
+        self.assertIsInstance(badge.name, str)
+
 
 if __name__ == '__main__':
     unittest.main()
