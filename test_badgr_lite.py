@@ -324,7 +324,7 @@ class TestBadgrLiteAwardMethod(BadgrLiteTestBase):
     """Test BadgrLite.award Method"""
 
     def get_sample_award_badge_data(self):
-        """Sample award data for other tests"""
+        """Sample data for .award() tests"""
         return {
             "recipient": {
                 "identity": "joe@exmple.com"
@@ -336,19 +336,24 @@ class TestBadgrLiteAwardMethod(BadgrLiteTestBase):
             }]
         }
 
+    def get_sample_award_badge_id(self):
+        """Sameple badge_id for .award() tests"""
+
+        return '2TfNNqMLT8CoAhfGKqSv6Q'
+
     def test_award_badge_gives_badge_when_successful(self):
         """.award_badge() returns a badge when successful"""
 
         badgr = self.get_badgr_setup()
-        badge_id = '2TfNNqMLT8CoAhfGKqSv6Q'
 
         with vcr.use_cassette('vcr_cassettes/award_badge.yaml'):
             result = badgr.award_badge(
-                badge_id, self.get_sample_award_badge_data())
+                self.get_sample_award_badge_id(),
+                self.get_sample_award_badge_data())
             self.assertIsInstance(result, badgr_lite.Badge)
 
     def test_award_badge_gives_error_when_given_bad_badge_id(self):
-        """.award_badge() raisesa BadBadgeIdError when given bad_id"""
+        """.award_badge() raises a BadBadgeIdError when given bad_id"""
 
         badgr = self.get_badgr_setup()
 
@@ -356,6 +361,22 @@ class TestBadgrLiteAwardMethod(BadgrLiteTestBase):
             with self.assertRaises(badgr_lite.BadBadgeIdError):
                 badgr.award_badge('bad_badge_id',
                                   self.get_sample_award_badge_data())
+
+    def test_award_badge_gives_error_when_given_bad_badge_data(self):
+        """.award_badge() raises an wardBadgeBadDataError when given data
+
+        Note that the details from the API are given to the exception for more
+        details.
+        """
+
+        badgr = self.get_badgr_setup()
+
+        with vcr.use_cassette('vcr_cassettes/award_badge_bad_data.yaml'):
+            with self.assertRaises(badgr_lite.AwardBadgeBadDataError):
+                badgr.award_badge(
+                    self.get_sample_award_badge_id(),
+                    {'bad_badge_data': 1}
+                )
 
 
 if __name__ == '__main__':

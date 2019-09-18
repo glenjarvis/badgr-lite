@@ -73,10 +73,14 @@ class RequiredAttributesMissingError(BaseException):
 
 
 class BadBadgeIdError(BaseException):
-    """Award Badge Failed Error
+    """Award Badge given bad badge_id
 
     Please consider the badge ID that you are trying to award is correct.
     """
+
+
+class AwardBadgeBadDataError(BaseException):
+    """Award Badge given bad data"""
 
 
 class Badge:
@@ -212,6 +216,9 @@ class BadgrLite:
 
         if response.status_code == 404:
             raise BadBadgeIdError(BadBadgeIdError.__doc__)
+
+        if response.status_code == 400:
+            raise AwardBadgeBadDataError(str(response.json()))
 
         assert response.status_code == 201 and\
             response.json()['status']['success']
