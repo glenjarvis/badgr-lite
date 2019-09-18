@@ -1,7 +1,6 @@
 """badgr_lite unit tests"""
 
 # Ignore methods that could be functions; pylint: disable=R0201
-# Ignore when there are too many test methods; pylint: disable=R0904
 
 import datetime
 import json
@@ -10,9 +9,8 @@ from tempfile import mkdtemp
 import unittest
 import vcr
 
-from badgr_lite import (
-        BadgrLite, TokenFileNotFoundError, RequiredBadgeAttributesMissing,
-        TokenAndRefreshExpired, Badge)
+import badgr_lite
+from badgr_lite import BadgrLite
 
 
 class BadgrLiteTestBase(unittest.TestCase):
@@ -86,7 +84,7 @@ class TestBadgeInstantiation(BadgrLiteTestBase):
         """Badge() instantiates a Badge class"""
 
         attrs = self.get_sample_attrs()
-        self.assertIsInstance(Badge(attrs), Badge)
+        self.assertIsInstance(badgr_lite.Badge(attrs), badgr_lite.Badge)
 
     def test_has_required_attrs(self):
         """Badge has a list of required attributes for initialization"""
@@ -94,15 +92,15 @@ class TestBadgeInstantiation(BadgrLiteTestBase):
         for attr in ['entity_id', 'open_badge_id', 'created_at',
                      'created_by', 'issuer', 'issuer_open_badge_id',
                      'image', 'expires', 'extensions']:
-            self.assertIn(attr, Badge.REQUIRED_ATTRS)
+            self.assertIn(attr, badgr_lite.Badge.REQUIRED_ATTRS)
 
     def test_fails_if_required_attrs_not_included(self):
         """Badge() fails if required attributes not included"""
 
         with vcr.use_cassette('vcr_cassettes/badge_retrieval.yaml'):
-            with self.assertRaises(RequiredBadgeAttributesMissing):
+            with self.assertRaises(badgr_lite.RequiredAttributesMissingError):
                 # We need more attrs than just created_at
-                Badge({'created_at': '2019-09-04T19:03:24Z'})
+                badgr_lite.Badge({'created_at': '2019-09-04T19:03:24Z'})
 
 
 class TestBadgeBadgesMethod(BadgrLiteTestBase):
@@ -120,7 +118,7 @@ class TestBadgeBadgesMethod(BadgrLiteTestBase):
 
         badgr = self.get_badgr_setup()
         with vcr.use_cassette('vcr_cassettes/badge_retrieval.yaml'):
-            self.assertTrue(isinstance(badgr.badges[0], Badge))
+            self.assertTrue(isinstance(badgr.badges[0], badgr_lite.Badge))
 
 
 class TestBadgeRequiredAttributes(BadgrLiteTestBase):
@@ -269,7 +267,7 @@ class TestBadgrLiteInstantiation(BadgrLiteTestBase):
     def test_verifies_token_file_exists(self):
         """BadgrLite() verifies token file exists"""
 
-        with self.assertRaises(TokenFileNotFoundError):
+        with self.assertRaises(badgr_lite.TokenFileNotFoundError):
             BadgrLite(token_filename='./non_existent_token_file.json')
 
     def test_verifies_token_file_contains_json(self):
@@ -297,7 +295,7 @@ class TestBadgrLiteInstantiation(BadgrLiteTestBase):
 
         badgr = self.get_badgr_setup()
         with vcr.use_cassette('vcr_cassettes/attempt_refresh_token.yaml'):
-            with self.assertRaises(TokenAndRefreshExpired):
+            with self.assertRaises(badgr_lite.TokenAndRefreshExpiredError):
                 badgr.get_from_server(self._sample_url)
         self.assertTrue(mock.called)
 
@@ -306,7 +304,7 @@ class TestBadgrLiteInstantiation(BadgrLiteTestBase):
 
         badgr = self.get_badgr_setup()
         with vcr.use_cassette('vcr_cassettes/no_valid_auth_token.yaml'):
-            with self.assertRaises(TokenAndRefreshExpired):
+            with self.assertRaises(badgr_lite.TokenAndRefreshExpiredError):
                 badgr.get_from_server(self._sample_url)
 
     def test_refreshes_token_when_expired(self):
@@ -325,10 +323,9 @@ class TestBadgrLiteInstantiation(BadgrLiteTestBase):
 class TestBadgrLiteAwardMethod(BadgrLiteTestBase):
     """Test BadgrLite.award Method"""
 
-    def test_award_badge_gives_badge_when_successful(self):
-        """.award_badge() returns a badge when successful"""
-
-        badge_data = {
+    def get_sample_award_badge_data(self):
+        """Sample award data for other tests"""
+        return {
             "recipient": {
                 "identity": "joe@exmple.com"
             },
@@ -339,11 +336,26 @@ class TestBadgrLiteAwardMethod(BadgrLiteTestBase):
             }]
         }
 
+    def test_award_badge_gives_badge_when_successful(self):
+        """.award_badge() returns a badge when successful"""
+
         badgr = self.get_badgr_setup()
         badge_id = '2TfNNqMLT8CoAhfGKqSv6Q'
+
         with vcr.use_cassette('vcr_cassettes/award_badge.yaml'):
-            result = badgr.award_badge(badge_id, badge_data)
-            self.assertIsInstance(result, Badge)
+            result = badgr.award_badge(
+                badge_id, self.get_sample_award_badge_data())
+            self.assertIsInstance(result, badgr_lite.Badge)
+
+    def test_award_badge_gives_error_when_given_bad_badge_id(self):
+        """.award_badge() raisesa BadBadgeIdError when given bad_id"""
+
+        badgr = self.get_badgr_setup()
+
+        with vcr.use_cassette('vcr_cassettes/award_badge_bad_badge_id.yaml'):
+            with self.assertRaises(badgr_lite.BadBadgeIdError):
+                badgr.award_badge('bad_badge_id',
+                                  self.get_sample_award_badge_data())
 
 
 if __name__ == '__main__':

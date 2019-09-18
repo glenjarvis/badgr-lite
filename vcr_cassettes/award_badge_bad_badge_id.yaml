@@ -1,0 +1,60 @@
+interactions:
+- request:
+    body: '{"recipient": {"identity": "joe@exmple.com"}, "notify": true, "evidence":
+      [{"url": "http://example.com/", "narrative": "Joe completed all..."}]}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer IGrrsB6voxBo8eC7jkQvbYbJjsgQp4
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '144'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.22.0
+    method: POST
+    uri: https://api.badgr.io/v2/badgeclasses/bad_badge_id/assertions
+  response:
+    body:
+      string: '{"status":{"description":"entity not found or insufficient privileges","success":false},"validationErrors":[],"fieldErrors":{},"result":[]}'
+    headers:
+      Allow:
+      - GET, POST, HEAD, OPTIONS
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '139'
+      Content-Security-Policy:
+      - default-src https://*.badgr.ws https://*.badgr.io https://www.google-analytics.com
+        https://ajax.googleapis.com https://ajax.googleapis.com; script-src 'unsafe-inline'
+        https://*.badgr.ws https://*.badgr.io https://online.swagger.io ;img-src https://*.badgr.ws
+        https://*.badgr.io https://online.swagger.io data:; style-src 'unsafe-inline'
+        https://*.badgr.ws https://*.badgr.io https://fonts.googleapis.com; style-src-elem
+        'unsafe-inline' https://*.badgr.ws https://*.badgr.io https://fonts.googleapis.com;
+        font-src https://*.badgr.ws https://*.badgr.io https://fonts.gstatic.com;
+        object-src 'none'
+      Content-Type:
+      - application/ld+json
+      Date:
+      - Wed, 18 Sep 2019 20:22:59 GMT
+      Server:
+      - Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips mod_wsgi/3.4 Python/2.7.5
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+      Vary:
+      - Accept,Authorization,Origin
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-XSS-Protection:
+      - 1; mode=block
+    status:
+      code: 404
+      message: Not Found
+version: 1

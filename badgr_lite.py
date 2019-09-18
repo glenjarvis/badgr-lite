@@ -8,6 +8,7 @@ import os
 
 import pytz
 import requests
+from requests.models import Response
 
 
 UTC = pytz.timezone("UTC")
@@ -56,7 +57,7 @@ class TokenFileNotFoundError(BaseException):
     """
 
 
-class TokenAndRefreshExpired(BaseException):
+class TokenAndRefreshExpiredError(BaseException):
     """Token expired
 
      The token has expired. We tried refreshing the token from the refresh
@@ -67,8 +68,15 @@ class TokenAndRefreshExpired(BaseException):
      """
 
 
-class RequiredBadgeAttributesMissing(BaseException):
+class RequiredAttributesMissingError(BaseException):
     """Required Badge Attributes Missing"""
+
+
+class BadBadgeIdError(BaseException):
+    """Award Badge Failed Error
+
+    Please consider the badge ID that you are trying to award is correct.
+    """
 
 
 class Badge:
@@ -105,7 +113,7 @@ class Badge:
         missing_but_required = set(self.REQUIRED_ATTRS) - set(pythonic_attrs)
 
         if missing_but_required:
-            raise RequiredBadgeAttributesMissing(
+            raise RequiredAttributesMissingError(
                 ", ".join(missing_but_required))
 
     def _add_dynamic_attrs(self):
@@ -158,7 +166,7 @@ class BadgrLite:
 
         # An else after a raise is perfectly valid here; pylint: disable=R1720
         if response.status_code == 401:
-            raise TokenAndRefreshExpired
+            raise TokenAndRefreshExpiredError
         else:
             assert response.status_code == 200
             raw_data = response.json()
@@ -181,7 +189,7 @@ class BadgrLite:
             self.refresh_token()
             response = requests.get(url, headers=self.prepare_headers())
             if response.status_code == 401:
-                raise TokenAndRefreshExpired
+                raise TokenAndRefreshExpiredError
         assert response.status_code == 200
         return response.json()
 
@@ -197,6 +205,17 @@ class BadgrLite:
             'https://api.badgr.io/v2/badgeclasses')['result']
 
         return [Badge(b) for b in raw_data]
+
+    def _validate_award_badge_response(self, response: Response) -> None:
+        """Review response from Badge().award and raise any exceptions"""
+        # It's okay as a function here; pylint: disable=R0201
+
+        if response.status_code == 404:
+            raise BadBadgeIdError(BadBadgeIdError.__doc__)
+
+        assert response.status_code == 201 and\
+            response.json()['status']['success']
+        assert len(response.json()['result']) == 1
 
     def award_badge(self, badge_id: str, badge_data: dict) -> Badge:
         """Given a previously created badge_id and badge_data, award badge
@@ -230,9 +249,7 @@ class BadgrLite:
             self.refresh_token()
             response = requests.post(url, headers=headers, json=badge_data)
             if response.status_code == 401:
-                raise TokenAndRefreshExpired
-        # Only happy paths at this point
-        assert response.status_code == 201 and\
-            response.json()['status']['success']
-        assert len(response.json()['result']) == 1
+                raise TokenAndRefreshExpiredError
+
+        self._validate_award_badge_response(response)
         return Badge(response.json()['result'][0])
