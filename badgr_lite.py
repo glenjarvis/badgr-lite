@@ -11,6 +11,8 @@ import requests
 
 
 UTC = pytz.timezone("UTC")
+DATETIME_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
+DATETIME_MILLISECOND_FORMAT = '%Y-%m-%dT%H:%M:%S.%fZ'
 
 
 def pythonic(name: str) -> str:
@@ -26,6 +28,21 @@ def pythonic(name: str) -> str:
     """
     regex_s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
     return re.sub('([a-z0-9])([A-Z])', r'\1_\2', regex_s1).lower()
+
+
+def to_datetime(potential_datetime):
+    """Given string, return UTC aware datetime"""
+
+    final_datetime = potential_datetime
+    if isinstance(potential_datetime, str):
+        try:
+            final_datetime = datetime.datetime.strptime(
+                potential_datetime, DATETIME_FORMAT)
+        except ValueError:
+            final_datetime = datetime.datetime.strptime(
+                potential_datetime, DATETIME_MILLISECOND_FORMAT)
+        final_datetime = UTC.localize(final_datetime)
+    return final_datetime
 
 
 class TokenFileNotFoundError(BaseException):
@@ -71,12 +88,10 @@ class Badge:
     """
     # pylint: disable=R0903
 
-    JSON_ATTRS = ['entityType', 'entityId', 'openBadgeId', 'createdAt',
-                  'createdBy', 'issuer', 'issuerOpenBadgeId', 'name', 'image',
-                  'description', 'criteriaUrl', 'criteriaNarrative',
-                  'alignments', 'tags', 'expires', 'extensions']
-
-    REQUIRED_ATTRS = [pythonic(attr) for attr in JSON_ATTRS]
+    REQUIRED_JSON = ['entityId', 'expires', 'entityType', 'extensions',
+                     'openBadgeId', 'createdBy', 'issuer', 'image',
+                     'issuerOpenBadgeId', 'createdAt']
+    REQUIRED_ATTRS = [pythonic(attr) for attr in REQUIRED_JSON]
 
     def __init__(self, attrs: dict) -> None:
         """Initialize with single dictionary
@@ -93,18 +108,20 @@ class Badge:
             raise RequiredBadgeAttributesMissing(
                 ", ".join(missing_but_required))
 
-    def __str__(self):
-        return "{}: {}".format(self._attrs['entity_id'], self._attrs['name'])
-
     def _add_dynamic_attrs(self):
         for key in self._attrs.keys():
             pythonic_key = pythonic(key)
-            if pythonic_key == "created_at" and \
-                    isinstance(self._attrs[key], str):
-                self._attrs[key] = datetime.datetime.strptime(
-                    self._attrs[key], '%Y-%m-%dT%H:%M:%SZ')
-                self._attrs[key] = UTC.localize(self._attrs[key])
+            if pythonic_key == "created_at":
+                self._attrs[key] = to_datetime(self._attrs[key])
             setattr(self, pythonic_key, self._attrs[key])
+
+    def __str__(self):
+        # pylint: disable=R1705,E1101
+        if hasattr(self, 'name'):
+            # Name isn't technically required
+            return "{}: {}".format(self.entity_id, self.name)
+        else:
+            return "{}: <No name>".format(self.entity_id)
 
 
 class BadgrLite:
@@ -153,9 +170,10 @@ class BadgrLite:
         """Prepare headers for communication with the server"""
 
         return {'Authorization': 'Bearer {}'.format(
-            self._token_data['access_token'])}
+            self._token_data['access_token']),
+                'Content-Type': 'application/json'}
 
-    def communicate_with_server(self, url: str) -> dict:
+    def get_from_server(self, url: str) -> dict:
         """Communicate with the server"""
 
         response = requests.get(url, headers=self.prepare_headers())
@@ -175,7 +193,46 @@ class BadgrLite:
         curl 'https://api.badgr.io/v2/badgeclasses'
             -H "Authorization: Bearer zEVAGKxdbw7i3gTD1hNqyb0l13mDmO"
         """
-        raw_data = self.communicate_with_server(
+        raw_data = self.get_from_server(
             'https://api.badgr.io/v2/badgeclasses')['result']
 
         return [Badge(b) for b in raw_data]
+
+    def award_badge(self, badge_id: str, badge_data: dict) -> Badge:
+        """Given a previously created badge_id and badge_data, award badge
+
+        Example:
+
+        >>> badgr = BadgrLite(token_filename='./token.json')
+        >>> badge_data = {
+        ...     "name": "Sample badge",
+        ...     "recipient": {
+        ...         "identity": "joe@example.com"
+        ...     },
+        ...     "notify": True,
+        ...     "evidence": [{
+        ...         "url": "http://example.com/",
+        ...         "narrative": "Glen completed all the prereqs for..."
+        ...     }]
+        ... }
+        >>>
+        >>> badge_id = '2TfNNqMLT8CoAhfGKqSv6Q'
+        >>> result = badgr.award_badge(badge_id, badge_data)
+        >>> print(result)
+        qv4DMvnYT0Gwz7wquRasvg: <No name>
+        """
+
+        base = 'https://api.badgr.io/v2'
+        url = '{}/badgeclasses/{}/assertions'.format(base, badge_id)
+        headers = self.prepare_headers()
+        response = requests.post(url, headers=headers, json=badge_data)
+        if response.status_code == 401:
+            self.refresh_token()
+            response = requests.post(url, headers=headers, json=badge_data)
+            if response.status_code == 401:
+                raise TokenAndRefreshExpired
+        # Only happy paths at this point
+        assert response.status_code == 201 and\
+            response.json()['status']['success']
+        assert len(response.json()['result']) == 1
+        return Badge(response.json()['result'][0])

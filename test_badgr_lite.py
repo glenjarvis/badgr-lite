@@ -92,10 +92,8 @@ class TestBadgeMethods(BadgrLiteTestBase):
         """It has a list of required attributes for initialization"""
 
         for attr in ['entity_id', 'open_badge_id', 'created_at',
-                     'created_by', 'issuer', 'issuer_open_badge_id', 'name',
-                     'image', 'description', 'criteria_url',
-                     'criteria_narrative', 'alignments', 'tags', 'expires',
-                     'extensions']:
+                     'created_by', 'issuer', 'issuer_open_badge_id',
+                     'image', 'expires', 'extensions']:
             self.assertIn(attr, Badge.REQUIRED_ATTRS)
 
     def test_fails_if_required_attrs_not_included(self):
@@ -288,7 +286,7 @@ class TestBadgrLiteInstantiation(BadgrLiteTestBase):
         badgr = self.get_badgr_setup()
         with vcr.use_cassette('vcr_cassettes/attempt_refresh_token.yaml'):
             with self.assertRaises(TokenAndRefreshExpired):
-                badgr.communicate_with_server(self._sample_url)
+                badgr.get_from_server(self._sample_url)
         self.assertTrue(mock.called)
 
     def test_raises_token_expired_when_applicable(self):
@@ -297,7 +295,7 @@ class TestBadgrLiteInstantiation(BadgrLiteTestBase):
         badgr = self.get_badgr_setup()
         with vcr.use_cassette('vcr_cassettes/no_valid_auth_token.yaml'):
             with self.assertRaises(TokenAndRefreshExpired):
-                badgr.communicate_with_server(self._sample_url)
+                badgr.get_from_server(self._sample_url)
 
     def test_refreshes_token_when_expired(self):
         """It refreshes the token when it is expired"""
@@ -307,9 +305,29 @@ class TestBadgrLiteInstantiation(BadgrLiteTestBase):
         # _token_data isn't meant to be exposed; pylint: disable=W0212
         original_token = badgr._token_data['access_token']
         with vcr.use_cassette('vcr_cassettes/expired_auth_token.yaml'):
-            badgr.communicate_with_server(self._sample_url)
+            badgr.get_from_server(self._sample_url)
             self.assertNotEqual(original_token,
                                 badgr._token_data['access_token'])
+
+    def test_award_badge_gives_badge_when_successful(self):
+        """.award_badge() returns a badge when successful"""
+
+        badge_data = {
+            "recipient": {
+                "identity": "joe@exmple.com"
+            },
+            "notify": True,
+            "evidence": [{
+                "url": "http://example.com/",
+                "narrative": "Joe completed all..."
+            }]
+        }
+
+        badgr = self.get_badgr_setup()
+        badge_id = '2TfNNqMLT8CoAhfGKqSv6Q'
+        with vcr.use_cassette('vcr_cassettes/award_badge.yaml'):
+            result = badgr.award_badge(badge_id, badge_data)
+            self.assertIsInstance(result, Badge)
 
 
 if __name__ == '__main__':
