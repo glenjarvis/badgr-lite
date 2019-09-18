@@ -58,7 +58,7 @@ class TokenFileNotFoundError(BaseException):
 
 
 class TokenAndRefreshExpiredError(BaseException):
-    """Token expired
+    """Token and refresh expired
 
      The token has expired. We tried refreshing the token from the refresh
      token and are still not able to get authorization to work correctly.
@@ -91,12 +91,6 @@ class Badge:
 
     The JSON object given by the Badgr API, loaded as a dict, can be used to
     instantiate the Badge class.
-
-    JSON style attributes (e.g., `issuerOpenBadgeId`) are maintainced.
-    However, the pythonic representation of the same object (e.g.,
-    `issuer_open_badge_id`) is also created. This way Python consumers
-    unfamiliar with the Badgr API will still have attributes that `git in their
-    brain`.
     """
     # pylint: disable=R0903
 
@@ -137,7 +131,7 @@ class Badge:
 
 
 class BadgrLite:
-    """BadgrLite: Automate without the overhead of badgr-server"""
+    """Automate using Badgr API without the overhead of badgr-server"""
     # pylint: disable=R0903
 
     def __init__(self, token_filename: str) -> None:
@@ -151,18 +145,8 @@ class BadgrLite:
             self._token_data = json.load(token_handler)
 
     def refresh_token(self) -> None:
-        """
-        curl -X POST 'https://api.badgr.io/o/token' \
-           -d "grant_type=refresh_token&
-               refresh_token=iCIdZMmWpcnh3nhsi4tWK6WOtRAuKa"
-            {
-                "access_token": "qmwatCYpNVzg6BcbtYp7ff1boMce8p",
-                "token_type": "Bearer",
-                "expires_in": 86400,
-                "refresh_token": "fka9YUHEmcRMYQr03JYtDmi9OUb3MN",
-                "scope": "rw:profile rw:issuer rw:backpack"
-            }
-        """
+        """Refresh access token from refresh_token"""
+
         response = requests.post(
             'https://api.badgr.io/o/token',
             data={'grant_type': 'refresh_token',
@@ -201,9 +185,16 @@ class BadgrLite:
     def badges(self) -> list:
         """Get list of badges from Server
 
-        Example API usage:
-        curl 'https://api.badgr.io/v2/badgeclasses'
-            -H "Authorization: Bearer zEVAGKxdbw7i3gTD1hNqyb0l13mDmO"
+        Example:
+
+        >>> badgr = BadgrLite(token_filename='./token.json')
+        >>> for badge in badgr.badges:
+        ...     print(badge)
+        ...
+        cTjxL52HQBiSgIp5JuVq5w: Bay Area Python Interest Group TDD Participant
+        5YhFytMUQb2loOMEy63gQA: Bay Area Python Interest Group TDD Quizmaster
+        yzExTDvOTnOx_R3YhwPf3A: Test Driven Development Fundamentals Champion
+        yNjcY70FSn603SO9vMGhBA: Install Python with Virtual Environments
         """
         raw_data = self.get_from_server(
             'https://api.badgr.io/v2/badgeclasses')['result']
