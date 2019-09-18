@@ -16,7 +16,7 @@ from badgr_lite import (
 
 
 class BadgrLiteTestBase(unittest.TestCase):
-    """BadgrLite setUp and tearDown"""
+    """BadgrLite setUp, tearDown and helper methods"""
 
     def setUp(self):
         """Create temporary input files of varying flavors"""
@@ -45,9 +45,16 @@ class BadgrLiteTestBase(unittest.TestCase):
 
         return BadgrLite(token_filename=self.sample_token_file)
 
+    def get_sample_badge(self):
+        """Fetch single badge for other tests"""
 
-class TestBadgeMethods(BadgrLiteTestBase):
-    """TestBadgrLite Badge related Methods"""
+        badgr = self.get_badgr_setup()
+        with vcr.use_cassette('vcr_cassettes/badge_retrieval.yaml'):
+            return badgr.badges[0]
+
+
+class TestBadgeInstantiation(BadgrLiteTestBase):
+    """Badge class instantiation tests"""
 
     def get_sample_attrs(self):
         """Return dictionary of test attributes for creating Badge"""
@@ -75,21 +82,14 @@ class TestBadgeMethods(BadgrLiteTestBase):
             'extensions': {}
         }
 
-    def get_sample_badge(self):
-        """Fetch single badge for other tests"""
-
-        badgr = self.get_badgr_setup()
-        with vcr.use_cassette('vcr_cassettes/badge_retrieval.yaml'):
-            return badgr.badges[0]
-
     def test_instantiates_badge(self):
-        """It instantiates a Badge class"""
+        """Badge() instantiates a Badge class"""
 
         attrs = self.get_sample_attrs()
         self.assertIsInstance(Badge(attrs), Badge)
 
     def test_has_required_attrs(self):
-        """It has a list of required attributes for initialization"""
+        """Badge has a list of required attributes for initialization"""
 
         for attr in ['entity_id', 'open_badge_id', 'created_at',
                      'created_by', 'issuer', 'issuer_open_badge_id',
@@ -97,91 +97,81 @@ class TestBadgeMethods(BadgrLiteTestBase):
             self.assertIn(attr, Badge.REQUIRED_ATTRS)
 
     def test_fails_if_required_attrs_not_included(self):
-        """It fails if required attributes not included"""
+        """Badge() fails if required attributes not included"""
 
         with vcr.use_cassette('vcr_cassettes/badge_retrieval.yaml'):
             with self.assertRaises(RequiredBadgeAttributesMissing):
                 # We need more attrs than just created_at
                 Badge({'created_at': '2019-09-04T19:03:24Z'})
 
+
+class TestBadgeBadgesMethod(BadgrLiteTestBase):
+    """Badge.badges() related tests"""
+
     def test_should_give_a_list_for_badges(self):
-        """It should give a list for badges"""
+        """Badge.badges() should give a list for badges"""
 
         badgr = self.get_badgr_setup()
         with vcr.use_cassette('vcr_cassettes/badge_retrieval.yaml'):
             self.assertTrue(isinstance(badgr.badges, list))
 
     def test_should_contain_badge_classes(self):
-        """It should contain badge classes"""
+        """Badge.badges() should contain badge classes"""
 
         badgr = self.get_badgr_setup()
         with vcr.use_cassette('vcr_cassettes/badge_retrieval.yaml'):
             self.assertTrue(isinstance(badgr.badges[0], Badge))
 
+
+class TestBadgeRequiredAttributes(BadgrLiteTestBase):
+    """Badge() required attribute related tests"""
+
     def test_badge_should_have_entity_id(self):
-        """It should have an entity_id attribute"""
+        """Badge() should have an entity_id attribute"""
 
         badge = self.get_sample_badge()
         self.assertIsInstance(badge.entity_id, str)
 
     def test_badge_should_have_open_badge_id(self):
-        """It should have an open_badge_id attribute"""
+        """Badge() should have an open_badge_id attribute"""
 
         badge = self.get_sample_badge()
         self.assertIsInstance(badge.open_badge_id, str)
 
     def test_badge_should_have_created_at(self):
-        """It should have a created_at attribute"""
+        """Badge() should have a created_at attribute"""
 
         badge = self.get_sample_badge()
         self.assertIsInstance(badge.created_at, datetime.datetime)
 
     def test_badge_should_have_created_by(self):
-        """It should have a created_by attribute"""
+        """Badge() should have a created_by attribute"""
 
         badge = self.get_sample_badge()
         self.assertIsInstance(badge.created_by, str)
 
-    def test_badge_should_have_description(self):
-        """It should have a description attribute"""
-
-        badge = self.get_sample_badge()
-        self.assertIsInstance(badge.description, str)
-
     def test_badge_should_have_issuer(self):
-        """It should have an issuer attribute"""
+        """Badge() should have an issuer attribute"""
 
         badge = self.get_sample_badge()
         self.assertIsInstance(badge.issuer, str)
 
     def test_badge_should_have_issuer_open_badge_id(self):
-        """It should have an issuer open badge id attribute"""
+        """Badge() should have an issuer_open_badge_id attribute"""
 
         badge = self.get_sample_badge()
         # It's a string, even though it often looks like a URL
         self.assertIsInstance(badge.issuer_open_badge_id, str)
 
-    def test_badge_should_have_name(self):
-        """It should have a name attribute"""
-
-        badge = self.get_sample_badge()
-        self.assertIsInstance(badge.name, str)
-
     def test_badge_should_have_image(self):
-        """It should have an image attribute"""
+        """Badge() should have an image attribute"""
 
         badge = self.get_sample_badge()
         # It's a string, even though it often looks like a URL
         self.assertIsInstance(badge.image, str)
 
-    def test_badge_should_have_alignments(self):
-        """It should have an alignments attribute"""
-
-        badge = self.get_sample_badge()
-        self.assertIsInstance(badge.alignments, list)
-
     def test_badge_should_have_expires(self):
-        """It should have an expires attribute
+        """Badge() should have an expires attribute
 
         At the time of this writing, there isn't enough clarity about what the
         actual value of expires should be. The only assertion that can be made
@@ -202,28 +192,8 @@ class TestBadgeMethods(BadgrLiteTestBase):
         badge = self.get_sample_badge()
         self.assertTrue(hasattr(badge, 'expires'))
 
-    def test_badge_should_have_criteria_narrative(self):
-        """It should have a criteria narrative attribute"""
-
-        badge = self.get_sample_badge()
-        self.assertIsInstance(badge.criteria_narrative, str)
-
-    def test_badge_should_have_criteria_url(self):
-        """It should have a criteria url attribute"""
-
-        badge = self.get_sample_badge()
-        # It's a string, even though it is used as a URL
-        self.assertIsInstance(badge.criteria_url, str)
-
-    def test_badge_should_have_tags(self):
-        """It should have a tags attribute"""
-
-        badge = self.get_sample_badge()
-        # It's a string, even though it is used as a URL
-        self.assertIsInstance(badge.tags, list)
-
     def test_badge_should_have_extensions(self):
-        """It should have an extensions attribute
+        """Badge() should have an extensions attribute
 
         There are ways of extending OpenBadges:
 
@@ -237,16 +207,58 @@ class TestBadgeMethods(BadgrLiteTestBase):
         self.assertTrue(hasattr(badge, 'extensions'))
 
 
+class TestBadgeOptionalAttributes(BadgrLiteTestBase):
+    """Badge() optional() attribute related tests"""
+
+    def test_badge_should_have_description(self):
+        """Badge() may have an optional description attribute"""
+
+        badge = self.get_sample_badge()
+        self.assertIsInstance(badge.description, str)
+
+    def test_badge_should_have_name(self):
+        """Badge() may have an optional name attribute"""
+
+        badge = self.get_sample_badge()
+        self.assertIsInstance(badge.name, str)
+
+    def test_badge_should_have_alignments(self):
+        """Badge() may have an optional alignments attribute"""
+
+        badge = self.get_sample_badge()
+        self.assertIsInstance(badge.alignments, list)
+
+    def test_badge_should_have_criteria_narrative(self):
+        """Badge() may have an optoinal criteria_narrative attribute"""
+
+        badge = self.get_sample_badge()
+        self.assertIsInstance(badge.criteria_narrative, str)
+
+    def test_badge_should_have_criteria_url(self):
+        """Badge() may have an optional criteria_url attribute"""
+
+        badge = self.get_sample_badge()
+        # It's a string, even though it is used as a URL
+        self.assertIsInstance(badge.criteria_url, str)
+
+    def test_badge_should_have_tags(self):
+        """Badge() may have an optional tags attribute"""
+
+        badge = self.get_sample_badge()
+        # It's a string, even though it is used as a URL
+        self.assertIsInstance(badge.tags, list)
+
+
 class TestBadgrLiteInstantiation(BadgrLiteTestBase):
     """Test BadgrLite Instantiation"""
 
     def test_instantiates_badgr_lite_class(self):
-        """It instantiates a BadgrLite class"""
+        """BadgrLite() instantiates a BadgrLite class"""
         badgr = self.get_badgr_setup()
         self.assertIsInstance(badgr, BadgrLite)
 
     def test_takes_a_token_file(self):
-        """It takes a token file argument"""
+        """BadgrLite() takes a token file argument"""
         with self.assertRaises(TypeError):
             # TypeError: __init__() missing 1 required
             # positional argument: 'token_filename'
@@ -255,13 +267,13 @@ class TestBadgrLiteInstantiation(BadgrLiteTestBase):
             BadgrLite()
 
     def test_verifies_token_file_exists(self):
-        """It verifies token file exists"""
+        """BadgrLite() verifies token file exists"""
 
         with self.assertRaises(TokenFileNotFoundError):
             BadgrLite(token_filename='./non_existent_token_file.json')
 
     def test_verifies_token_file_contains_json(self):
-        """It verifies token file exists"""
+        """BadgrLite() verifies token file exists"""
 
         with open(self.sample_token_file, 'w') as stf_h:
             stf_h.write("Bad JSON")
@@ -270,7 +282,7 @@ class TestBadgrLiteInstantiation(BadgrLiteTestBase):
             BadgrLite(token_filename=self.sample_token_file)
 
     def test_verifies_bearer_token(self):
-        """It has a bearer token when instantiated"""
+        """BadgrLite() has a bearer token when instantiated"""
 
         badgr = self.get_badgr_setup()
 
@@ -281,7 +293,7 @@ class TestBadgrLiteInstantiation(BadgrLiteTestBase):
 
     @unittest.mock.patch('badgr_lite.BadgrLite.refresh_token')
     def test_attempts_to_refresh_token_when_appropriate(self, mock):
-        """It attempts to refresh token when http 401 has been received"""
+        """BadgrLite() attempts to refresh token when http 401"""
 
         badgr = self.get_badgr_setup()
         with vcr.use_cassette('vcr_cassettes/attempt_refresh_token.yaml'):
@@ -290,7 +302,7 @@ class TestBadgrLiteInstantiation(BadgrLiteTestBase):
         self.assertTrue(mock.called)
 
     def test_raises_token_expired_when_applicable(self):
-        """It raises TokenExpired when applicable"""
+        """BadgrLite() raises TokenExpired when applicable"""
 
         badgr = self.get_badgr_setup()
         with vcr.use_cassette('vcr_cassettes/no_valid_auth_token.yaml'):
@@ -298,7 +310,7 @@ class TestBadgrLiteInstantiation(BadgrLiteTestBase):
                 badgr.get_from_server(self._sample_url)
 
     def test_refreshes_token_when_expired(self):
-        """It refreshes the token when it is expired"""
+        """BadgrLite() refreshes the token when it is expired"""
 
         badgr = self.get_badgr_setup()
 
@@ -308,6 +320,10 @@ class TestBadgrLiteInstantiation(BadgrLiteTestBase):
             badgr.get_from_server(self._sample_url)
             self.assertNotEqual(original_token,
                                 badgr._token_data['access_token'])
+
+
+class TestBadgrLiteAwardMethod(BadgrLiteTestBase):
+    """Test BadgrLite.award Method"""
 
     def test_award_badge_gives_badge_when_successful(self):
         """.award_badge() returns a badge when successful"""
