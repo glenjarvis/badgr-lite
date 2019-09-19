@@ -53,6 +53,10 @@ clean-test: ## remove test and coverage artifacts
 lint: ## check style with flake8
 	flake8 badgr_lite tests
 
+reqs: ## run tests quickly with the default Python
+	 pipenv lock -r > requirements.txt
+	 pipenv lock -r --dev > requirements-dev.txt
+
 test: ## run tests quickly with the default Python
 	python setup.py test
 
