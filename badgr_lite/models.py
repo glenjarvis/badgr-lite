@@ -1,86 +1,18 @@
+# -*- coding: utf-8 -*-
+
 """BadgrLite module for automating Badr awards (assertions)"""
+
+# pylint: disable=R1710
 # pylint: disable=R1710
 
-import datetime
 import json
-import re
 import os
 
-import pytz
 import requests
 from requests.models import Response
 
-
-UTC = pytz.timezone("UTC")
-DATETIME_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
-DATETIME_MILLISECOND_FORMAT = '%Y-%m-%dT%H:%M:%S.%fZ'
-
-
-def pythonic(name: str) -> str:
-    """Convert camelCase identifier to pythonic identifier
-
-    Citaton: (https://stackoverflow.com/questions/1175208/
-              elegant-python-function-to-convert-camelcase-
-              to-snake-case/17328907)
-
-    The Badgr API returns attributes in camel case (e.g., issuerOpenBadgeId).
-    We wish to also see those attributes in a pythonic way
-    (e.g., issuer_open_badgee_id).
-    """
-    regex_s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
-    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', regex_s1).lower()
-
-
-def to_datetime(potential_datetime):
-    """Given string, return UTC aware datetime"""
-
-    final_datetime = potential_datetime
-    if isinstance(potential_datetime, str):
-        try:
-            final_datetime = datetime.datetime.strptime(
-                potential_datetime, DATETIME_FORMAT)
-        except ValueError:
-            final_datetime = datetime.datetime.strptime(
-                potential_datetime, DATETIME_MILLISECOND_FORMAT)
-        final_datetime = UTC.localize(final_datetime)
-    return final_datetime
-
-
-class TokenFileNotFoundError(BaseException):
-    """Token file not found
-
-    The token_filename argument that you passed into BadgrLite is not found.
-    Please consider:
-        - Using using `prime_initial_token` (see Installation instructions)
-        - Checking the filename is correct
-        - Ensuring the filename exists and is in JSON format
-    """
-
-
-class TokenAndRefreshExpiredError(BaseException):
-    """Token and refresh expired
-
-     The token has expired. We tried refreshing the token from the refresh
-     token and are still not able to get authorization to work correctly.
-
-     Use `prime_initial_token` (see Installation instructions) to reconfigure
-     tokens.
-     """
-
-
-class RequiredAttributesMissingError(BaseException):
-    """Required Badge Attributes Missing"""
-
-
-class BadBadgeIdError(BaseException):
-    """Award Badge given bad badge_id
-
-    Please consider the badge ID that you are trying to award is correct.
-    """
-
-
-class AwardBadgeBadDataError(BaseException):
-    """Award Badge given bad data"""
+from badgr_lite import exceptions
+from .helpers import pythonic, to_datetime
 
 
 class Badge:
@@ -111,7 +43,7 @@ class Badge:
         missing_but_required = set(self.REQUIRED_ATTRS) - set(pythonic_attrs)
 
         if missing_but_required:
-            raise RequiredAttributesMissingError(
+            raise exceptions.RequiredAttributesMissingError(
                 ", ".join(missing_but_required))
 
     def _add_dynamic_attrs(self):
@@ -137,9 +69,9 @@ class BadgrLite:
     def __init__(self, token_filename: str) -> None:
         self.token_filename = token_filename
         if not os.path.exists(token_filename):
-            raise TokenFileNotFoundError(
+            raise exceptions.TokenFileNotFoundError(
                 "Token File Not Found.",
-                TokenFileNotFoundError.__doc__)
+                exceptions.TokenFileNotFoundError.__doc__)
 
         with open(token_filename, 'r') as token_handler:
             self._token_data = json.load(token_handler)
@@ -154,7 +86,7 @@ class BadgrLite:
 
         # An else after a raise is perfectly valid here; pylint: disable=R1720
         if response.status_code == 401:
-            raise TokenAndRefreshExpiredError
+            raise exceptions.TokenAndRefreshExpiredError
         else:
             assert response.status_code == 200
             raw_data = response.json()
@@ -177,7 +109,7 @@ class BadgrLite:
             self.refresh_token()
             response = requests.get(url, headers=self.prepare_headers())
             if response.status_code == 401:
-                raise TokenAndRefreshExpiredError
+                raise exceptions.TokenAndRefreshExpiredError
         assert response.status_code == 200
         return response.json()
 
@@ -206,10 +138,11 @@ class BadgrLite:
         # It's okay as a function here; pylint: disable=R0201
 
         if response.status_code == 404:
-            raise BadBadgeIdError(BadBadgeIdError.__doc__)
+            raise exceptions.BadBadgeIdError(
+                exceptions.BadBadgeIdError.__doc__)
 
         if response.status_code == 400:
-            raise AwardBadgeBadDataError(str(response.json()))
+            raise exceptions.AwardBadgeBadDataError(str(response.json()))
 
         assert response.status_code == 201 and\
             response.json()['status']['success']
@@ -247,7 +180,7 @@ class BadgrLite:
             self.refresh_token()
             response = requests.post(url, headers=headers, json=badge_data)
             if response.status_code == 401:
-                raise TokenAndRefreshExpiredError
+                raise exceptions.TokenAndRefreshExpiredError
 
         self._validate_award_badge_response(response)
         return Badge(response.json()['result'][0])

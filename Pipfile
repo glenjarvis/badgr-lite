@@ -5,14 +5,21 @@ verify_ssl = true
 
 [dev-packages]
 pylint = "*"
-vcrpy = "*"
 pycodestyle = "*"
 mypy = "*"
+vcrpy = "*"
+bump2version = "*"
+wheel = "*"
+tox = "==3.7.0"
+tox-pipenv = "*"
+tox-pyenv = "*"
+watchdog = "*"
+coverage = "*"
+sphinx = "*"
+twine = "*"
+click = "*"
 flake8 = "*"
 
 [packages]
 requests = "*"
 pytz = "*"
-
-[requires]
-python_version = "3.7"
