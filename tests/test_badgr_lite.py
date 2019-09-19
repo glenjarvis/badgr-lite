@@ -52,7 +52,7 @@ class BadgrLiteTestBase(unittest.TestCase):
         """Fetch single badge for other tests"""
 
         badgr = self.get_badgr_setup()
-        with vcr.use_cassette('vcr_cassettes/badge_retrieval.yaml'):
+        with vcr.use_cassette('tests/vcr_cassettes/badge_retrieval.yaml'):
             return badgr.badges[0]
 
 
@@ -102,7 +102,7 @@ class TestBadgeInstantiation(BadgrLiteTestBase):
     def test_fails_if_required_attrs_not_included(self):
         """Badge() fails if required attributes not included"""
 
-        with vcr.use_cassette('vcr_cassettes/badge_retrieval.yaml'):
+        with vcr.use_cassette('test/vcr_cassettes/badge_retrieval.yaml'):
             with self.assertRaises(exceptions.RequiredAttributesMissingError):
                 # We need more attrs than just created_at
                 Badge({'created_at': '2019-09-04T19:03:24Z'})
@@ -115,14 +115,14 @@ class TestBadgeBadgesMethod(BadgrLiteTestBase):
         """Badge.badges() should give a list for badges"""
 
         badgr = self.get_badgr_setup()
-        with vcr.use_cassette('vcr_cassettes/badge_retrieval.yaml'):
+        with vcr.use_cassette('tests/vcr_cassettes/badge_retrieval.yaml'):
             self.assertTrue(isinstance(badgr.badges, list))
 
     def test_should_contain_badge_classes(self):
         """Badge.badges() should contain badge classes"""
 
         badgr = self.get_badgr_setup()
-        with vcr.use_cassette('vcr_cassettes/badge_retrieval.yaml'):
+        with vcr.use_cassette('tests/vcr_cassettes/badge_retrieval.yaml'):
             self.assertTrue(isinstance(badgr.badges[0], Badge))
 
 
@@ -299,7 +299,7 @@ class TestBadgrLiteInstantiation(BadgrLiteTestBase):
         """BadgrLite() attempts to refresh token when http 401"""
 
         badgr = self.get_badgr_setup()
-        with vcr.use_cassette('vcr_cassettes/attempt_refresh_token.yaml'):
+        with vcr.use_cassette('tests/vcr_cassettes/try_refresh_token.yaml'):
             with self.assertRaises(exceptions.TokenAndRefreshExpiredError):
                 badgr.get_from_server(self._sample_url)
         self.assertTrue(mock.called)
@@ -308,7 +308,7 @@ class TestBadgrLiteInstantiation(BadgrLiteTestBase):
         """BadgrLite() raises TokenExpired when applicable"""
 
         badgr = self.get_badgr_setup()
-        with vcr.use_cassette('vcr_cassettes/no_valid_auth_token.yaml'):
+        with vcr.use_cassette('tests/vcr_cassettes/no_valid_auth_token.yaml'):
             with self.assertRaises(exceptions.TokenAndRefreshExpiredError):
                 badgr.get_from_server(self._sample_url)
 
@@ -319,7 +319,7 @@ class TestBadgrLiteInstantiation(BadgrLiteTestBase):
 
         # _token_data isn't meant to be exposed; pylint: disable=W0212
         original_token = badgr._token_data['access_token']
-        with vcr.use_cassette('vcr_cassettes/expired_auth_token.yaml'):
+        with vcr.use_cassette('tests/vcr_cassettes/expired_auth_token.yaml'):
             badgr.get_from_server(self._sample_url)
             self.assertNotEqual(original_token,
                                 badgr._token_data['access_token'])
@@ -351,7 +351,7 @@ class TestBadgrLiteAwardMethod(BadgrLiteTestBase):
 
         badgr = self.get_badgr_setup()
 
-        with vcr.use_cassette('vcr_cassettes/award_badge.yaml'):
+        with vcr.use_cassette('tests/vcr_cassettes/award_badge.yaml'):
             result = badgr.award_badge(
                 self.get_sample_award_badge_id(),
                 self.get_sample_award_badge_data())
@@ -362,7 +362,7 @@ class TestBadgrLiteAwardMethod(BadgrLiteTestBase):
 
         badgr = self.get_badgr_setup()
 
-        with vcr.use_cassette('vcr_cassettes/award_badge_bad_badge_id.yaml'):
+        with vcr.use_cassette('tests/vcr_cassettes/award_bad_badge_id.yaml'):
             with self.assertRaises(exceptions.BadBadgeIdError):
                 badgr.award_badge('bad_badge_id',
                                   self.get_sample_award_badge_data())
@@ -376,7 +376,7 @@ class TestBadgrLiteAwardMethod(BadgrLiteTestBase):
 
         badgr = self.get_badgr_setup()
 
-        with vcr.use_cassette('vcr_cassettes/award_badge_bad_data.yaml'):
+        with vcr.use_cassette('tests/vcr_cassettes/award_badge_bad_data.yaml'):
             with self.assertRaises(exceptions.AwardBadgeBadDataError):
                 badgr.award_badge(
                     self.get_sample_award_badge_id(),
