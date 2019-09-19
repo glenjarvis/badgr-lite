@@ -18,12 +18,10 @@ jobs:
             - v1-dependencies-
 
       - run:
-          name: install dependencies
+          name: Install Dependencies
           command: |
              pipenv install --dev
              pipenv check
-             # It is currently unknown where eQF46Ow3 comes from
-             source $HOME/.local/share/virtualenvs/repo-eQF46Ow3/bin/activate
 
       - save_cache:
           paths:
@@ -31,9 +29,11 @@ jobs:
           key: v1-dependencies-{{ checksum "Pipfile.lock" }}
 
       - run:
-          name: run tests
+          name: Run Tests
           command: |
-            python tests.py
+            # It is currently unknown where eQF46Ow3 comes from
+            source $HOME/.local/share/virtualenvs/repo-eQF46Ow3/bin/activate
+            python setup.py test
 
       #- store_artifacts:
       #    path: test-reports

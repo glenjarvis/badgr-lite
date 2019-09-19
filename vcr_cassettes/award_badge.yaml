@@ -1,0 +1,61 @@
+interactions:
+- request:
+    body: '{"recipient": {"identity": "joe0@example.com"}, "notify":
+      true, "evidence": [{"url": "http://example.com/", "narrative":
+      "Joe completed all..."}]}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer IGrrsB6voxBo8eC7jkQvbYbJjsgQp4
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '229'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.22.0
+    method: POST
+    uri: https://api.badgr.io/v2/badgeclasses/2TfNNqMLT8CoAhfGKqSv6Q/assertions
+  response:
+    body:
+      string: '{"status":{"description":"ok","success":true},"result":[{"entityType":"Assertion","entityId":"I4eaA9LARAaODuDaxt9DGQ","openBadgeId":"https://api.badgr.io/public/assertions/I4eaA9LARAaODuDaxt9DGQ","createdAt":"2019-09-17T23:54:18.277836Z","createdBy":"LjhaHDrCT7K6EdwC_vVVIA","badgeclass":"2TfNNqMLT8CoAhfGKqSv6Q","badgeclassOpenBadgeId":"https://api.badgr.io/public/badges/2TfNNqMLT8CoAhfGKqSv6Q","issuer":"5Dm1JnO_STiXQ26x5yD4Kg","issuerOpenBadgeId":"https://api.badgr.io/public/issuers/5Dm1JnO_STiXQ26x5yD4Kg","image":"https://media.badgr.io/uploads/badges/assertion-I4eaA9LARAaODuDaxt9DGQ.png","recipient":{"identity":"sha256$f7b985ae443db187ebd63de31166c71227efb6b204281c8dacf04989d9999892","hashed":true,"type":"email","plaintextIdentity":"joe@example.com","salt":"8f0fe9817e4a46fd9189a3adcfdb0122"},"issuedOn":"2019-09-17T23:54:17.697741Z","narrative":null,"evidence":[{"url":"http://example.com/","narrative":"Joe completed all..."}],"revoked":false,"revocationReason":null,"expires":null,"extensions":{}}]}'
+    headers:
+      Allow:
+      - GET, POST, HEAD, OPTIONS
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '1098'
+      Content-Security-Policy:
+      - default-src https://*.badgr.ws https://*.badgr.io https://www.google-analytics.com
+        https://ajax.googleapis.com https://ajax.googleapis.com; script-src 'unsafe-inline'
+        https://*.badgr.ws https://*.badgr.io https://online.swagger.io ;img-src https://*.badgr.ws
+        https://*.badgr.io https://online.swagger.io data:; style-src 'unsafe-inline'
+        https://*.badgr.ws https://*.badgr.io https://fonts.googleapis.com; style-src-elem
+        'unsafe-inline' https://*.badgr.ws https://*.badgr.io https://fonts.googleapis.com;
+        font-src https://*.badgr.ws https://*.badgr.io https://fonts.gstatic.com;
+        object-src 'none'
+      Content-Type:
+      - application/ld+json
+      Date:
+      - Tue, 17 Sep 2019 23:54:18 GMT
+      Server:
+      - Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips mod_wsgi/3.4 Python/2.7.5
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+      Vary:
+      - Accept,Authorization,Origin
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-XSS-Protection:
+      - 1; mode=block
+    status:
+      code: 201
+      message: Created
+version: 1
