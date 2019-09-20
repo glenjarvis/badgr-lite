@@ -11,13 +11,15 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = ['Click', ]
+requirements = ['Click', 'requests', 'pytz']
 
-setup_requirements = [ 'requests', 'pytz']
+setup_requirements = []
 
 test_requirements = ['vcrpy', ]
 
 setup(
+    name='badgr_lite',
+    version='0.0.1',
     author="Glen Jarvis",
     author_email='glen@glenjarvis.com',
     python_requires='!=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*',
@@ -34,7 +36,7 @@ setup(
     description="Automate awarding Badgr (or equivalent) badges to recipients without the overhead of badgr-server",
     entry_points={
         'console_scripts': [
-            'badgr_lite=badgr_lite.cli:main',
+            'badgr=badgr_lite.cli:main',
         ],
     },
     install_requires=requirements,
@@ -42,12 +44,10 @@ setup(
     long_description=readme + '\n\n' + history,
     include_package_data=True,
     keywords='OpenBadge',
-    name='badgr_lite',
     packages=find_packages(include=['badgr_lite', 'badgr_lite.*']),
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/glenjarvis/badgr_lite',
-    version='0.0.1',
     zip_safe=False,
 )

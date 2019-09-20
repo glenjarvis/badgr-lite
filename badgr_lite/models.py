@@ -24,7 +24,8 @@ class Badge:
     The JSON object given by the Badgr API, loaded as a dict, can be used to
     instantiate the Badge class.
     """
-    # pylint: disable=R0903
+    # There are enough public methods; pylint: disable=R0903
+    # Attrs are dynamically assigned;  pylint: disable=E1101
 
     REQUIRED_JSON = ['entityId', 'expires', 'entityType', 'extensions',
                      'openBadgeId', 'createdBy', 'issuer', 'image',
@@ -54,12 +55,12 @@ class Badge:
             setattr(self, pythonic_key, self._attrs[key])
 
     def __str__(self):
-        # pylint: disable=R1705,E1101
+        url = "https://badgr.io/public/assertions/{}".format(self.entity_id)
+        name = "<No name>"
         if hasattr(self, 'name'):
-            # Name isn't technically required
-            return "{}: {}".format(self.entity_id, self.name)
-        else:
-            return "{}: <No name>".format(self.entity_id)
+            name = self.name
+
+        return "{}\t{}\t{}".format(self.entity_id, url, name)
 
 
 class BadgrLite:
