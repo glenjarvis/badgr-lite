@@ -58,7 +58,7 @@ tqdm==4.36.1
 twine==1.15.0
 typed-ast==1.4.0 ; implementation_name == 'cpython'
 typing-extensions==3.7.4
-urllib3==1.25.4
+urllib3==1.25.5
 vcrpy==2.1.0
 virtualenv-clone==0.5.3
 virtualenv==16.7.5
