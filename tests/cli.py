@@ -40,8 +40,14 @@ class TestBadgrLiteCLI(unittest.TestCase):
         result = self.runner.invoke(cli.main, ['list-badges', '--help'])
         self.assertEqual(0, result.exit_code)
 
-    def test_cli_help_shows_list_badges_without_token(self):
-        """CLI help shows for list-badges subcommand without token
+    def test_cli_subcommand_award_badge(self):
+        """CLI has subcommand list-badges"""
+
+        result = self.runner.invoke(cli.main, ['award-badge', '--help'])
+        self.assertEqual(0, result.exit_code)
+
+    def test_cli_help_shows_subcommand_without_token(self):
+        """CLI shows subcommands help without token
 
         If the `--token-file` option were required with
         `type=click.Path(exists=True)`, then the --token-file argument
