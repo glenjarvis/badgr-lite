@@ -2,8 +2,8 @@
 # pylint: disable=E1120, R0913, R0903, C0103
 """Console script for badgr_lite."""
 
-import click
 
+import click
 
 from badgr_lite.models import BadgrLite
 
@@ -35,6 +35,17 @@ def list_badges(config):
     badgr = BadgrLite(token_filename=config.token_file)
     for badge in badgr.badges:
         click.echo(badge)
+
+
+@main.command()
+@pass_config
+def award_badge(config):
+    """Award badge with BADGE_ID to RECIPIENT.
+
+
+    If evidence is provided, both --evidence-url and --evidence-narrative
+    should be used.
+    """
 
 
 if __name__ == "__main__":
