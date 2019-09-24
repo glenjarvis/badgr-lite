@@ -9,18 +9,24 @@ import tempfile
 import unittest
 
 from click.testing import CliRunner
+import vcr
 
 from badgr_lite import cli
 
 
-class TestBadgrLiteCLI(unittest.TestCase):
-    """Tests for `badgr_lite` package."""
+class TestBadgrLiteBase(unittest.TestCase):
+    """Test Base for setUp tearDown and test helper methods"""
 
     def setUp(self):
         self.runner = CliRunner()
 
+
+class TestBadgrLiteCLI(TestBadgrLiteBase):
+    """Tests for `badgr_lite` package."""
+
     def test_cli_main_entry_point(self):
         """Installation calls into cli.main()"""
+
         result = self.runner.invoke(cli.main)
         self.assertEqual(0, result.exit_code)
         self.assertIn(
@@ -35,18 +41,6 @@ class TestBadgrLiteCLI(unittest.TestCase):
         self.assertIn(
             '--token-file PATH  File holding token credentials',
             help_result.output)
-
-    def test_cli_subcommand_list_badges(self):
-        """CLI has subcommand list-badges"""
-
-        result = self.runner.invoke(cli.main, ['list-badges', '--help'])
-        self.assertEqual(0, result.exit_code)
-
-    def test_cli_subcommand_award_badge(self):
-        """CLI has subcommand list-badges"""
-
-        result = self.runner.invoke(cli.main, ['award-badge', '--help'])
-        self.assertEqual(0, result.exit_code)
 
     def test_cli_help_shows_subcommand_without_token(self):
         """CLI shows subcommands help without token
@@ -79,6 +73,44 @@ class TestBadgrLiteCLI(unittest.TestCase):
             ['--token-file', token_file, 'list-badges', '--help'])
         self.assertEqual(0, result.exit_code)
         os.remove(token_file)
+
+
+class TestBadgrLiteCLIListBadges(TestBadgrLiteBase):
+    """BadgrLite CLI list-badge subcommand tests
+
+    See also .models badges property tests
+    """
+
+    def test_cli_subcommand_list_badges_help(self):
+        """CLI has subcommand list-badges"""
+
+        result = self.runner.invoke(cli.main, ['list-badges', '--help'])
+        self.assertEqual(0, result.exit_code)
+
+
+class TestBadgrLiteCLIAwardBadge(TestBadgrLiteBase):
+    """BadgrLite CLI award-badge subcommand tests"""
+
+    def test_cli_subcommand_award_badge_help(self):
+        """CLI has subcommand award-badge"""
+
+        result = self.runner.invoke(cli.main, ['award-badge', '--help'])
+        self.assertEqual(0, result.exit_code)
+
+    def test_cli_subcommand_award_badge_badge_id(self):
+        """CLI award-badge requires --badge-id
+
+        If a Badge ID is not provided, it will be prompted.
+
+        In this test, we'll add "Some Badge ID" for the
+        prompt input.
+        """
+
+        with vcr.use_cassette('tests/vcr_cassettes/award_badge.yaml'):
+            result = self.runner.invoke(
+                cli.main, ['award-badge', ],
+                input="Some Badge ID")
+            self.assertEqual(0, result.exit_code)
 
 
 if __name__ == '__main__':
