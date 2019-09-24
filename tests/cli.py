@@ -4,6 +4,8 @@
 """Tests for `badgr_lite` package."""
 
 
+import os
+import tempfile
 import unittest
 
 from click.testing import CliRunner
@@ -62,6 +64,21 @@ class TestBadgrLiteCLI(unittest.TestCase):
 
         result = self.runner.invoke(cli.main, ['list-badges', '--help'])
         self.assertEqual(0, result.exit_code)
+
+    def test_cli_subcommand_with_token(self):
+        """CLI subcommands should take --token-file argument
+
+        Even though we should still get `--help` on subcommands, the
+        subcommands should use the `--token-file` argument (or
+        it's default).
+        """
+
+        _, token_file = tempfile.mkstemp(suffix='.json', prefix='token')
+        result = self.runner.invoke(
+            cli.main,
+            ['--token-file', token_file, 'list-badges', '--help'])
+        self.assertEqual(0, result.exit_code)
+        os.remove(token_file)
 
 
 if __name__ == '__main__':

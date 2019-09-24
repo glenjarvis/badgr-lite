@@ -45,7 +45,9 @@ class BadgrLiteTestBase(unittest.TestCase):
     def get_badgr_setup(self):
         """Return BadgrLite instance for testing"""
 
-        return BadgrLite(token_filename=self.sample_token_file)
+        badgr = BadgrLite(token_filename=self.sample_token_file)
+        badgr.load_token()
+        return badgr
 
     def get_sample_badge(self):
         """Fetch single badge for other tests"""
@@ -272,7 +274,8 @@ class TestBadgrLiteInstantiation(BadgrLiteTestBase):
         """BadgrLite() verifies token file exists"""
 
         with self.assertRaises(exceptions.TokenFileNotFoundError):
-            BadgrLite(token_filename='./non_existent_token_file.json')
+            badgr = BadgrLite(token_filename='./non_existent_token_file.json')
+            badgr.load_token()
 
     def test_verifies_token_file_contains_json(self):
         """BadgrLite() verifies token file exists"""
@@ -281,7 +284,8 @@ class TestBadgrLiteInstantiation(BadgrLiteTestBase):
             stf_h.write("Bad JSON")
 
         with self.assertRaises(json.decoder.JSONDecodeError):
-            BadgrLite(token_filename=self.sample_token_file)
+            badgr = BadgrLite(token_filename=self.sample_token_file)
+            badgr.load_token()
 
     def test_verifies_bearer_token(self):
         """BadgrLite() has a bearer token when instantiated"""
