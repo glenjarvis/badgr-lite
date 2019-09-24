@@ -26,6 +26,8 @@ pass_config = click.make_pass_decorator(Config, ensure=True)
 def main(config, token_file):
     """Automate Badgr tasks without the overhead of badgr-server"""
 
+    config.token_file = token_file
+
 
 @main.command()
 @pass_config

@@ -69,15 +69,23 @@ class BadgrLite:
 
     def __init__(self, token_filename: str) -> None:
         self.token_filename = token_filename
-        if not os.path.exists(token_filename):
+        self._token_data = None
+
+    def load_token(self) -> None:
+        """Given initialization with token_filename, load token data
+
+        Ensure token_filename exists. Load JSON data from the filename.
+        Store in self._token_data
+        """
+        if not os.path.exists(self.token_filename):
             raise exceptions.TokenFileNotFoundError(
                 "Token File Not Found.",
                 exceptions.TokenFileNotFoundError.__doc__)
 
-        with open(token_filename, 'r') as token_handler:
+        with open(self.token_filename, 'r') as token_handler:
             self._token_data = json.load(token_handler)
 
-    def refresh_token(self) -> None:
+    def refresh_token(self):
         """Refresh access token from refresh_token"""
 
         response = requests.post(
@@ -95,7 +103,7 @@ class BadgrLite:
             with open(self.token_filename, 'w') as token_handler:
                 token_handler.write(json.dumps(raw_data))
 
-    def prepare_headers(self) -> dict:
+    def prepare_headers(self):
         """Prepare headers for communication with the server"""
 
         return {'Authorization': 'Bearer {}'.format(
@@ -129,6 +137,7 @@ class BadgrLite:
         yzExTDvOTnOx_R3YhwPf3A: Test Driven Development Fundamentals Champion
         yNjcY70FSn603SO9vMGhBA: Install Python with Virtual Environments
         """
+        self.load_token()
         raw_data = self.get_from_server(
             'https://api.badgr.io/v2/badgeclasses')['result']
 
@@ -173,6 +182,7 @@ class BadgrLite:
         qv4DMvnYT0Gwz7wquRasvg: <No name>
         """
 
+        self.load_token()
         base = 'https://api.badgr.io/v2'
         url = '{}/badgeclasses/{}/assertions'.format(base, badge_id)
         headers = self.prepare_headers()
