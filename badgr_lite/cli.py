@@ -41,7 +41,9 @@ def list_badges(config):
 
 @main.command()
 @pass_config
-def award_badge(config):
+@click.option('--badge-id', prompt='Badge ID',
+              help='ID of badge to award')
+def award_badge(config, badge_id):
     """Award badge with BADGE_ID to RECIPIENT.
 
 
