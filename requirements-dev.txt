@@ -1,7 +1,7 @@
 -i https://pypi.org/simple
 alabaster==0.7.12
 argh==0.26.2
-astroid==2.2.5
+astroid==2.3.0
 babel==2.7.0
 bleach==3.1.0
 bump2version==0.5.11
@@ -55,10 +55,10 @@ tox-pipenv==1.9.0
 tox-pyenv==1.1.0
 tox==3.7.0
 tqdm==4.36.1
-twine==1.15.0
-typed-ast==1.4.0 ; implementation_name == 'cpython'
+twine==2.0.0
+typed-ast==1.4.0 ; implementation_name == 'cpython' and python_version >= '3.7' and python_version < '3.8'
 typing-extensions==3.7.4
-urllib3==1.25.5
+urllib3==1.25.6
 vcrpy==2.1.0
 virtualenv-clone==0.5.3
 virtualenv==16.7.5
