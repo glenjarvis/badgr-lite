@@ -108,8 +108,24 @@ class TestBadgrLiteCLIAwardBadge(TestBadgrLiteBase):
 
         with vcr.use_cassette('tests/vcr_cassettes/award_badge.yaml'):
             result = self.runner.invoke(
-                cli.main, ['award-badge', ],
+                cli.main,
+                ['award-badge', '--recipient', 'recipient@example.com'],
                 input="Some Badge ID")
+            self.assertEqual(0, result.exit_code)
+
+    def test_cli_subcommand_award_badge_recipient(self):
+        """CLI award-badge requires --recipient
+
+        If a recipient is not provided, it will be prompted.
+
+        In this test, we'll add "recipient@example.com" for the
+        prompt input.
+        """
+
+        with vcr.use_cassette('tests/vcr_cassettes/award_badge.yaml'):
+            result = self.runner.invoke(
+                cli.main, ['award-badge', '--badge-id=123456'],
+                input="recipient@example.com")
             self.assertEqual(0, result.exit_code)
 
 
