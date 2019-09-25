@@ -66,6 +66,11 @@ def award_badge(config, badge_id, recipient, notify,
     should be used.
     """
 
+    if xor(evidence_url, evidence_narrative):
+        raise click.UsageError(
+            """If one evidence paramater is used, both are needed:
+            --evidence-url and --evidence-narrative""")
+
 
 if __name__ == "__main__":
     main()
