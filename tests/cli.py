@@ -164,6 +164,24 @@ class TestBadgrLiteCLIAwardBadge(TestBadgrLiteBase):
             # See also self.cli_options.
             self.assertEqual(0, result.exit_code)
 
+    def test_cli_xor(self):
+        """CLI has Exclusive OR (XOR) function
+
+        This CLI needs one, or the other, but not both:
+
+        A | B   | Result
+        --+-+---+-------
+        T | T   | False
+        T | F   | True
+        F | F   | True
+        F | F   | False
+        """
+
+        self.assertEqual(cli.xor(True, True), False)
+        self.assertEqual(cli.xor(True, False), True)
+        self.assertEqual(cli.xor(False, True), True)
+        self.assertEqual(cli.xor(False, False), False)
+
 
 if __name__ == '__main__':
     unittest.main()
