@@ -12,10 +12,9 @@ from tempfile import mkdtemp
 import unittest
 
 import vcr
-from click.testing import CliRunner
 
 from badgr_lite.models import BadgrLite, Badge
-from badgr_lite import exceptions, cli
+from badgr_lite import exceptions
 
 
 class BadgrLiteTestBase(unittest.TestCase):
@@ -46,7 +45,9 @@ class BadgrLiteTestBase(unittest.TestCase):
     def get_badgr_setup(self):
         """Return BadgrLite instance for testing"""
 
-        return BadgrLite(token_filename=self.sample_token_file)
+        badgr = BadgrLite(token_filename=self.sample_token_file)
+        badgr.load_token()
+        return badgr
 
     def get_sample_badge(self):
         """Fetch single badge for other tests"""
@@ -273,7 +274,8 @@ class TestBadgrLiteInstantiation(BadgrLiteTestBase):
         """BadgrLite() verifies token file exists"""
 
         with self.assertRaises(exceptions.TokenFileNotFoundError):
-            BadgrLite(token_filename='./non_existent_token_file.json')
+            badgr = BadgrLite(token_filename='./non_existent_token_file.json')
+            badgr.load_token()
 
     def test_verifies_token_file_contains_json(self):
         """BadgrLite() verifies token file exists"""
@@ -282,7 +284,8 @@ class TestBadgrLiteInstantiation(BadgrLiteTestBase):
             stf_h.write("Bad JSON")
 
         with self.assertRaises(json.decoder.JSONDecodeError):
-            BadgrLite(token_filename=self.sample_token_file)
+            badgr = BadgrLite(token_filename=self.sample_token_file)
+            badgr.load_token()
 
     def test_verifies_bearer_token(self):
         """BadgrLite() has a bearer token when instantiated"""
@@ -382,20 +385,6 @@ class TestBadgrLiteAwardMethod(BadgrLiteTestBase):
                     self.get_sample_award_badge_id(),
                     {'bad_badge_data': 1}
                 )
-
-
-class TestBadgrLiteCLI(unittest.TestCase):
-    """Tests for `badgr_lite` package."""
-
-    def test_command_line_interface(self):
-        """Test the CLI."""
-        runner = CliRunner()
-        result = runner.invoke(cli.main)
-        assert result.exit_code == 0
-        assert 'badgr_lite.cli.main' in result.output
-        help_result = runner.invoke(cli.main, ['--help'])
-        assert help_result.exit_code == 0
-        assert '--help  Show this message and exit.' in help_result.output
 
 
 if __name__ == '__main__':
