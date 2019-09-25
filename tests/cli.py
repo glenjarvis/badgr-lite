@@ -5,6 +5,7 @@
 
 
 import os
+import json
 import tempfile
 import unittest
 
@@ -17,15 +18,48 @@ from badgr_lite import cli
 class TestBadgrLiteBase(unittest.TestCase):
     """Test Base for setUp tearDown and test helper methods"""
 
+    SAMPLE_TOKEN_DATA = {
+        "access_token": "FVQ__sample_token__QYzzRracgjH",
+        "token_type": "Bearer",
+        "expires_in": 86400,
+        "refresh_token": "vK__sample_refresh_token__AlPZ",
+        "scope": "rw:profile rw:issuer rw:backpack"}
+
     def setUp(self):
         self.runner = CliRunner()
+        self.create_token_file()
         self.cli_options = [
+            '--token-file', self.token_file,
             'award-badge',
             '--badge-id', '2TfNNqMLT8CoAhfGKqSv6Q',
             '--recipient', 'recipient@example.com',
             '--notify',
             '--evidence-url', 'https://example.com',
             '--evidence-narrative', 'John Doe performed...']
+
+    def tearDown(self):
+        os.remove(self.token_file)
+
+    def create_token_file(self) -> None:
+        """Create token file for tests
+
+        Although this is slightly more like a factory than a fixture, it
+        feels like a more crude way to do the tests. Instead of making a
+        fake token file, it feels like the approach should be to mock
+        out the calls that access the token data.
+
+        However, as of the time of this writing, the initial author of
+        this library was not able to cleanly do this. Since the great is
+        often the enemy of the good, we will leave this functioning
+        approach.
+
+        There is a good opportunity to refactor these tests to make them
+        more streamlined so that creating a temporary token file is not
+        needed.
+        """
+        _, self.token_file = tempfile.mkstemp(suffix='.json', prefix='token')
+        with open(self.token_file, 'w') as tmp_file:
+            tmp_file.write(json.dumps(TestBadgrLiteBase.SAMPLE_TOKEN_DATA))
 
 
 class TestBadgrLiteCLI(TestBadgrLiteBase):
