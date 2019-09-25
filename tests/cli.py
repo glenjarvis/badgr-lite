@@ -182,6 +182,21 @@ class TestBadgrLiteCLIAwardBadge(TestBadgrLiteBase):
         self.assertEqual(cli.xor(False, True), True)
         self.assertEqual(cli.xor(False, False), False)
 
+    def test_cli_subcommand_award_badge_xor_evidence(self):
+        """CLI award-badge evidence requires URL and Narrative
+
+        If either `--evidence-url` or `--evidence-narrative` is provided,
+        require both.
+        """
+        with vcr.use_cassette('tests/vcr_cassettes/award_badge.yaml'):
+            self.cli_options.remove('--evidence-narrative')
+            self.cli_options.remove('John Doe performed...')
+            result = self.runner.invoke(cli.main, self.cli_options)
+            self.assertNotEqual(0, result.exit_code)
+            self.assertIn(
+                "If one evidence paramater is used, both are needed",
+                result.output)
+
 
 if __name__ == '__main__':
     unittest.main()
