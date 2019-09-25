@@ -20,9 +20,11 @@ class TestBadgrLiteBase(unittest.TestCase):
     def setUp(self):
         self.runner = CliRunner()
         self.cli_options = [
-            'award-badge', '--badge-id', '123456',
+            'award-badge',
+            '--badge-id', '123456',
             '--recipient', 'recipient@example.com',
-            '--notify']
+            '--notify',
+            '--evidence-url', 'https://example.com']
 
 
 class TestBadgrLiteCLI(TestBadgrLiteBase):
@@ -113,11 +115,11 @@ class TestBadgrLiteCLIAwardBadge(TestBadgrLiteBase):
         with vcr.use_cassette('tests/vcr_cassettes/award_badge.yaml'):
             self.cli_options.remove('--badge-id')
             self.cli_options.remove('123456')
-            cli_opts = ['award-badge'].extend(self.cli_options)
             result = self.runner.invoke(
-                cli.main, cli_opts,
+                cli.main, self.cli_options,
                 input="Some Badge ID")
             self.assertEqual(0, result.exit_code)
+            self.assertIn('Badge ID: Some Badge ID', result.output)
 
     def test_cli_subcommand_award_badge_recipient(self):
         """CLI award-badge requires --recipient
@@ -131,18 +133,26 @@ class TestBadgrLiteCLIAwardBadge(TestBadgrLiteBase):
         with vcr.use_cassette('tests/vcr_cassettes/award_badge.yaml'):
             self.cli_options.remove('--recipient')
             self.cli_options.remove('recipient@example.com')
-            cli_opts = ['award-badge'].extend(self.cli_options)
             result = self.runner.invoke(
-                cli.main, cli_opts,
+                cli.main, self.cli_options,
                 input="recipient@example.com")
             self.assertEqual(0, result.exit_code)
+            self.assertIn('Recipient email: recipient@example.com',
+                          result.output)
 
     def test_cli_subcommand_award_badge_notify(self):
         """CLI award-badge allows --notify / --no-notify"""
 
         with vcr.use_cassette('tests/vcr_cassettes/award_badge.yaml'):
-            cli_opts = ['award-badge'].extend(self.cli_options)
-            result = self.runner.invoke(cli.main, cli_opts)
+            result = self.runner.invoke(cli.main, self.cli_options)
+            self.assertEqual(0, result.exit_code)
+
+    def test_cli_subcommand_award_badge_evidence_url(self):
+        """CLI award-badge allows --name"""
+
+        with vcr.use_cassette('tests/vcr_cassettes/award_badge.yaml'):
+            result = self.runner.invoke(cli.main, self.cli_options)
+            # See also changes in self.cli_options
             self.assertEqual(0, result.exit_code)
 
 
