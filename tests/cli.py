@@ -197,6 +197,16 @@ class TestBadgrLiteCLIAwardBadge(TestBadgrLiteBase):
                 "If one evidence paramater is used, both are needed",
                 result.output)
 
+    def test_cli_subcommand_award_badge_ensure_evidence(self):
+        """CLI has ensure_evidence function
+
+        Function ensures there is an 'evidence' key and the associated value is
+        a list.
+        """
+        badge_data = cli.ensure_evidence({})
+        self.assertIn('evidence', badge_data.keys())
+        self.assertTrue(isinstance(badge_data['evidence'], list))
+
 
 if __name__ == '__main__':
     unittest.main()

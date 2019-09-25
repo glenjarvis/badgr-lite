@@ -24,6 +24,14 @@ def xor(first: bool, second: bool) -> bool:
     return (first and not second) or (not first and second)
 
 
+def ensure_evidence(badge_data: dict) -> dict:
+    """Given badge_data, ensure 'evidence' key exists with list value"""
+
+    if 'evidence' not in badge_data:
+        badge_data['evidence'] = [{}]
+    return badge_data
+
+
 @click.group()
 @click.option('--token-file', type=click.Path(),
               default='./token.json',
