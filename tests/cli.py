@@ -19,6 +19,10 @@ class TestBadgrLiteBase(unittest.TestCase):
 
     def setUp(self):
         self.runner = CliRunner()
+        self.cli_options = [
+            'award-badge', '--badge-id', '123456',
+            '--recipient', 'recipient@example.com',
+            '--notify']
 
 
 class TestBadgrLiteCLI(TestBadgrLiteBase):
@@ -107,9 +111,11 @@ class TestBadgrLiteCLIAwardBadge(TestBadgrLiteBase):
         """
 
         with vcr.use_cassette('tests/vcr_cassettes/award_badge.yaml'):
+            self.cli_options.remove('--badge-id')
+            self.cli_options.remove('123456')
+            cli_opts = ['award-badge'].extend(self.cli_options)
             result = self.runner.invoke(
-                cli.main,
-                ['award-badge', '--recipient', 'recipient@example.com'],
+                cli.main, cli_opts,
                 input="Some Badge ID")
             self.assertEqual(0, result.exit_code)
 
@@ -123,9 +129,20 @@ class TestBadgrLiteCLIAwardBadge(TestBadgrLiteBase):
         """
 
         with vcr.use_cassette('tests/vcr_cassettes/award_badge.yaml'):
+            self.cli_options.remove('--recipient')
+            self.cli_options.remove('recipient@example.com')
+            cli_opts = ['award-badge'].extend(self.cli_options)
             result = self.runner.invoke(
-                cli.main, ['award-badge', '--badge-id=123456'],
+                cli.main, cli_opts,
                 input="recipient@example.com")
+            self.assertEqual(0, result.exit_code)
+
+    def test_cli_subcommand_award_badge_notify(self):
+        """CLI award-badge allows --notify / --no-notify"""
+
+        with vcr.use_cassette('tests/vcr_cassettes/award_badge.yaml'):
+            cli_opts = ['award-badge'].extend(self.cli_options)
+            result = self.runner.invoke(cli.main, cli_opts)
             self.assertEqual(0, result.exit_code)
 
 

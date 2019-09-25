@@ -45,7 +45,9 @@ def list_badges(config):
               help='ID of badge to award')
 @click.option('--recipient', prompt='Recipient email',
               help='Email of recipient')
-def award_badge(config, badge_id, recipient):
+@click.option('--notify/--no-notify', default=False,
+              help="Should badgr notify recipient?")
+def award_badge(config, badge_id, recipient, notify):
     """Award badge with BADGE_ID to RECIPIENT.
 
 
