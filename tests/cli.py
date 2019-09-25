@@ -21,7 +21,7 @@ class TestBadgrLiteBase(unittest.TestCase):
         self.runner = CliRunner()
         self.cli_options = [
             'award-badge',
-            '--badge-id', '123456',
+            '--badge-id', '2TfNNqMLT8CoAhfGKqSv6Q',
             '--recipient', 'recipient@example.com',
             '--notify',
             '--evidence-url', 'https://example.com',
@@ -115,12 +115,12 @@ class TestBadgrLiteCLIAwardBadge(TestBadgrLiteBase):
 
         with vcr.use_cassette('tests/vcr_cassettes/award_badge.yaml'):
             self.cli_options.remove('--badge-id')
-            self.cli_options.remove('123456')
+            self.cli_options.remove('2TfNNqMLT8CoAhfGKqSv6Q')
             result = self.runner.invoke(
                 cli.main, self.cli_options,
-                input="Some Badge ID")
+                input="2TfNNqMLT8CoAhfGKqSv6Q")
             self.assertEqual(0, result.exit_code)
-            self.assertIn('Badge ID: Some Badge ID', result.output)
+            self.assertIn('Badge ID: 2TfNNqMLT8CoAhfGKqSv6Q', result.output)
 
     def test_cli_subcommand_award_badge_recipient(self):
         """CLI award-badge requires --recipient
