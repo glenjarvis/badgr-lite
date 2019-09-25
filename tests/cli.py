@@ -24,7 +24,8 @@ class TestBadgrLiteBase(unittest.TestCase):
             '--badge-id', '123456',
             '--recipient', 'recipient@example.com',
             '--notify',
-            '--evidence-url', 'https://example.com']
+            '--evidence-url', 'https://example.com',
+            '--evidence-narrative', 'John Doe performed...']
 
 
 class TestBadgrLiteCLI(TestBadgrLiteBase):
@@ -148,11 +149,19 @@ class TestBadgrLiteCLIAwardBadge(TestBadgrLiteBase):
             self.assertEqual(0, result.exit_code)
 
     def test_cli_subcommand_award_badge_evidence_url(self):
-        """CLI award-badge allows --name"""
+        """CLI award-badge allows --evidence_url"""
 
         with vcr.use_cassette('tests/vcr_cassettes/award_badge.yaml'):
             result = self.runner.invoke(cli.main, self.cli_options)
-            # See also changes in self.cli_options
+            # See also self.cli_options.
+            self.assertEqual(0, result.exit_code)
+
+    def test_cli_subcommand_award_badge_evidence_narrative(self):
+        """CLI award-badge allows --evidence-narrative"""
+
+        with vcr.use_cassette('tests/vcr_cassettes/award_badge.yaml'):
+            result = self.runner.invoke(cli.main, self.cli_options)
+            # See also self.cli_options.
             self.assertEqual(0, result.exit_code)
 
 
