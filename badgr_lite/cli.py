@@ -47,7 +47,9 @@ def list_badges(config):
               help='Email of recipient')
 @click.option('--notify/--no-notify', default=False,
               help="Should badgr notify recipient?")
-def award_badge(config, badge_id, recipient, notify):
+@click.option('--evidence-url',
+              help="Optional evidence-url for awarded badge")
+def award_badge(config, badge_id, recipient, notify, evidence_url):
     """Award badge with BADGE_ID to RECIPIENT.
 
 
