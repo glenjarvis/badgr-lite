@@ -6,6 +6,7 @@
 import click
 
 from badgr_lite.models import BadgrLite
+from badgr_lite import exceptions
 
 
 class Config:
@@ -49,8 +50,12 @@ def list_badges(config):
     """Pull and print a list of badges from server"""
 
     badgr = BadgrLite(token_filename=config.token_file)
-    for badge in badgr.badges:
-        click.echo(badge)
+    try:
+        for badge in badgr.badges:
+            click.echo(badge)
+    except exceptions.TokenFileNotFoundError as err:
+        for line in err.args:
+            click.echo(line)
 
 
 @main.command()
@@ -79,8 +84,6 @@ def award_badge(config, badge_id, recipient, notify,
             """If one evidence paramater is used, both are needed:
             --evidence-url and --evidence-narrative""")
 
-    badgr = BadgrLite(token_filename=config.token_file)
-
     badge_data = {
         "recipient": {
             "identity": recipient,
@@ -93,8 +96,13 @@ def award_badge(config, badge_id, recipient, notify,
         badge_data['evidence'][0]['url'] = evidence_url
         badge_data['evidence'][0]['narrative'] = evidence_narrative
 
-    result = badgr.award_badge(badge_id, badge_data)
-    click.echo(result)
+    try:
+        badgr = BadgrLite(token_filename=config.token_file)
+        result = badgr.award_badge(badge_id, badge_data)
+        click.echo(result)
+    except exceptions.TokenFileNotFoundError as err:
+        for line in err.args:
+            click.echo(line)
 
 
 if __name__ == "__main__":
