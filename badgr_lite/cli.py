@@ -79,6 +79,23 @@ def award_badge(config, badge_id, recipient, notify,
             """If one evidence paramater is used, both are needed:
             --evidence-url and --evidence-narrative""")
 
+    badgr = BadgrLite(token_filename=config.token_file)
+
+    badge_data = {
+        "recipient": {
+            "identity": recipient,
+        },
+        "notify": notify,
+    }
+
+    if evidence_url:
+        badge_data = ensure_evidence(badge_data)
+        badge_data['evidence'][0]['url'] = evidence_url
+        badge_data['evidence'][0]['narrative'] = evidence_narrative
+
+    result = badgr.award_badge(badge_id, badge_data)
+    click.echo(result)
+
 
 if __name__ == "__main__":
     main()
