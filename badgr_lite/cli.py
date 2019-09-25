@@ -18,6 +18,12 @@ class Config:
 pass_config = click.make_pass_decorator(Config, ensure=True)
 
 
+def xor(first: bool, second: bool) -> bool:
+    """Return exclusive OR for boolean arguments"""
+
+    return (first and not second) or (not first and second)
+
+
 @click.group()
 @click.option('--token-file', type=click.Path(),
               default='./token.json',
