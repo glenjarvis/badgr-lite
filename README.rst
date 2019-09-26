@@ -8,8 +8,8 @@ Automate awarding Open Badges to recipients without the overhead of a server
         :target: https://pypi.python.org/pypi/badgr_lite
 
 
-.. image:: https://img.shields.io/travis/glenjarvis/badgr_lite.svg
-        :target: https://travis-ci.org/glenjarvis/badgr_lite
+.. image:: https://img.shields.io/travis/glenjarvis/badgr-lite.svg
+        :target: https://travis-ci.org/glenjarvis/badgr-lite
 
 
 .. image:: https://readthedocs.org/projects/badgr-lite/badge/?version=latest
@@ -17,8 +17,8 @@ Automate awarding Open Badges to recipients without the overhead of a server
         :alt: Documentation Status
 
 
-.. image:: https://pyup.io/repos/github/glenjarvis/badgr_lite/shield.svg
-     :target: https://pyup.io/repos/github/glenjarvis/badgr_lite/
+.. image:: https://pyup.io/repos/github/glenjarvis/badgr-lite/shield.svg
+     :target: https://pyup.io/repos/github/glenjarvis/badgr-lite/
      :alt: Updates
 
 
