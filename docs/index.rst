@@ -6,6 +6,7 @@ Welcome to badgr-lite's documentation!
    :caption: Contents:
 
    readme
+   tutorial
    installation
    usage
    modules

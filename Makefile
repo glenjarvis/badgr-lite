@@ -90,3 +90,15 @@ dist: clean ## builds source and wheel package
 
 install: clean ## install the package to the active Python's site-packages
 	python setup.py install
+
+
+# Deploying
+# ---------
+#
+# A reminder for the maintainers on how to deploy.
+# Make sure all your changes are committed (including an entry in HISTORY.rst).
+# Then run::
+#
+# $ bump2version patch # possible: major / minor / patch
+# $ git push
+# $ git push --tags

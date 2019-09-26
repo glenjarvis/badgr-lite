@@ -8,9 +8,10 @@ class TokenFileNotFoundError(BaseException):
 
     The token_filename argument that you passed into BadgrLite is not found.
     Please consider:
-        - Using using `prime_initial_token` (see Installation instructions)
-        - Checking the filename is correct
-        - Ensuring the filename exists and is in JSON format
+
+    - Using using `prime_initial_token` (see Installation instructions)
+    - Checking the filename is correct
+    - Ensuring the filename exists and is in JSON format
     """
 
 
