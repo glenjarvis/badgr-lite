@@ -1,0 +1,108 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer FVQ__sample_token__QYzzRracgjH
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.22.0
+    method: GET
+    uri: https://api.badgr.io/v2/badgeclasses
+  response:
+    body:
+      string: '{"status":{"description":"no valid auth token found","success":false},"validationErrors":[],"fieldErrors":{},"result":[]}'
+    headers:
+      Allow:
+      - GET, POST, HEAD, OPTIONS
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '121'
+      Content-Security-Policy:
+      - default-src https://*.badgr.ws https://*.badgr.io https://www.google-analytics.com
+        https://ajax.googleapis.com https://ajax.googleapis.com; script-src 'unsafe-inline'
+        https://*.badgr.ws https://*.badgr.io https://online.swagger.io ;img-src https://*.badgr.ws
+        https://*.badgr.io https://online.swagger.io data:; style-src 'unsafe-inline'
+        https://*.badgr.ws https://*.badgr.io https://fonts.googleapis.com; style-src-elem
+        'unsafe-inline' https://*.badgr.ws https://*.badgr.io https://fonts.googleapis.com;
+        font-src https://*.badgr.ws https://*.badgr.io https://fonts.gstatic.com;
+        object-src 'none'
+      Content-Type:
+      - application/ld+json
+      Date:
+      - Fri, 13 Sep 2019 01:32:14 GMT
+      Server:
+      - Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips mod_wsgi/3.4 Python/2.7.5
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+      Vary:
+      - Accept,Authorization,Cookie,Origin
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-XSS-Protection:
+      - 1; mode=block
+    status:
+      code: 401
+      message: Unauthorized
+- request:
+    body: null
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer FVQ__sample_token__QYzzRracgjH
+      Connection:
+      - keep-alive
+      User-Agent:
+      - python-requests/2.22.0
+    method: GET
+    uri: https://api.badgr.io/v2/badgeclasses
+  response:
+    body:
+      string: '{"status":{"description":"no valid auth token found","success":false},"validationErrors":[],"fieldErrors":{},"result":[]}'
+    headers:
+      Allow:
+      - GET, POST, HEAD, OPTIONS
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '121'
+      Content-Security-Policy:
+      - default-src https://*.badgr.ws https://*.badgr.io https://www.google-analytics.com
+        https://ajax.googleapis.com https://ajax.googleapis.com; script-src 'unsafe-inline'
+        https://*.badgr.ws https://*.badgr.io https://online.swagger.io ;img-src https://*.badgr.ws
+        https://*.badgr.io https://online.swagger.io data:; style-src 'unsafe-inline'
+        https://*.badgr.ws https://*.badgr.io https://fonts.googleapis.com; style-src-elem
+        'unsafe-inline' https://*.badgr.ws https://*.badgr.io https://fonts.googleapis.com;
+        font-src https://*.badgr.ws https://*.badgr.io https://fonts.gstatic.com;
+        object-src 'none'
+      Content-Type:
+      - application/ld+json
+      Date:
+      - Fri, 13 Sep 2019 01:32:14 GMT
+      Server:
+      - Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips mod_wsgi/3.4 Python/2.7.5
+      Strict-Transport-Security:
+      - max-age=63072000; includeSubDomains; preload
+      Vary:
+      - Accept,Authorization,Cookie,Origin
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-XSS-Protection:
+      - 1; mode=block
+    status:
+      code: 401
+      message: Unauthorized
+version: 1

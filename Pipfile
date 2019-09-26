@@ -1,0 +1,25 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+pylint = "*"
+pycodestyle = "*"
+mypy = "*"
+tox = "==3.7.0"
+tox-pipenv = "*"
+tox-pyenv = "*"
+vcrpy = "*"
+coverage = "*"
+bump2version = "*"
+wheel = "*"
+twine = "*"
+watchdog = "*"
+sphinx = "*"
+flake8 = "*"
+
+[packages]
+requests = "*"
+pytz = "*"
+click = "*"
