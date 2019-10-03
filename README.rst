@@ -22,6 +22,24 @@ Automate awarding Open Badges to recipients without the overhead of a server
      :alt: Updates
 
 
+Python support
+--------------
+
+The actual library should work in Python 3.5, 3.6 and 3.7. However, the
+development support for documentation (i.e., Sphinx) has removed Python 3.5
+support.
+
+The Sphinx library requires snowballstemmer >= 1.1. However, snowballstemmer
+2.0.0 was just released. That update to snowballtemmer fails with Python 3.5
+due to a dependency with Python 3.6 or higher:
+
+```RuntimeError: yarl 1.4+ requires Python 3.6+```
+
+Until this is resolved with the Sphinx project, official support for Python 3.5
+has been removed from this project. However, please note that the only place
+this dependency is needed is for Sphinx document generation. The badgr-lite
+library itself has been tested with Python 3.5.
+
 Quick Start
 -----------
 
