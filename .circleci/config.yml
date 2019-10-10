@@ -2,12 +2,12 @@
 #
 version: 2.1
 jobs:
-  setup:
-    steps:
-      - run:
-          name: Install Dependencies
-          command: |
-            echo "Setup"
+#  setup:
+#    steps:
+#      - run:
+#          name: Install Dependencies
+#          command: |
+#            echo "Setup"
 
   test:
     docker:
