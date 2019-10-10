@@ -5,8 +5,8 @@ jobs:
   setup:
     - run:
         name: Install Dependencies
-      command: |
-        echo "Setup"
+        command: |
+          echo "Setup"
 
   test:
     docker:
