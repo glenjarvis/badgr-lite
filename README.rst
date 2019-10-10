@@ -6,10 +6,12 @@ Automate awarding Open Badges to recipients without the overhead of a server
 
 .. image:: https://img.shields.io/pypi/v/badgr_lite.svg
      :target: https://pypi.python.org/pypi/badgr_lite
+     :alt: PyPI Status
 
 
 .. image:: https://img.shields.io/travis/glenjarvis/badgr-lite.svg?branch=develop
      :target: https://travis-ci.org/glenjarvis/badgr-lite?branch=develop
+     :alt: Build Status
 
 
 .. image:: https://readthedocs.org/projects/badgr-lite/badge/?version=latest
@@ -20,6 +22,11 @@ Automate awarding Open Badges to recipients without the overhead of a server
 .. image:: https://pyup.io/repos/github/glenjarvis/badgr-lite/shield.svg
      :target: https://pyup.io/repos/github/glenjarvis/badgr-lite/
      :alt: Updates
+
+
+.. image:: https://codecov.io/gh/glenjarvis/badgr-lite/branch/develop/graph/badge.svg?branch=develop
+     :target: https://codecov.io/gh/glenjarvis/badgr-lite?branch=develop
+     :alt: Code Doverage Status
 
 
 Python support

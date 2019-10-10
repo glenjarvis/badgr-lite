@@ -18,6 +18,7 @@ twine = "*"
 watchdog = "*"
 sphinx = "*"
 flake8 = "*"
+codecov = "*"
 
 [packages]
 requests = "*"

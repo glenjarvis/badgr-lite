@@ -35,6 +35,9 @@ jobs:
             source $HOME/.local/share/virtualenvs/repo-eQF46Ow3/bin/activate
             python setup.py test
 
-      #- store_artifacts:
-      #    path: test-reports
-      #    destination: test-reports
+      - run:
+          name: Calculate and upload code coverage
+          context: code_coverage
+          command: |
+            coverage run tests/test_badgr_lite.py
+            codecov --token $CODECOV_TOKEN
