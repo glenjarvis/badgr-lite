@@ -8,8 +8,6 @@ jobs:
     steps:
       - checkout
 
-      - run: echo 'hello'
-
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "Pipfile.lock" }}
@@ -39,10 +37,39 @@ jobs:
       - image: circleci/python:3.7
     steps:
       - checkout
-      - run: echo 'world'
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "Pipfile.lock" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run:
+          name: Install Dependencies
+          command: |
+             pipenv install --dev
+             pipenv check
+
+      - save_cache:
+          paths:
+            - $HOME/.local/share/virtualenvs/project-zxI9dQ-Q
+          key: v1-dependencies-{{ checksum "Pipfile.lock" }}
+
+      - run:
+          name: Calculate and upload code coverage
+          command: |
+            source $HOME/.local/share/virtualenvs/repo-eQF46Ow3/bin/activate
+            pip install .
+            # ^^ ModuleNotFoundError: No module named 'badgr_lite'
+            echo "TESTING context: $GLEN_TEST"
+            pipenv run coverage run tests/test_badgr_lite.py
+            pipenv run codecov --token $CODECOV_TOKEN
+
+
 workflows:
   version: 2
   build_and_test:
     jobs:
       - setup
       - test
+        context: code_coverage
