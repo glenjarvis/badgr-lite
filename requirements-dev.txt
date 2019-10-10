@@ -7,6 +7,7 @@ bleach==3.1.0
 bump2version==0.5.11
 certifi==2019.9.11
 chardet==3.0.4
+codecov==2.0.15
 coverage==4.5.4
 docutils==0.15.2
 entrypoints==0.3
