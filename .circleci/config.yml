@@ -76,8 +76,6 @@ workflows:
   version: 2
   full_suite:
     jobs:
-      - test:
-          requires:
-            - setup
+      - test
       - code_coverage:
           context: code_coverage
