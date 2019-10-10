@@ -2,6 +2,12 @@
 #
 version: 2.1
 jobs:
+  setup:
+    - run:
+        name: Install Dependencies
+      command: |
+        echo "Setup"
+
   test:
     docker:
       - image: circleci/python:3.7
@@ -69,6 +75,8 @@ workflows:
   version: 2
   full_suite:
     jobs:
-      - test
+      - test:
+          requires:
+            - setup
       - code_coverage:
           context: code_coverage
