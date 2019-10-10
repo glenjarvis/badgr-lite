@@ -10,9 +10,9 @@ jobs:
 
       - restore_cache:
           keys:
-            - pip-requirements-r2-{{ checksum "Pipfile.lock" }}
+            - pip-requirements-r3-{{ checksum "Pipfile.lock" }}
             # fallback to using the latest cache if no exact match is found
-            - pip-requirements-r2-
+            - pip-requirements-r3-
 
       - run:
           name: Install Dependencies
@@ -23,7 +23,7 @@ jobs:
       - save_cache:
           paths:
             - /home/circleci/.local/share/virtualenvs/project-zxI9dQ-Q
-          key: pip-requirements-r2-{{ checksum "Pipfile.lock" }}
+          key: pip-requirements-r3-{{ checksum "Pipfile.lock" }}
 
 
   test:
@@ -34,9 +34,9 @@ jobs:
 
       - restore_cache:
           keys:
-            - pip-requirements-r2-{{ checksum "Pipfile.lock" }}
+            - pip-requirements-r3-{{ checksum "Pipfile.lock" }}
             # fallback to using the latest cache if no exact match is found
-            - pip-requirements-r2-
+            - pip-requirements-r3-
 
       - run:
           name: Run Tests
@@ -54,9 +54,9 @@ jobs:
 
       - restore_cache:
           keys:
-            - pip-requirements-r2-{{ checksum "Pipfile.lock" }}
+            - pip-requirements-r3-{{ checksum "Pipfile.lock" }}
             # fallback to using the latest cache if no exact match is found
-            - pip-requirements-r2-
+            - pip-requirements-r3-
 
       - run:
           name: Calculate and upload code coverage
