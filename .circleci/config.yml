@@ -67,7 +67,7 @@ jobs:
 
 
 workflows:
-  version: 2.1
+  version: 2
   full_suite:
     jobs:
       - setup
