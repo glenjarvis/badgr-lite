@@ -16,7 +16,7 @@ idna==2.8
 imagesize==1.1.0
 importlib-metadata==0.23 ; python_version < '3.8'
 isort==4.3.21
-jinja2==2.10.1
+jinja2==2.10.3
 lazy-object-proxy==1.4.2
 markupsafe==1.1.1
 mccabe==0.6.1
@@ -35,7 +35,7 @@ pyflakes==2.1.1
 pygments==2.4.2
 pylint==2.4.2
 pyparsing==2.4.2
-pytz==2019.2
+pytz==2019.3
 pyyaml==5.1.2
 readme-renderer==24.0
 requests-toolbelt==0.9.1
