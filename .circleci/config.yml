@@ -25,7 +25,7 @@ jobs:
 
       - save_cache:
           paths:
-            - ./venv
+            - ~/.local/share/virtualenvs/repo-eQF46Ow3
           key: v1-dependencies-{{ checksum "Pipfile.lock" }}
 
       - run:
@@ -39,5 +39,5 @@ jobs:
           name: Calculate and upload code coverage
           context: code_coverage
           command: |
-            coverage run tests/test_badgr_lite.py
-            codecov --token $CODECOV_TOKEN
+            pipenv run coverage run tests/test_badgr_lite.py
+            pipenv run codecov --token $CODECOV_TOKEN
