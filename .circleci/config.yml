@@ -3,10 +3,11 @@
 version: 2.1
 jobs:
   setup:
-    - run:
-        name: Install Dependencies
-        command: |
-          echo "Setup"
+    steps:
+      - run:
+          name: Install Dependencies
+          command: |
+            echo "Setup"
 
   test:
     docker:
