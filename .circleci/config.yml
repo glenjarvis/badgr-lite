@@ -58,10 +58,10 @@ jobs:
       - run:
           name: Calculate and upload code coverage
           command: |
-            source $HOME/.local/share/virtualenvs/repo-eQF46Ow3/bin/activate
+            echo "TESTING context: $GLEN_TEST"
+            source $HOME/.local/share/virtualenvs/project-zxI9dQ-Q/bin/activate
             pip install .
             # ^^ ModuleNotFoundError: No module named 'badgr_lite'
-            echo "TESTING context: $GLEN_TEST"
             pipenv run coverage run tests/test_badgr_lite.py
             pipenv run codecov --token $CODECOV_TOKEN
 
