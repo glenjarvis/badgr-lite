@@ -10,9 +10,9 @@ jobs:
 
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "Pipfile.lock" }}
+            - pip-requirements-v1-{{ checksum "Pipfile.lock" }}
             # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+            - pip-requirements-v1-
 
       - run:
           name: Install Dependencies
@@ -23,7 +23,7 @@ jobs:
       - save_cache:
           paths:
             - $HOME/.local/share/virtualenvs/project-zxI9dQ-Q
-          key: v1-dependencies-{{ checksum "Pipfile.lock" }}
+          key: pip-requirements-v1-{{ checksum "Pipfile.lock" }}
 
 
   test:
@@ -34,9 +34,9 @@ jobs:
 
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "Pipfile.lock" }}
+            - pip-requirements-v1-{{ checksum "Pipfile.lock" }}
             # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+            - pip-requirements-v1-
 
       - run:
           name: Run Tests
@@ -53,9 +53,9 @@ jobs:
 
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "Pipfile.lock" }}
+            - pip-requirements-v1-{{ checksum "Pipfile.lock" }}
             # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+            - pip-requirements-v1-
 
       - run:
           name: Calculate and upload code coverage
