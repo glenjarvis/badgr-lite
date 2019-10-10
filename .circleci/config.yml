@@ -89,3 +89,5 @@ workflows:
             - setup
       - code_coverage:
           context: code_coverage
+          requires:
+            - setup
