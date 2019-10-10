@@ -30,6 +30,12 @@ jobs:
     docker:
       - image: circleci/python:3.7
     steps:
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "Pipfile.lock" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
       - run:
           name: Run Tests
           command: |
@@ -48,17 +54,6 @@ jobs:
             - v1-dependencies-{{ checksum "Pipfile.lock" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
-
-      - run:
-          name: Install Dependencies
-          command: |
-             pipenv install --dev
-             pipenv check
-
-      - save_cache:
-          paths:
-            - $HOME/.local/share/virtualenvs/project-zxI9dQ-Q
-          key: v1-dependencies-{{ checksum "Pipfile.lock" }}
 
       - run:
           name: Calculate and upload code coverage
