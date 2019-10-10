@@ -62,6 +62,8 @@ jobs:
           name: Calculate and upload code coverage
           command: |
             source $HOME/.local/share/virtualenvs/project-zxI9dQ-Q/bin/activate
+            # Be careful not to cache after following step
+            pip install .
             pipenv run coverage run tests/test_badgr_lite.py
             pipenv run codecov --token $CODECOV_TOKEN
 
