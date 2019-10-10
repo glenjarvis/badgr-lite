@@ -40,7 +40,7 @@ jobs:
           context: code_coverage
           command: |
             source $HOME/.local/share/virtualenvs/repo-eQF46Ow3/bin/activate
-            #pip install .
-            ## ^^ ModuleNotFoundError: No module named 'badgr_lite'
+            pip install .
+            # ^^ ModuleNotFoundError: No module named 'badgr_lite'
             pipenv run coverage run tests/test_badgr_lite.py
             pipenv run codecov --token $CODECOV_TOKEN
