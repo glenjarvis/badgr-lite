@@ -1,53 +1,21 @@
 # Python CircleCI 2.1 configuration file
 #
-version: 2.1
 jobs:
   build:
     docker:
       - image: circleci/python:3.7
-
-    working_directory: ~/repo
-
     steps:
       - checkout
-
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "Pipfile.lock" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-
-      - run:
-          name: Install Dependencies
-          command: |
-             pipenv install --dev
-             pipenv check
-
-      - save_cache:
-          paths:
-            - ~/.local/share/virtualenvs/repo-eQF46Ow3
-          key: v1-dependencies-{{ checksum "Pipfile.lock" }}
-
-      - run:
-          name: Run Tests
-          command: |
-            # It is currently unknown where eQF46Ow3 comes from
-            source $HOME/.local/share/virtualenvs/repo-eQF46Ow3/bin/activate
-            python setup.py test
-
-      - run:
-          name: Calculate and upload code coverage
-          context: code_coverage
-          command: |
-            source $HOME/.local/share/virtualenvs/repo-eQF46Ow3/bin/activate
-            pip install .
-            # ^^ ModuleNotFoundError: No module named 'badgr_lite'
-            echo "TESTING context: $GLEN_TEST"
-            pipenv run coverage run tests/test_badgr_lite.py
-            pipenv run codecov --token $CODECOV_TOKEN
-
+      - run: echo 'hello'
+  test:
+    docker:
+      - image: circleci/python:3.7
+    steps:
+      - checkout
+      - run: echo 'world'
 workflows:
-  version: 2.1
+  version: 2
   build_and_test:
-  jobs:
-    - build
+    jobs:
+      - build
+      - test
