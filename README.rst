@@ -5,16 +5,16 @@ badgr-lite
 Automate awarding Open Badges to recipients without the overhead of a server
 
 .. image:: https://img.shields.io/pypi/v/badgr_lite.svg
-        :target: https://pypi.python.org/pypi/badgr_lite
+     :target: https://pypi.python.org/pypi/badgr_lite
 
 
-.. image:: https://img.shields.io/travis/glenjarvis/badgr-lite.svg
-        :target: https://travis-ci.org/glenjarvis/badgr-lite
+.. image:: https://img.shields.io/travis/glenjarvis/badgr-lite.svg?branch=develop
+     :target: https://travis-ci.org/glenjarvis/badgr-lite?branch=develop
 
 
 .. image:: https://readthedocs.org/projects/badgr-lite/badge/?version=latest
-        :target: https://badgr-lite.readthedocs.io/en/latest/?badge=latest
-        :alt: Documentation Status
+     :target: https://badgr-lite.readthedocs.io/en/latest/?badge=latest
+     :alt: Documentation Status
 
 
 .. image:: https://pyup.io/repos/github/glenjarvis/badgr-lite/shield.svg
@@ -35,9 +35,9 @@ already generated and online at `Read The Docs
 However, the documentation generation (i.e., Sphinx) support has removed Python
 3.5 support. These are considered developer only requirements.
 
-The Sphinx library requires snowballstemmer >= 1.1. However, snowballstemmer
-2.0.0 was just released. That update to snowballtemmer fails with Python 3.5
-due to a dependency with Python 3.6 or higher:
+The Sphinx library requires ``snowballstemmer >= 1.1``. However,
+``snowballstemmer 2.0.0`` was just released. That update to snowballtemmer
+fails with **Python 3.5** due to a dependency with **Python 3.6** or higher:
 
 ``RuntimeError: yarl 1.4+ requires Python 3.6+``
 
