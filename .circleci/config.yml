@@ -71,5 +71,5 @@ workflows:
   build_and_test:
     jobs:
       - setup
-      - test
-        context: code_coverage
+      - test:
+          context: code_coverage
