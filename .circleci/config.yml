@@ -8,13 +8,23 @@ jobs:
     steps:
       - checkout
 
-#      - restore_cache:
-#  setup:
-#    steps:
-#      - run:
-#          name: Install Dependencies
-#          command: |
-#            echo "Setup"
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "Pipfile.lock" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run:
+          name: Install Dependencies
+          command: |
+             pipenv install --dev
+             pipenv check
+
+      - save_cache:
+          paths:
+            - $HOME/.local/share/virtualenvs/project-zxI9dQ-Q
+          key: v1-dependencies-{{ checksum "Pipfile.lock" }}
+
 
   test:
     docker:
