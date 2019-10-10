@@ -14,6 +14,11 @@ Automate awarding Open Badges to recipients without the overhead of a server
      :alt: Build Status
 
 
+.. image:: https://codecov.io/gh/glenjarvis/badgr-lite/branch/develop/graph/badge.svg?branch=develop
+     :target: https://codecov.io/gh/glenjarvis/badgr-lite?branch=develop
+     :alt: Code Coverage Status
+
+
 .. image:: https://readthedocs.org/projects/badgr-lite/badge/?version=latest
      :target: https://badgr-lite.readthedocs.io/en/latest/?badge=latest
      :alt: Documentation Status
@@ -23,10 +28,6 @@ Automate awarding Open Badges to recipients without the overhead of a server
      :target: https://pyup.io/repos/github/glenjarvis/badgr-lite/
      :alt: Updates
 
-
-.. image:: https://codecov.io/gh/glenjarvis/badgr-lite/branch/develop/graph/badge.svg?branch=develop
-     :target: https://codecov.io/gh/glenjarvis/badgr-lite?branch=develop
-     :alt: Code Coverage Status
 
 
 Python support
