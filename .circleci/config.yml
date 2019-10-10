@@ -2,7 +2,7 @@
 #
 version: 2.1
 jobs:
-  setup:
+  install_requirements:
     docker:
       - image: circleci/python:3.7
     steps:
@@ -43,7 +43,7 @@ jobs:
           command: |
             # It is currently unknown where eQF46Ow3 comes from
             source $HOME/.local/share/virtualenvs/project-zxI9dQ-Q/bin/activate
-            python setup.py test
+            python install_requirements.py test
 
   code_coverage:
     docker:
@@ -72,11 +72,11 @@ workflows:
   version: 2
   full_suite:
     jobs:
-      - setup
+      - install_requirements
       - test:
           requires:
-            - setup
+            - install_requirements
       - code_coverage:
           context: code_coverage
           requires:
-            - setup
+            - install_requirements
