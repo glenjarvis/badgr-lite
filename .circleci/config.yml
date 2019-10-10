@@ -45,3 +45,9 @@ jobs:
             echo "TESTING context: $GLEN_TEST"
             pipenv run coverage run tests/test_badgr_lite.py
             pipenv run codecov --token $CODECOV_TOKEN
+
+workflows:
+  version: 2.1
+  build_and_test:
+  jobs:
+    - build
