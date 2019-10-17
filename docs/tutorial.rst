@@ -15,7 +15,7 @@ validated for authenticity.
 
 There is data baked into the image that proves the badge is valid (and that it
 was awarded to you). And, there are `verifier tools <https://badgecheck.io/>`_
-that can be used to verify the vadge is genuine and even that it was awarded to
+that can be used to verify the badge is genuine and even that it was awarded to
 you.
 
 Let's start by having you earn your first badge. Open a new tab and go to this
