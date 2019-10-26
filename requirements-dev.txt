@@ -18,7 +18,7 @@ imagesize==1.1.0
 importlib-metadata==0.23 ; python_version < '3.8'
 isort==4.3.21
 jinja2==2.10.3
-lazy-object-proxy==1.4.2
+lazy-object-proxy==1.4.3
 markupsafe==1.1.1
 mccabe==0.6.1
 more-itertools==7.2.0
@@ -43,7 +43,7 @@ requests-toolbelt==0.9.1
 requests==2.22.0
 six==1.12.0
 snowballstemmer==2.0.0
-sphinx==2.2.0
+sphinx==2.2.1
 sphinxcontrib-applehelp==1.0.1
 sphinxcontrib-devhelp==1.0.1
 sphinxcontrib-htmlhelp==1.0.2
