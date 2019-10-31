@@ -54,7 +54,7 @@ toml==0.10.0
 tox-pipenv==1.9.0
 tox-pyenv==1.1.0
 tox==3.14.0
-tqdm==4.36.1
+tqdm==4.37.0
 twine==2.0.0
 typed-ast==1.4.0 ; implementation_name == 'cpython' and python_version < '3.8'
 typing-extensions==3.7.4.1
