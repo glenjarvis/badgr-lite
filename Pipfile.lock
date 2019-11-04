@@ -651,11 +651,11 @@
         },
         "vcrpy": {
             "hashes": [
-                "sha256:0e79239441fb4c731da9f05aecbd062223ef1f4ab668d2400c63c347a7071414",
-                "sha256:b5bcdd4450d03acd623515c8b9fbf3f1f7fa3a44fd0c01c674b0f1166a1949f8"
+                "sha256:27cc696df66d77703eab5cdfa041b2f9877bbf2b54bcd390de89a4be964ca536",
+                "sha256:3203170a13fe26407183768fab48af10086fa22d487b3887859c89fd47e69935"
             ],
             "index": "pypi",
-            "version": "==2.1.0"
+            "version": "==2.1.1"
         },
         "virtualenv": {
             "hashes": [
@@ -713,7 +713,7 @@
                 "sha256:c9bb7c249c4432cd47e75af3864bc02d26c9594f49c82e2a28624417f0ae63b8",
                 "sha256:e060906c0c585565c718d1c3841747b61c5439af2211e185f6739a9412dfbde1"
             ],
-            "markers": "python_version >= '3.5'",
+            "markers": "python_version >= '3.6'",
             "version": "==1.3.0"
         },
         "zipp": {
