@@ -4,7 +4,7 @@ version: 2.1
 jobs:
   install_requirements:
     docker:
-      - image: circleci/python:3.7
+      - image: circleci/python:3.8
     steps:
       - checkout
 
@@ -28,7 +28,7 @@ jobs:
 
   test:
     docker:
-      - image: circleci/python:3.7
+      - image: circleci/python:3.8
     steps:
       - checkout
 
@@ -47,7 +47,7 @@ jobs:
 
   code_coverage:
     docker:
-      - image: circleci/python:3.7
+      - image: circleci/python:3.8
 
     steps:
       - checkout
