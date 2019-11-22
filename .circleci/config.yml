@@ -2,20 +2,17 @@
 #
 version: 2.1
 jobs:
-  build:
+  install_requirements:
     docker:
-      - image: circleci/python:3.7
-
-    working_directory: ~/repo
-
+      - image: circleci/python:3.8
     steps:
       - checkout
 
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "Pipfile.lock" }}
+            - pip-requirements-r4-{{ checksum "Pipfile.lock" }}
             # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+            - pip-requirements-r4-
 
       - run:
           name: Install Dependencies
@@ -25,16 +22,61 @@ jobs:
 
       - save_cache:
           paths:
-            - ./venv
-          key: v1-dependencies-{{ checksum "Pipfile.lock" }}
+            - /home/circleci/.local/share/virtualenvs/project-zxI9dQ-Q
+          key: pip-requirements-r4-{{ checksum "Pipfile.lock" }}
+
+
+  test:
+    docker:
+      - image: circleci/python:3.8
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - pip-requirements-r4-{{ checksum "Pipfile.lock" }}
+            # fallback to using the latest cache if no exact match is found
+            - pip-requirements-r4-
 
       - run:
           name: Run Tests
           command: |
             # It is currently unknown where eQF46Ow3 comes from
-            source $HOME/.local/share/virtualenvs/repo-eQF46Ow3/bin/activate
+            source $HOME/.local/share/virtualenvs/project-zxI9dQ-Q/bin/activate
             python setup.py test
 
-      #- store_artifacts:
-      #    path: test-reports
-      #    destination: test-reports
+  code_coverage:
+    docker:
+      - image: circleci/python:3.8
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - pip-requirements-r4-{{ checksum "Pipfile.lock" }}
+            # fallback to using the latest cache if no exact match is found
+            - pip-requirements-r4-
+
+      - run:
+          name: Calculate and upload code coverage
+          command: |
+            source $HOME/.local/share/virtualenvs/project-zxI9dQ-Q/bin/activate
+            # Be careful not to cache after following step
+            pip install .
+            pipenv run coverage run tests/test_badgr_lite.py
+            pipenv run codecov --token $CODECOV_TOKEN
+
+
+workflows:
+  version: 2
+  full_suite:
+    jobs:
+      - install_requirements
+      - test:
+          requires:
+            - install_requirements
+      - code_coverage:
+          context: code_coverage
+          requires:
+            - install_requirements

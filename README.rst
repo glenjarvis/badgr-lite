@@ -5,16 +5,23 @@ badgr-lite
 Automate awarding Open Badges to recipients without the overhead of a server
 
 .. image:: https://img.shields.io/pypi/v/badgr_lite.svg
-        :target: https://pypi.python.org/pypi/badgr_lite
+     :target: https://pypi.python.org/pypi/badgr_lite
+     :alt: PyPI Status
 
 
-.. image:: https://img.shields.io/travis/glenjarvis/badgr-lite.svg
-        :target: https://travis-ci.org/glenjarvis/badgr-lite
+.. image:: https://img.shields.io/travis/glenjarvis/badgr-lite.svg?branch=develop
+     :target: https://travis-ci.org/glenjarvis/badgr-lite?branch=develop
+     :alt: Build Status
+
+
+.. image:: https://codecov.io/gh/glenjarvis/badgr-lite/branch/develop/graph/badge.svg?branch=develop
+     :target: https://codecov.io/gh/glenjarvis/badgr-lite?branch=develop
+     :alt: Code Coverage Status
 
 
 .. image:: https://readthedocs.org/projects/badgr-lite/badge/?version=latest
-        :target: https://badgr-lite.readthedocs.io/en/latest/?badge=latest
-        :alt: Documentation Status
+     :target: https://badgr-lite.readthedocs.io/en/latest/?badge=latest
+     :alt: Documentation Status
 
 
 .. image:: https://pyup.io/repos/github/glenjarvis/badgr-lite/shield.svg
@@ -22,30 +29,6 @@ Automate awarding Open Badges to recipients without the overhead of a server
      :alt: Updates
 
 
-Python support
---------------
-
-The badgr-lite library and command-line (CLI) should work in Python 3.5, 3.6
-and 3.7. You should be able to use this without error in those versions (and
-possibly other versions) as long as you do not need to regenerate the
-documentation. Generating the documentation shouldn't be needed as they are
-already generated and online at `Read The Docs
-<https://badgr-lite.readthedocs.io/en/latest/>`_
-
-However, the documentation generation (i.e., Sphinx) support has removed Python
-3.5 support. These are considered developer only requirements.
-
-The Sphinx library requires snowballstemmer >= 1.1. However, snowballstemmer
-2.0.0 was just released. That update to snowballtemmer fails with Python 3.5
-due to a dependency with Python 3.6 or higher:
-
-``RuntimeError: yarl 1.4+ requires Python 3.6+``
-
-Until this is resolved with the Sphinx project, official support for Python 3.5
-has been removed from this project. However, please note that the only place
-this dependency is needed is for Sphinx document generation. The badgr-lite
-library itself has been tested with Python 3.5 and may work with other Python 3
-versions.
 
 Quick Start
 -----------

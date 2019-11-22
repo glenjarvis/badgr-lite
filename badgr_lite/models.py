@@ -35,24 +35,38 @@ class Badge:
     def __init__(self, attrs: dict) -> None:
         """Initialize with single dictionary
 
-        All keys in REQUIRED_ATTRS are required to initialize properly.
-        """
-        self._attrs = attrs
-        self._add_dynamic_attrs()
+        Pythonic attributes are created from the given attrs dictionary.
 
-        pythonic_attrs = [pythonic(k) for k in attrs.keys()]
-        missing_but_required = set(self.REQUIRED_ATTRS) - set(pythonic_attrs)
+        Note that the keys in REQUIRED_ATTRS (or their JSON equivalents)
+        are required for initialization. The RequiredAttributesMissin...
+        exception is raised if they are not all present.
+
+        Also, `created_at` (createdAt) is converted from string to
+        datetime.
+        """
+        pythonic_attrs = {pythonic(k): v for k, v in attrs.items()}
+        if "created_at" in pythonic_attrs:
+            converted_value = to_datetime(pythonic_attrs['created_at'])
+            pythonic_attrs['created_at'] = converted_value
+
+        for pythonic_key, value in pythonic_attrs.items():
+            setattr(self, pythonic_key, value)
+
+        self._attrs = pythonic_attrs
+        self._check_missing_but_required(pythonic_attrs)
+
+    def _check_missing_but_required(self, pythonic_attrs: dict) -> None:
+        """Raise exception if required attributes not in pythonic_attrs
+
+        Raise exceptions.RequiredAttributesMissingError if required attributes
+        are not given.
+        """
+        missing_but_required =\
+            set(self.REQUIRED_ATTRS) - set(pythonic_attrs.keys())
 
         if missing_but_required:
             raise exceptions.RequiredAttributesMissingError(
                 ", ".join(missing_but_required))
-
-    def _add_dynamic_attrs(self):
-        for key in self._attrs.keys():
-            pythonic_key = pythonic(key)
-            if pythonic_key == "created_at":
-                self._attrs[key] = to_datetime(self._attrs[key])
-            setattr(self, pythonic_key, self._attrs[key])
 
     def __str__(self):
         url = "https://badgr.io/public/assertions/{}".format(self.entity_id)
