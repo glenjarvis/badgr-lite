@@ -19,7 +19,7 @@ test_requirements = ['vcrpy', ]
 
 setup(
     name='badgr_lite',
-    version='1.0.1',
+    version='1.0.2',
     author="Glen Jarvis",
     author_email='glen@glenjarvis.com',
     python_requires='!=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*',

@@ -2,6 +2,12 @@
 History
 =======
 
+
+1.0.2 (2019-11-22)
+------------------
+
+* Add Python 3.8 Trove Classifier / `Pull request #67 <https://github.com/glenjarvis/badgr-lite/pull/67>`_
+
 1.0.1 (2019-11-22)
 ------------------
 
