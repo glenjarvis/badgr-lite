@@ -19,7 +19,7 @@ test_requirements = ['vcrpy', ]
 
 setup(
     name='badgr_lite',
-    version='1.0.1',
+    version='1.0.2',
     author="Glen Jarvis",
     author_email='glen@glenjarvis.com',
     python_requires='!=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*',
@@ -32,6 +32,7 @@ setup(
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
     ],
     description="Automate awarding Badgr (or equivalent) badges to recipients without the overhead of badgr-server",
     entry_points={
