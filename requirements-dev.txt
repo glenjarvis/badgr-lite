@@ -32,7 +32,7 @@ pluggy==0.13.1
 py==1.8.0
 pycodestyle==2.5.0
 pyflakes==2.1.1
-pygments==2.4.2
+pygments==2.5.1
 pylint==2.4.4
 pyparsing==2.4.5
 pytz==2019.3
@@ -54,7 +54,7 @@ tox-pipenv==1.9.0
 tox-pyenv==1.1.0
 tox==3.14.1
 tqdm==4.39.0
-twine==3.1.0
+twine==3.1.1
 typed-ast==1.4.0
 typing-extensions==3.7.4.1
 urllib3==1.25.7
