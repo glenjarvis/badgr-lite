@@ -23,7 +23,7 @@ markupsafe==1.1.1
 mccabe==0.6.1
 multidict==4.7.1
 mypy-extensions==0.4.3
-mypy==0.750
+mypy==0.760
 packaging==19.2
 pathtools==0.1.2
 pipenv==2018.11.26
