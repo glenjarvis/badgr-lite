@@ -65,5 +65,5 @@ virtualenv==20.0.9
 watchdog==0.10.2
 webencodings==0.5.1
 wheel==0.34.2
-wrapt==1.11.2
+wrapt==1.12.1
 yarl==1.4.2 ; python_version >= '3.6'
