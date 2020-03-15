@@ -50,7 +50,7 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr htmlcov/
 	rm -fr .pytest_cache
 
-check: ## Style Guidelines and check of tests
+code-style-check: ## Style Guidelines and check of tests
 	echo "########################"
 	python tests/test_badgr_lite.py
 	echo "########################"
