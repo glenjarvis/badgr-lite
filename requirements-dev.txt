@@ -18,13 +18,13 @@ idna==2.9
 imagesize==1.2.0
 isort==4.3.21
 jinja2==2.11.1
-keyring==21.1.1
+keyring==21.2.0
 lazy-object-proxy==1.4.3
 markupsafe==1.1.1
 mccabe==0.6.1
 multidict==4.7.5
 mypy-extensions==0.4.3
-mypy==0.761
+mypy==0.770
 packaging==20.3
 pathtools==0.1.2
 pipenv==2018.11.26
@@ -38,7 +38,7 @@ pylint==2.4.4
 pyparsing==2.4.6
 pytz==2019.3
 pyyaml==5.3
-readme-renderer==24.0
+readme-renderer==25.0
 requests-toolbelt==0.9.1
 requests==2.23.0
 six==1.14.0
@@ -61,7 +61,7 @@ typing-extensions==3.7.4.1
 urllib3==1.25.8
 vcrpy==4.0.2
 virtualenv-clone==0.5.3
-virtualenv==20.0.9
+virtualenv==20.0.10
 watchdog==0.10.2
 webencodings==0.5.1
 wheel==0.34.2
