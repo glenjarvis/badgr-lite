@@ -44,6 +44,7 @@ jobs:
             # It is currently unknown where eQF46Ow3 comes from
             source $HOME/.local/share/virtualenvs/project-zxI9dQ-Q/bin/activate
             python setup.py test
+            pip install .
             make code-style-check
 
   code_coverage:
