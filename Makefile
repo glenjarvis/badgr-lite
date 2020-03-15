@@ -50,6 +50,20 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr htmlcov/
 	rm -fr .pytest_cache
 
+check: ## Style Guidelines and check of tests
+	echo "########################"
+	python tests/test_badgr_lite.py
+	echo "########################"
+	flake8 tests/test_badgr_lite.py
+	pylint tests/test_badgr_lite.py
+	pycodestyle tests/test_badgr_lite.py
+	pylint tests/test_badgr_lite.py
+	pycodestyle tests/test_badgr_lite.py
+	mypy badgr_lite/cli.py
+	mypy badgr_lite/exceptions.py
+	mypy badgr_lite/helpers.py
+	mypy badgr_lite/models.py
+
 lint: ## check style with flake8
 	flake8 badgr_lite tests
 
