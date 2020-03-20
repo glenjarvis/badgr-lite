@@ -3,12 +3,12 @@ alabaster==0.7.12
 appdirs==1.4.3
 astroid==2.3.3
 babel==2.8.0
-bleach==3.1.1
+bleach==3.1.3
 bump2version==1.0.0
 certifi==2019.11.28
 chardet==3.0.4
-codecov==2.0.16
-coverage==5.0.3
+codecov==2.0.22
+coverage==5.0.4
 distlib==0.3.0
 docutils==0.16
 entrypoints==0.3
@@ -37,7 +37,7 @@ pygments==2.6.1
 pylint==2.4.4
 pyparsing==2.4.6
 pytz==2019.3
-pyyaml==5.3
+pyyaml==5.3.1
 readme-renderer==25.0
 requests-toolbelt==0.9.1
 requests==2.23.0
@@ -61,7 +61,7 @@ typing-extensions==3.7.4.1
 urllib3==1.25.8
 vcrpy==4.0.2
 virtualenv-clone==0.5.3
-virtualenv==20.0.10
+virtualenv==20.0.13
 watchdog==0.10.2
 webencodings==0.5.1
 wheel==0.34.2
