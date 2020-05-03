@@ -54,7 +54,7 @@ toml==0.10.0
 tox-pipenv==1.9.0
 tox-pyenv==1.1.0
 tox==3.14.6
-tqdm==4.45.0
+tqdm==4.46.0
 twine==3.1.1
 typed-ast==1.4.1
 typing-extensions==3.7.4.2
