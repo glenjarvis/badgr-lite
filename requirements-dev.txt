@@ -1,6 +1,6 @@
 -i https://pypi.org/simple
 alabaster==0.7.12
-appdirs==1.4.3
+appdirs==1.4.4
 astroid==2.4.1
 babel==2.8.0
 bleach==3.1.5
@@ -11,9 +11,8 @@ codecov==2.0.22
 coverage==5.1
 distlib==0.3.0
 docutils==0.16
-entrypoints==0.3
 filelock==3.0.12
-flake8==3.7.9
+flake8==3.8.1
 idna==2.9
 imagesize==1.2.0
 importlib-metadata==1.6.0 ; python_version < '3.8'
@@ -32,8 +31,8 @@ pipenv==2018.11.26
 pkginfo==1.5.0.1
 pluggy==0.13.1
 py==1.8.1
-pycodestyle==2.5.0
-pyflakes==2.1.1
+pycodestyle==2.6.0
+pyflakes==2.2.0
 pygments==2.6.1
 pylint==2.5.2
 pyparsing==2.4.7
