@@ -147,7 +147,7 @@ class BadgrLite:
         ...     print(badge)
         ...
         cTjxL52HQBiSgIp5JuVq5w: Bay Area Python Interest Group TDD Participant
-        5YhFytMUQb2loOMEy63gQA: Bay Area Python Interest Group TDD Quizmaster
+        5YhFytMUQb2loOMEy63gQA: Bay Area Python Interest Group TDD Quiz Champion
         yzExTDvOTnOx_R3YhwPf3A: Test Driven Development Fundamentals Champion
         yNjcY70FSn603SO9vMGhBA: Install Python with Virtual Environments
         """
