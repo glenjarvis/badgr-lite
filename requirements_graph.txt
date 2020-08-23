@@ -1,0 +1,9 @@
+click 7.1.2 Composable command line interface toolkit
+pytz 2020.1 World timezone definitions, modern and historical
+vcrpy 4.1.0 Automatically mock your HTTP interactions to simplify and speed up testing
+|-- pyyaml *
+|-- six >=1.5
+|-- wrapt *
+`-- yarl *
+    |-- idna >=2.0 
+    `-- multidict >=4.0 
