@@ -9,8 +9,8 @@ Automate awarding Open Badges to recipients without the overhead of a server
      :alt: PyPI Status
 
 
-.. image:: https://img.shields.io/travis/glenjarvis/badgr-lite.svg?branch=develop
-     :target: https://travis-ci.org/glenjarvis/badgr-lite?branch=develop
+.. image:: https://circleci.com/gh/glenjarvis/badgr-lite.svg?style=svg
+     :target: https://circleci.com/gh/glenjarvis/badgr-lite
      :alt: Build Status
 
 
