@@ -9,7 +9,7 @@ flake8==3.8.4
 idna==2.10
 importlib-metadata==2.0.0; python_version < "3.8"
 isort==5.6.1
-lazy-object-proxy==1.4.3
+lazy-object-proxy==1.5.1
 mccabe==0.6.1
 multidict==4.7.6; python_version >= "3.6"
 mypy==0.782
