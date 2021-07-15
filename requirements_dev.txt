@@ -1,13 +1,13 @@
 astroid==2.6.2; python_version >= "3.6" and python_version < "4.0"
 certifi==2021.5.30; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.6.0"
 charset-normalizer==2.0.2; python_full_version >= "3.6.0" and python_version >= "3"
-click==7.1.2; (python_version >= "2.7" and python_full_version < "3.0.0") or (python_full_version >= "3.5.0")
+click==8.0.1; python_version >= "3.6"
 codecov==2.1.11; (python_version >= "2.7" and python_full_version < "3.0.0") or (python_full_version >= "3.4.0")
-colorama==0.4.4; python_version >= "3.6" and python_full_version < "3.0.0" and python_version < "4.0" and sys_platform == "win32" or python_version >= "3.6" and python_version < "4.0" and sys_platform == "win32" and python_full_version >= "3.5.0"
+colorama==0.4.4; python_version >= "3.6" and python_full_version < "3.0.0" and platform_system == "Windows" and python_version < "4.0" and sys_platform == "win32" or platform_system == "Windows" and python_version >= "3.6" and python_full_version >= "3.5.0" and python_version < "4.0" and sys_platform == "win32"
 coverage==5.5; (python_version >= "2.7" and python_full_version < "3.0.0") or (python_full_version >= "3.5.0" and python_version < "4")
 flake8==3.9.2; (python_version >= "2.7" and python_full_version < "3.0.0") or (python_full_version >= "3.5.0")
 idna==3.2; python_version >= "3.6" and python_full_version < "3.0.0" or python_full_version >= "3.6.0" and python_version >= "3.6"
-importlib-metadata==4.6.1; python_version >= "3.6" and python_full_version < "3.0.0" and python_version < "3.8" or python_full_version >= "3.5.0" and python_version < "3.8" and python_version >= "3.6"
+importlib-metadata==4.6.1; python_version < "3.8" and python_version >= "3.6" and (python_version >= "3.6" and python_full_version < "3.0.0" and python_version < "3.8" or python_full_version >= "3.5.0" and python_version < "3.8" and python_version >= "3.6")
 isort==5.8.0; python_version >= "3.6" and python_version < "4.0"
 lazy-object-proxy==1.6.0; python_version >= "3.6" and python_full_version < "3.0.0" and python_version < "4.0" or python_version >= "3.6" and python_version < "4.0" and python_full_version >= "3.6.0"
 mccabe==0.6.1; python_version >= "3.6" and python_full_version < "3.0.0" and python_version < "4.0" or python_version >= "3.6" and python_version < "4.0" and python_full_version >= "3.5.0"
@@ -26,9 +26,9 @@ typed-ast==1.4.3; python_version < "3.8" and python_version >= "3.6" and impleme
 types-click==7.1.2
 types-pytz==2021.1.0
 types-requests==2.25.0
-typing-extensions==3.10.0.0; python_version < "3.8" and python_version >= "3.6" and (python_version >= "3.6" and python_full_version < "3.0.0" and python_version < "3.8" or python_full_version >= "3.5.0" and python_version < "3.8" and python_version >= "3.6")
+typing-extensions==3.10.0.0; python_version < "3.8" and python_version >= "3.6"
 urllib3==1.26.6; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.6.0" and python_version < "4"
 vcrpy==4.1.1; python_version >= "3.5"
 wrapt==1.12.1; python_version >= "3.6" and python_version < "4.0"
 yarl==1.6.3; python_version >= "3.6"
-zipp==3.5.0; python_version >= "3.6" and python_full_version < "3.0.0" and python_version < "3.8" or python_full_version >= "3.5.0" and python_version < "3.8" and python_version >= "3.6"
+zipp==3.5.0; python_version < "3.8" and python_version >= "3.6"

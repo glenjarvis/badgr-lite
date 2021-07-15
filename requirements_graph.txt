@@ -1,4 +1,8 @@
-click 7.1.2 Composable command line interface toolkit
+click 8.0.1 Composable command line interface toolkit
+|-- colorama *
+`-- importlib-metadata *
+    |-- typing-extensions >=3.6.4 
+    `-- zipp >=0.5 
 codecov 2.1.11 Hosted coverage reports for GitHub, Bitbucket and Gitlab
 |-- coverage *
 `-- requests >=2.7.9
