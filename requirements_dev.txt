@@ -23,6 +23,9 @@ requests==2.26.0
 six==1.16.0
 toml==0.10.2
 typed-ast==1.4.3; implementation_name == "cpython" and python_version < "3.8" or python_version < "3.8"
+types-click==7.1.2
+types-pytz==2021.1.0
+types-requests==2.25.0
 typing-extensions==3.10.0.0
 urllib3==1.26.6
 vcrpy==4.1.1
