@@ -1,33 +1,38 @@
 click 7.1.2 Composable command line interface toolkit
-codecov 2.1.10 Hosted coverage reports for GitHub, Bitbucket and Gitlab
+codecov 2.1.11 Hosted coverage reports for GitHub, Bitbucket and Gitlab
 |-- coverage *
 `-- requests >=2.7.9
     |-- certifi >=2017.4.17 
-    |-- chardet >=3.0.2,<4 
-    |-- idna >=2.5,<3 
-    `-- urllib3 >=1.21.1,<1.25.0 || >1.25.0,<1.25.1 || >1.25.1,<1.26 
-coverage 5.3 Code coverage measurement for Python
-flake8 3.8.4 the modular source code checker: pep8 pyflakes and co
+    |-- charset-normalizer >=2.0.0,<2.1.0 
+    |-- idna >=2.5,<4 
+    `-- urllib3 >=1.21.1,<1.27 
+coverage 5.5 Code coverage measurement for Python
+flake8 3.9.2 the modular source code checker: pep8 pyflakes and co
 |-- importlib-metadata *
+|   |-- typing-extensions >=3.6.4 
 |   `-- zipp >=0.5 
 |-- mccabe >=0.6.0,<0.7.0
-|-- pycodestyle >=2.6.0a1,<2.7.0
-`-- pyflakes >=2.2.0,<2.3.0
-mypy 0.790 Optional static typing for Python
+|-- pycodestyle >=2.7.0,<2.8.0
+`-- pyflakes >=2.3.0,<2.4.0
+mypy 0.910 Optional static typing for Python
 |-- mypy-extensions >=0.4.3,<0.5.0
+|-- toml *
 |-- typed-ast >=1.4.0,<1.5.0
 `-- typing-extensions >=3.7.4
-pylint 2.6.0 python code static checker
-|-- astroid >=2.4.0,<=2.5
-|   |-- lazy-object-proxy >=1.4.0,<1.5.0 
-|   |-- six >=1.12,<2.0 
+pylint 2.9.3 python code static checker
+|-- astroid >=2.6.2,<2.7
+|   |-- lazy-object-proxy >=1.4.0 
 |   |-- typed-ast >=1.4.0,<1.5 
-|   `-- wrapt >=1.11,<2.0 
+|   |-- typing-extensions >=3.7.4 
+|   `-- wrapt >=1.11,<1.13 
 |-- colorama *
 |-- isort >=4.2.5,<6
 |-- mccabe >=0.6,<0.7
 `-- toml >=0.7.1
-pytz 2020.1 World timezone definitions, modern and historical
+pytz 2020.5 World timezone definitions, modern and historical
+types-click 7.1.2 Typing stubs for click
+types-pytz 2021.1.0 Typing stubs for pytz
+types-requests 2.25.0 Typing stubs for requests
 vcrpy 4.1.1 Automatically mock your HTTP interactions to simplify and speed up testing
 |-- pyyaml *
 |-- six >=1.5
