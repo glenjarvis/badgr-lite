@@ -17,7 +17,7 @@ classifiers = [
 [tool.poetry.dependencies]
 python = "^3.6"
 click = "^8"
-pytz = "^2020.1"
+pytz = "^2020.3"
 
 [tool.poetry.dev-dependencies]
 vcrpy = "^4.1.0"
