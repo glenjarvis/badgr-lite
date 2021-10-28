@@ -29,7 +29,8 @@ class BadgrLiteTestBase(unittest.TestCase):
         self.sample_token_file =\
             os.path.join(self._tempdir, "sample_token_file.json")
 
-        with open(self.sample_token_file, 'w') as stf_h:
+        with open(self.sample_token_file, 'w',
+                  encoding="utf8", errors="surrogateescape") as stf_h:
             stf_h.write(json.dumps(
                 {"access_token": self._sample_token,
                  "token_type": "Bearer",
@@ -280,7 +281,8 @@ class TestBadgrLiteInstantiation(BadgrLiteTestBase):
     def test_verifies_token_file_contains_json(self):
         """BadgrLite() verifies token file exists"""
 
-        with open(self.sample_token_file, 'w') as stf_h:
+        with open(self.sample_token_file, 'w',
+                  encoding="utf8", errors="surrogateescape") as stf_h:
             stf_h.write("Bad JSON")
 
         with self.assertRaises(json.decoder.JSONDecodeError):

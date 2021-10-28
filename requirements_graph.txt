@@ -1,9 +1,9 @@
-click 8.0.1 Composable command line interface toolkit
+click 8.0.3 Composable command line interface toolkit
 |-- colorama *
 `-- importlib-metadata *
     |-- typing-extensions >=3.6.4 
     `-- zipp >=0.5 
-codecov 2.1.11 Hosted coverage reports for GitHub, Bitbucket and Gitlab
+codecov 2.1.12 Hosted coverage reports for GitHub, Bitbucket and Gitlab
 |-- coverage *
 `-- requests >=2.7.9
     |-- certifi >=2017.4.17 
@@ -23,20 +23,22 @@ mypy 0.910 Optional static typing for Python
 |-- toml *
 |-- typed-ast >=1.4.0,<1.5.0
 `-- typing-extensions >=3.7.4
-pylint 2.9.3 python code static checker
-|-- astroid >=2.6.2,<2.7
+pylint 2.11.1 python code static checker
+|-- astroid >=2.8.0,<2.9
 |   |-- lazy-object-proxy >=1.4.0 
 |   |-- typed-ast >=1.4.0,<1.5 
-|   |-- typing-extensions >=3.7.4 
-|   `-- wrapt >=1.11,<1.13 
+|   |-- typing-extensions >=3.10 
+|   `-- wrapt >=1.11,<1.14 
 |-- colorama *
 |-- isort >=4.2.5,<6
 |-- mccabe >=0.6,<0.7
-`-- toml >=0.7.1
+|-- platformdirs >=2.2.0
+|-- toml >=0.7.1
+`-- typing-extensions >=3.10.0
 pytz 2020.5 World timezone definitions, modern and historical
-types-click 7.1.2 Typing stubs for click
-types-pytz 2021.1.0 Typing stubs for pytz
-types-requests 2.25.0 Typing stubs for requests
+types-click 7.1.7 Typing stubs for click
+types-pytz 2021.3.0 Typing stubs for pytz
+types-requests 2.25.11 Typing stubs for requests
 vcrpy 4.1.1 Automatically mock your HTTP interactions to simplify and speed up testing
 |-- pyyaml *
 |-- six >=1.5
