@@ -21,9 +21,9 @@ pytz = "^2020.1"
 
 [tool.poetry.dev-dependencies]
 vcrpy = "^4.1.0"
-coverage = "^5.2.1"
+coverage = "^6.0"
 codecov = "^2.1.9"
-flake8 = "^3.8.3"
+flake8 = "^4.0"
 pylint = "^2.6.0"
 mypy = "<1"
 types-click = "^7.1"

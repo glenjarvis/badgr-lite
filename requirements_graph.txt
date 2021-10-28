@@ -10,14 +10,14 @@ codecov 2.1.12 Hosted coverage reports for GitHub, Bitbucket and Gitlab
     |-- charset-normalizer >=2.0.0,<2.1.0 
     |-- idna >=2.5,<4 
     `-- urllib3 >=1.21.1,<1.27 
-coverage 5.5 Code coverage measurement for Python
-flake8 3.9.2 the modular source code checker: pep8 pyflakes and co
-|-- importlib-metadata *
+coverage 6.0.2 Code coverage measurement for Python
+flake8 4.0.1 the modular source code checker: pep8 pyflakes and co
+|-- importlib-metadata <4.3
 |   |-- typing-extensions >=3.6.4 
 |   `-- zipp >=0.5 
 |-- mccabe >=0.6.0,<0.7.0
-|-- pycodestyle >=2.7.0,<2.8.0
-`-- pyflakes >=2.3.0,<2.4.0
+|-- pycodestyle >=2.8.0,<2.9.0
+`-- pyflakes >=2.4.0,<2.5.0
 mypy 0.910 Optional static typing for Python
 |-- mypy-extensions >=0.4.3,<0.5.0
 |-- toml *
