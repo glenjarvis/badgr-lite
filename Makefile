@@ -67,11 +67,11 @@ code-style-check: ## Style Guidelines and check of tests
 lint: ## check style with flake8
 	flake8 badgr_lite tests
 
-reqs: ## Update all Pip requirements with Poetry
+reqs: ## Update all requirements
 	poetry update
 	poetry export --without-hashes -f requirements.txt -o requirements.txt
-	poetry export --without-hashes --dev -f requirements.txt -o requirements_dev.txt
-	poetry show --tree > requirements_graph.txt
+	poetry export --without-hashes --dev -f requirements.txt -o requirements/dev.txt
+	poetry show --tree > requirements/graph.txt
 
 test: ## run tests quickly with the default Python
 	python setup.py test
