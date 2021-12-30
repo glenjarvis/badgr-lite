@@ -17,14 +17,14 @@ classifiers = [
 [tool.poetry.dependencies]
 python = "^3.6"
 click = "^8"
-pytz = "^2020.3"
+pytz = "^2021.3"
 
 [tool.poetry.dev-dependencies]
 vcrpy = "^4.1.0"
 coverage = "^6.0"
 codecov = "^2.1.9"
 flake8 = "^4.0"
-pylint = "^2.6.0"
+pylint = "^2.12"
 mypy = "<1"
 types-click = "^7.1"
 types-pytz = "^2021.1"
