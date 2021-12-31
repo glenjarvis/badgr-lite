@@ -3,4 +3,4 @@ colorama==0.4.4; python_version >= "3.6" and python_full_version < "3.0.0" and p
 importlib-metadata==4.2.0; python_version < "3.8" and python_version >= "3.6"
 pytz==2021.3
 typing-extensions==4.0.1; python_version < "3.8" and python_version >= "3.6"
-zipp==3.6.0; python_version < "3.8" and python_version >= "3.6"
+zipp==3.7.0; python_version < "3.8" and python_version >= "3.6"
