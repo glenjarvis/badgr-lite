@@ -10,7 +10,7 @@ idna==3.3; python_version >= "3.6" and python_full_version < "3.0.0" or python_f
 importlib-metadata==4.2.0; python_version < "3.8" and python_version >= "3.6"
 isort==5.8.0; python_version >= "3.6" and python_version < "4.0"
 lazy-object-proxy==1.7.1; python_version >= "3.6" and python_version < "4.0"
-mccabe==0.6.1; python_version >= "3.6" and python_version < "4.0"
+mccabe==0.7.0; python_version >= "3.6" and python_version < "4.0"
 multidict==5.2.0; python_version >= "3.6"
 mypy-extensions==0.4.3; python_version >= "3.6"
 mypy==0.930; python_version >= "3.6"
