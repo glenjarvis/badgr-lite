@@ -23,19 +23,26 @@ class TestBadgrLiteBase(unittest.TestCase):
         "token_type": "Bearer",
         "expires_in": 86400,
         "refresh_token": "vK__sample_refresh_token__AlPZ",
-        "scope": "rw:profile rw:issuer rw:backpack"}
+        "scope": "rw:profile rw:issuer rw:backpack",
+    }
 
     def setUp(self):
         self.runner = CliRunner()
         self.create_token_file()
         self.cli_options = [
-            '--token-file', self.token_file,
-            'award-badge',
-            '--badge-id', '2TfNNqMLT8CoAhfGKqSv6Q',
-            '--recipient', 'recipient@example.com',
-            '--notify',
-            '--evidence-url', 'https://example.com',
-            '--evidence-narrative', 'John Doe performed...']
+            "--token-file",
+            self.token_file,
+            "award-badge",
+            "--badge-id",
+            "2TfNNqMLT8CoAhfGKqSv6Q",
+            "--recipient",
+            "recipient@example.com",
+            "--notify",
+            "--evidence-url",
+            "https://example.com",
+            "--evidence-narrative",
+            "John Doe performed...",
+        ]
 
     def tearDown(self):
         os.remove(self.token_file)
@@ -57,8 +64,8 @@ class TestBadgrLiteBase(unittest.TestCase):
         more streamlined so that creating a temporary token file is not
         needed.
         """
-        _, self.token_file = tempfile.mkstemp(suffix='.json', prefix='token')
-        with open(self.token_file, 'w') as tmp_file:
+        _, self.token_file = tempfile.mkstemp(suffix=".json", prefix="token")
+        with open(self.token_file, "w") as tmp_file:
             tmp_file.write(json.dumps(TestBadgrLiteBase.SAMPLE_TOKEN_DATA))
 
 
@@ -71,17 +78,19 @@ class TestBadgrLiteCLI(TestBadgrLiteBase):
         result = self.runner.invoke(cli.main)
         self.assertEqual(0, result.exit_code)
         self.assertIn(
-            'Automate Badgr tasks without the overhead of badgr-server',
-            result.output)
+            "Automate Badgr tasks without the overhead of badgr-server",
+            result.output,
+        )
 
     def test_cli_token_file_option(self):
         """CLI takes --token argument"""
 
-        help_result = self.runner.invoke(cli.main, ['--help'])
+        help_result = self.runner.invoke(cli.main, ["--help"])
         self.assertEqual(0, help_result.exit_code)
         self.assertIn(
-            '--token-file PATH  File holding token credentials',
-            help_result.output)
+            "--token-file PATH  File holding token credentials",
+            help_result.output,
+        )
 
     def test_cli_help_shows_subcommand_without_token(self):
         """CLI shows subcommands help without token
@@ -97,7 +106,7 @@ class TestBadgrLiteCLI(TestBadgrLiteBase):
         token file existence is enforced.
         """
 
-        result = self.runner.invoke(cli.main, ['list-badges', '--help'])
+        result = self.runner.invoke(cli.main, ["list-badges", "--help"])
         self.assertEqual(0, result.exit_code)
 
     def test_cli_subcommand_with_token(self):
@@ -108,10 +117,10 @@ class TestBadgrLiteCLI(TestBadgrLiteBase):
         it's default).
         """
 
-        _, token_file = tempfile.mkstemp(suffix='.json', prefix='token')
+        _, token_file = tempfile.mkstemp(suffix=".json", prefix="token")
         result = self.runner.invoke(
-            cli.main,
-            ['--token-file', token_file, 'list-badges', '--help'])
+            cli.main, ["--token-file", token_file, "list-badges", "--help"]
+        )
         self.assertEqual(0, result.exit_code)
         os.remove(token_file)
 
@@ -125,7 +134,7 @@ class TestBadgrLiteCLIListBadges(TestBadgrLiteBase):
     def test_cli_subcommand_list_badges_help(self):
         """CLI has subcommand list-badges"""
 
-        result = self.runner.invoke(cli.main, ['list-badges', '--help'])
+        result = self.runner.invoke(cli.main, ["list-badges", "--help"])
         self.assertEqual(0, result.exit_code)
 
 
@@ -135,7 +144,7 @@ class TestBadgrLiteCLIAwardBadge(TestBadgrLiteBase):
     def test_cli_subcommand_award_badge_help(self):
         """CLI has subcommand award-badge"""
 
-        result = self.runner.invoke(cli.main, ['award-badge', '--help'])
+        result = self.runner.invoke(cli.main, ["award-badge", "--help"])
         self.assertEqual(0, result.exit_code)
 
     def test_cli_subcommand_award_badge_badge_id(self):
@@ -147,14 +156,14 @@ class TestBadgrLiteCLIAwardBadge(TestBadgrLiteBase):
         prompt input.
         """
 
-        with vcr.use_cassette('tests/vcr_cassettes/award_badge.yaml'):
-            self.cli_options.remove('--badge-id')
-            self.cli_options.remove('2TfNNqMLT8CoAhfGKqSv6Q')
+        with vcr.use_cassette("tests/vcr_cassettes/award_badge.yaml"):
+            self.cli_options.remove("--badge-id")
+            self.cli_options.remove("2TfNNqMLT8CoAhfGKqSv6Q")
             result = self.runner.invoke(
-                cli.main, self.cli_options,
-                input="2TfNNqMLT8CoAhfGKqSv6Q")
+                cli.main, self.cli_options, input="2TfNNqMLT8CoAhfGKqSv6Q"
+            )
             self.assertEqual(0, result.exit_code)
-            self.assertIn('Badge ID: 2TfNNqMLT8CoAhfGKqSv6Q', result.output)
+            self.assertIn("Badge ID: 2TfNNqMLT8CoAhfGKqSv6Q", result.output)
 
     def test_cli_subcommand_award_badge_recipient(self):
         """CLI award-badge requires --recipient
@@ -165,27 +174,28 @@ class TestBadgrLiteCLIAwardBadge(TestBadgrLiteBase):
         prompt input.
         """
 
-        with vcr.use_cassette('tests/vcr_cassettes/award_badge.yaml'):
-            self.cli_options.remove('--recipient')
-            self.cli_options.remove('recipient@example.com')
+        with vcr.use_cassette("tests/vcr_cassettes/award_badge.yaml"):
+            self.cli_options.remove("--recipient")
+            self.cli_options.remove("recipient@example.com")
             result = self.runner.invoke(
-                cli.main, self.cli_options,
-                input="recipient@example.com")
+                cli.main, self.cli_options, input="recipient@example.com"
+            )
             self.assertEqual(0, result.exit_code)
-            self.assertIn('Recipient email: recipient@example.com',
-                          result.output)
+            self.assertIn(
+                "Recipient email: recipient@example.com", result.output
+            )
 
     def test_cli_subcommand_award_badge_notify(self):
         """CLI award-badge allows --notify / --no-notify"""
 
-        with vcr.use_cassette('tests/vcr_cassettes/award_badge.yaml'):
+        with vcr.use_cassette("tests/vcr_cassettes/award_badge.yaml"):
             result = self.runner.invoke(cli.main, self.cli_options)
             self.assertEqual(0, result.exit_code)
 
     def test_cli_subcommand_award_badge_evidence_url(self):
         """CLI award-badge allows --evidence_url"""
 
-        with vcr.use_cassette('tests/vcr_cassettes/award_badge.yaml'):
+        with vcr.use_cassette("tests/vcr_cassettes/award_badge.yaml"):
             result = self.runner.invoke(cli.main, self.cli_options)
             # See also self.cli_options.
             self.assertEqual(0, result.exit_code)
@@ -193,7 +203,7 @@ class TestBadgrLiteCLIAwardBadge(TestBadgrLiteBase):
     def test_cli_subcommand_award_badge_evidence_narrative(self):
         """CLI award-badge allows --evidence-narrative"""
 
-        with vcr.use_cassette('tests/vcr_cassettes/award_badge.yaml'):
+        with vcr.use_cassette("tests/vcr_cassettes/award_badge.yaml"):
             result = self.runner.invoke(cli.main, self.cli_options)
             # See also self.cli_options.
             self.assertEqual(0, result.exit_code)
@@ -222,14 +232,15 @@ class TestBadgrLiteCLIAwardBadge(TestBadgrLiteBase):
         If either `--evidence-url` or `--evidence-narrative` is provided,
         require both.
         """
-        with vcr.use_cassette('tests/vcr_cassettes/award_badge.yaml'):
-            self.cli_options.remove('--evidence-narrative')
-            self.cli_options.remove('John Doe performed...')
+        with vcr.use_cassette("tests/vcr_cassettes/award_badge.yaml"):
+            self.cli_options.remove("--evidence-narrative")
+            self.cli_options.remove("John Doe performed...")
             result = self.runner.invoke(cli.main, self.cli_options)
             self.assertNotEqual(0, result.exit_code)
             self.assertIn(
                 "If one evidence paramater is used, both are needed",
-                result.output)
+                result.output,
+            )
 
     def test_cli_subcommand_award_badge_ensure_evidence(self):
         """CLI has ensure_evidence function
@@ -238,9 +249,9 @@ class TestBadgrLiteCLIAwardBadge(TestBadgrLiteBase):
         a list.
         """
         badge_data = cli.ensure_evidence({})
-        self.assertIn('evidence', badge_data.keys())
-        self.assertTrue(isinstance(badge_data['evidence'], list))
+        self.assertIn("evidence", badge_data.keys())
+        self.assertTrue(isinstance(badge_data["evidence"], list))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

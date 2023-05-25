@@ -170,7 +170,7 @@ Yes! If you don't have the bandwith to handle this integration with your Badgr
 (Canvas, Blackboard, etc.) system, we will happily do this for you.
 
 We are a safe B2B vendor that can solve this problem so that you can work on
-other issues.  Email **contact@glenjarvis.com**
+other issues.  Email **glen@glenjarvis.com**
 
 .. _Concentric Sky: https://www.concentricsky.com/
 .. _badgr-lite: https://github.com/glenjarvis/badgr-lite

@@ -54,23 +54,19 @@ code-style-check: ## Style Guidelines and check of tests
 	echo "########################"
 	python tests/test_badgr_lite.py
 	echo "########################"
-	flake8 tests/test_badgr_lite.py
 	pylint tests/test_badgr_lite.py
-	pycodestyle tests/test_badgr_lite.py
-	pylint tests/test_badgr_lite.py
-	pycodestyle tests/test_badgr_lite.py
 	mypy badgr_lite/cli.py
 	mypy badgr_lite/exceptions.py
 	mypy badgr_lite/helpers.py
 	mypy badgr_lite/models.py
 
 lint: ## check style with flake8
-	flake8 badgr_lite tests
+	black --line-length=80 .
 
 reqs: ## Update all requirements
 	poetry update
-	poetry export --without-hashes -f requirements.txt -o requirements.txt
-	poetry export --without-hashes --dev -f requirements.txt -o requirements/dev.txt
+	poetry export --without-hashes -f requirements.txt -o requirements/requirements.txt
+	poetry export --without-hashes --with dev -f requirements.txt -o requirements/dev.txt
 	poetry show --tree > requirements/graph.txt
 
 test: ## run tests quickly with the default Python
@@ -99,13 +95,11 @@ servedocs: docs ## compile the docs watching for changes
 release: dist ## package and upload a release
 	twine upload dist/*
 
-dist: clean ## builds source and wheel package
-	python setup.py sdist
-	python setup.py bdist_wheel
-	ls -l dist
+build: clean ## builds source and wheel package
+	poetry build
 
-install: clean ## install the package to the active Python's site-packages
-	python setup.py install
+pex:  ## install the package to the active Python's site-packages
+	pex $(cat requirements/requirements.txt | awk -F';' '{print $1}') dist/badgr_lite-0.1.0-py3-none-any.whl -e "badgr_lite.cli:main" --python-shebang=/home/glenjarvis/.pyenv/versions/3.11.3/bin/python -o foo 
 
 
 # Deploying

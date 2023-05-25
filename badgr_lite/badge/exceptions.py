@@ -18,12 +18,12 @@ class TokenFileNotFoundError(BaseException):
 class TokenAndRefreshExpiredError(BaseException):
     """Token and refresh expired
 
-     The token has expired. We tried refreshing the token from the refresh
-     token and are still not able to get authorization to work correctly.
+    The token has expired. We tried refreshing the token from the refresh
+    token and are still not able to get authorization to work correctly.
 
-     Use `prime_initial_token` (see Installation instructions) to reconfigure
-     tokens.
-     """
+    Use `prime_initial_token` (see Installation instructions) to reconfigure
+    tokens.
+    """
 
 
 class RequiredAttributesMissingError(BaseException):

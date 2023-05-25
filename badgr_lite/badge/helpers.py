@@ -9,8 +9,8 @@ import pytz
 
 
 UTC = pytz.timezone("UTC")
-DATETIME_FORMAT = '%Y-%m-%dT%H:%M:%SZ'
-DATETIME_MILLISECOND_FORMAT = '%Y-%m-%dT%H:%M:%S.%fZ'
+DATETIME_FORMAT = "%Y-%m-%dT%H:%M:%SZ"
+DATETIME_MILLISECOND_FORMAT = "%Y-%m-%dT%H:%M:%S.%fZ"
 
 
 def pythonic(name: str) -> str:
@@ -24,8 +24,8 @@ def pythonic(name: str) -> str:
     We wish to also see those attributes in a pythonic way
     (e.g., issuer_open_badgee_id).
     """
-    regex_s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
-    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', regex_s1).lower()
+    regex_s1 = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", name)
+    return re.sub("([a-z0-9])([A-Z])", r"\1_\2", regex_s1).lower()
 
 
 def to_datetime(potential_datetime):
@@ -35,9 +35,11 @@ def to_datetime(potential_datetime):
     if isinstance(potential_datetime, str):
         try:
             final_datetime = datetime.datetime.strptime(
-                potential_datetime, DATETIME_FORMAT)
+                potential_datetime, DATETIME_FORMAT
+            )
         except ValueError:
             final_datetime = datetime.datetime.strptime(
-                potential_datetime, DATETIME_MILLISECOND_FORMAT)
+                potential_datetime, DATETIME_MILLISECOND_FORMAT
+            )
         final_datetime = UTC.localize(final_datetime)
     return final_datetime
