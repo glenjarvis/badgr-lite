@@ -24,7 +24,8 @@ badgr = "badgr_lite.cli:main"
 python = ">=3.7 <3.12"
 click = "^8.1"
 pytz = "^2023.3"
-requests = ">=2.31" # Leak of Proxy-Authorization header
+certifi = ">=2022.12.07" # Removes "TrustCor" from the root store
+requests = ">=2.31" # Fix leak of Proxy-Authorization header
 
 [tool.poetry.dev-dependencies]
 vcrpy = "^4.2.1"
