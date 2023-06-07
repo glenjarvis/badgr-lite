@@ -29,7 +29,7 @@ class Badge:
 
     REQUIRED_JSON = ['entityId', 'expires',
                      'openBadgeId', 'createdBy', 'issuer', 'image',
-                     'issuerOpenBadgeId', 'createdAt']
+                     'createdAt']
     REQUIRED_ATTRS = [pythonic(attr) for attr in REQUIRED_JSON]
 
     def __init__(self, attrs: dict) -> None:
