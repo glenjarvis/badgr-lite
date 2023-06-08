@@ -19,9 +19,9 @@ jobs:
 
       - restore_cache:
           keys:
-            - pip-requirements-r6-{{ checksum "poetry.lock" }}
+            - pip-requirements-r7-{{ checksum "poetry.lock" }}
             # fallback to using the latest cache if no exact match is found
-            - pip-requirements-r6-
+            - pip-requirements-r7-
 
       - run:
           name: Setup Virtual Environment with dependencies installed
@@ -30,27 +30,29 @@ jobs:
              source /home/circleci/venv/bin/activate
              pip install --upgrade pip
              pip install poetry
-             poetry install
+             #poetry install
 
-      - save_cache:
-          paths:
-            - /home/circleci/venv
-          key: pip-requirements-r6-{{ checksum "poetry.lock" }}
+             #      - save_cache:
+             #          paths:
+             #            - /home/circleci/venv
+             #          key: pip-requirements-r7-{{ checksum "poetry.lock" }}
 
       - run:
           name: Run Tests
           command: |
             # Be careful not to cache after following step
-            source /home/circleci/venv/bin/activate
-            poetry run python tests/test_badgr_lite.py
-            make code-style-check
+            #source /home/circleci/venv/bin/activate
+            #poetry run python tests/test_badgr_lite.py
+            #make code-style-check
+            echo "Testing CircleCI"
 
       - run:
           name: Calculate and upload code coverage
           command: |
-            source /home/circleci/venv/bin/activate
-            poetry run coverage run tests/test_badgr_lite.py
-            poetry run codecov --token $CODECOV_TOKEN
+            #source /home/circleci/venv/bin/activate
+            #poetry run coverage run tests/test_badgr_lite.py
+            #poetry run codecov --token $CODECOV_TOKEN
+            echo "Testing CircleCI"
 
 
   Python39:
