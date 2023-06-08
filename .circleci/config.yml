@@ -5,23 +5,23 @@ workflows:
   version: 2
   test:
     jobs:
-      - Python37:
-          context: code_coverage
       - Python38:
+          context: code_coverage
+      - Python39:
           context: code_coverage
 
 jobs:
-  Python37: &test-template
+  Python38: &test-template
     docker:
-      - image: cimg/python:3.7
+      - image: cimg/python:3.8
     steps:
       - checkout
 
       - restore_cache:
           keys:
-            - pip-requirements-r5-{{ checksum "poetry.lock" }}
+            - pip-requirements-r6-{{ checksum "poetry.lock" }}
             # fallback to using the latest cache if no exact match is found
-            - pip-requirements-r5-
+            - pip-requirements-r6-
 
       - run:
           name: Setup Virtual Environment with dependencies installed
@@ -35,7 +35,7 @@ jobs:
       - save_cache:
           paths:
             - /home/circleci/venv
-          key: pip-requirements-r5-{{ checksum "poetry.lock" }}
+          key: pip-requirements-r6-{{ checksum "poetry.lock" }}
 
       - run:
           name: Run Tests
@@ -53,7 +53,7 @@ jobs:
             poetry run codecov --token $CODECOV_TOKEN
 
 
-  Python38:
+  Python39:
     <<: *test-template
     docker:
-      - image: cimg/python:3.8
+      - image: cimg/python:3.9
