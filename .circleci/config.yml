@@ -28,9 +28,7 @@ jobs:
           command: |
              python3 -m venv /home/circleci/venv
              source /home/circleci/venv/bin/activate
-             pip install --upgrade pip
-             pip install -r requirements/requirements.txt
-             pip install -r requirements/dev.txt
+             poetry install -vvv
 
              #      - save_cache:
              #          paths:
@@ -59,3 +57,9 @@ jobs:
     <<: *test-template
     docker:
       - image: cimg/python:3.9
+
+
+  Python310:
+    <<: *test-template
+    docker:
+      - image: cimg/python:3.10
