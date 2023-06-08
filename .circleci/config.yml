@@ -5,17 +5,15 @@ workflows:
   version: 2
   test:
     jobs:
-      - Python36:
-          context: code_coverage
       - Python37:
           context: code_coverage
       - Python38:
           context: code_coverage
 
 jobs:
-  Python36: &test-template
+  Python37: &test-template
     docker:
-      - image: circleci/python:3.8
+      - image: cimg/python:3.7
     steps:
       - checkout
 
@@ -55,12 +53,7 @@ jobs:
             poetry run codecov --token $CODECOV_TOKEN
 
 
-  Python37:
-    <<: *test-template
-    docker:
-      - image: circleci/python:3.7
-
   Python38:
     <<: *test-template
     docker:
-      - image: circleci/python:3.8
+      - image: cimg/python:3.8
