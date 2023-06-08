@@ -17,11 +17,11 @@ jobs:
     steps:
       - checkout
 
-      - restore_cache:
-          keys:
-            - pip-requirements-r7-{{ checksum "poetry.lock" }}
-            # fallback to using the latest cache if no exact match is found
-            - pip-requirements-r7-
+        #- restore_cache:
+        #  keys:
+        #    - pip-requirements-r7-{{ checksum "poetry.lock" }}
+        #    # fallback to using the latest cache if no exact match is found
+        #    - pip-requirements-r7-
 
       - run:
           name: Setup Virtual Environment with dependencies installed
