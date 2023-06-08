@@ -42,16 +42,16 @@ jobs:
           command: |
             # Be careful not to cache after following step
             source /home/circleci/venv/bin/activate
-            #poetry run python tests/test_badgr_lite.py
-            #make code-style-check
+            python tests/test_badgr_lite.py
+            make code-style-check
             echo "Testing CircleCI"
 
       - run:
           name: Calculate and upload code coverage
           command: |
-            #source /home/circleci/venv/bin/activate
-            #poetry run coverage run tests/test_badgr_lite.py
-            #poetry run codecov --token $CODECOV_TOKEN
+            source /home/circleci/venv/bin/activate
+            coverage run tests/test_badgr_lite.py
+            codecov --token $CODECOV_TOKEN
             echo "Testing CircleCI"
 
 
