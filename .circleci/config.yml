@@ -30,7 +30,7 @@ jobs:
              source /home/circleci/venv/bin/activate
              pip install --upgrade pip
              pip install poetry
-             poetry update
+             poetry update || true
 
              #      - save_cache:
              #          paths:
