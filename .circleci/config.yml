@@ -41,9 +41,9 @@ jobs:
           name: Run Tests
           command: |
             # Be careful not to cache after following step
-            #source /home/circleci/venv/bin/activate
-            #poetry run python tests/test_badgr_lite.py
-            #make code-style-check
+            source /home/circleci/venv/bin/activate
+            poetry run python tests/test_badgr_lite.py
+            make code-style-check
             echo "Testing CircleCI"
 
       - run:
