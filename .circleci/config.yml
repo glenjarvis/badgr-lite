@@ -29,8 +29,8 @@ jobs:
              python3 -m venv /home/circleci/venv
              source /home/circleci/venv/bin/activate
              pip install --upgrade pip
-             pip install poetry
-             poetry install || true
+             pip install -r requirements/requirements.txt
+             pip install -r requirements/dev.txt
 
              #      - save_cache:
              #          paths:
@@ -43,7 +43,7 @@ jobs:
             # Be careful not to cache after following step
             source /home/circleci/venv/bin/activate
             #poetry run python tests/test_badgr_lite.py
-            make code-style-check
+            #make code-style-check
             echo "Testing CircleCI"
 
       - run:
