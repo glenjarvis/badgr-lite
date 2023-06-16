@@ -7,9 +7,9 @@ jobs:
     steps:
       - checkout
       - run: |
-          echo "hello world"
           python3 -m venv /home/circleci/venv
           source /home/circleci/venv/bin/activate
+          python tests/test_badgr_lite.py
 
 workflows:
   test-suite-against-python-versions:
