@@ -2,7 +2,7 @@ version: 2.1
 executors:
   my-custom-executor:
     docker:
-      - image: cimg/python
+      - image: cimg/base:2021.04
 jobs:
   python38:
     executor: my-custom-executor
@@ -10,7 +10,8 @@ jobs:
       - checkout
       - run: |
           command: |
-             python -m this
+             echo "hello world"
+             #python -m this
              #python -m venv /home/circleci/venv
              #source /home/circleci/venv/bin/activate
              #poetry install -vvv
