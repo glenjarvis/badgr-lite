@@ -2,7 +2,7 @@ version: 2.1
 executors:
   my-custom-executor:
     docker:
-      - image: cimg/python:stable
+      - image: cimg/python
 jobs:
   python38:
     executor: my-custom-executor
@@ -10,9 +10,10 @@ jobs:
       - checkout
       - run: |
           command: |
-             python3 -m venv /home/circleci/venv
-             source /home/circleci/venv/bin/activate
-             poetry install -vvv
+             python -m this
+             #python -m venv /home/circleci/venv
+             #source /home/circleci/venv/bin/activate
+             #poetry install -vvv
 
 workflows:
   test-across-python-versions:
