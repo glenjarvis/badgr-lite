@@ -5,11 +5,11 @@ jobs:
     docker:
       - image: cimg/python:3.8
     steps:
-      - checkout # check out the code in the project directory
+      - checkout
       - run: |
-             echo "hello world" # run the `echo` command
-
-
+          echo "hello world"
+          python3 -m venv /home/circleci/venv
+          source /home/circleci/venv/bin/activate
 
 workflows:
   test-suite-against-python-versions:
