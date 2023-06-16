@@ -9,6 +9,6 @@ jobs:
       - run: echo "hello world" # run the `echo` command
 
 workflows:
-  my-workflow:
+  test-suite-against-python-versions:
     jobs:
       - python38
