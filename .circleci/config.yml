@@ -4,15 +4,18 @@ executors:
     docker:
       - image: cimg/base:stable
 jobs:
-  my-job-name:
-
+  python38:
     executor: my-custom-executor
     steps:
       - checkout
       - run: |
-          echo Hello, World!
+          name: Setup Virtual Environment with dependencies installed
+          command: |
+             python3 -m venv /home/circleci/venv
+             source /home/circleci/venv/bin/activate
+             poetry install -vvv
 
 workflows:
-  my-custom-workflow:
+  test-across-python-versions:
     jobs:
-      - my-job-name
+      - python38
