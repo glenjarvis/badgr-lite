@@ -11,10 +11,6 @@ jobs:
       - run: |
           command: |
              echo "hello world"
-             #python -m this
-             #python -m venv /home/circleci/venv
-             #source /home/circleci/venv/bin/activate
-             #poetry install -vvv
 
 workflows:
   test-across-python-versions:
