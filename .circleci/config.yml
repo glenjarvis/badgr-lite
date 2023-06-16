@@ -1,65 +1,10 @@
-# Python CircleCI 2.1 configuration file
-#
 version: 2.1
-workflows:
-  version: 2
-  test:
-    jobs:
-      - Python38:
-          context: code_coverage
-      - Python39:
-          context: code_coverage
-
-jobs:
-  Python38: &test-template
-    docker:
-      - image: cimg/python:3.8
+  my-job-name:
     steps:
       - checkout
-
-        #- restore_cache:
-        #  keys:
-        #    - pip-requirements-r7-{{ checksum "poetry.lock" }}
-        #    # fallback to using the latest cache if no exact match is found
-        #    - pip-requirements-r7-
-
-      - run:
-          name: Setup Virtual Environment with dependencies installed
-          command: |
-             python3 -m venv /home/circleci/venv
-             source /home/circleci/venv/bin/activate
-             poetry install -vvv
-
-             #      - save_cache:
-             #          paths:
-             #            - /home/circleci/venv
-             #          key: pip-requirements-r7-{{ checksum "poetry.lock" }}
-
-      - run:
-          name: Run Tests
-          command: |
-            # Be careful not to cache after following step
-            source /home/circleci/venv/bin/activate
-            python tests/test_badgr_lite.py
-            make code-style-check
-            echo "Testing CircleCI"
-
-      - run:
-          name: Calculate and upload code coverage
-          command: |
-            source /home/circleci/venv/bin/activate
-            coverage run tests/test_badgr_lite.py
-            codecov --token $CODECOV_TOKEN
-            echo "Testing CircleCI"
-
-
-  Python39:
-    <<: *test-template
-    docker:
-      - image: cimg/python:3.9
-
-
-  Python310:
-    <<: *test-template
-    docker:
-      - image: cimg/python:3.10
+      - run: |
+          echo Hello, World!
+workflows:
+  my-custom-workflow:
+    jobs:
+      - my-job-name
