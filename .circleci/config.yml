@@ -7,9 +7,9 @@ jobs:
     steps:
       - checkout
       - run: |
-          #python3 -m venv /home/circleci/venv
-          #  source /home/circleci/venv/bin/activate
-          poetry install
+          python3 -m venv /home/circleci/venv
+          source /home/circleci/venv/bin/activate
+          poetry update
           #python tests/test_badgr_lite.py
 
 workflows:
