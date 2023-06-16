@@ -9,7 +9,7 @@ jobs:
       - run: |
           python3 -m venv /home/circleci/venv
           source /home/circleci/venv/bin/activate
-          poetry update
+          poetry install
           #python tests/test_badgr_lite.py
 
 workflows:
