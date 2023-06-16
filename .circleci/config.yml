@@ -9,7 +9,6 @@ jobs:
     steps:
       - checkout
       - run: |
-          name: Setup Virtual Environment with dependencies installed
           command: |
              python3 -m venv /home/circleci/venv
              source /home/circleci/venv/bin/activate
