@@ -1,9 +1,17 @@
 version: 2.1
+executors:
+  my-custom-executor:
+    docker:
+      - image: cimg/base:stable
+jobs:
   my-job-name:
+
+    executor: my-custom-executor
     steps:
       - checkout
       - run: |
           echo Hello, World!
+
 workflows:
   my-custom-workflow:
     jobs:
