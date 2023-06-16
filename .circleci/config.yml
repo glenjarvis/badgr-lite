@@ -1,18 +1,10 @@
 version: 2.1
-executors:
-  my-custom-executor:
-    docker:
-      - image: cimg/base:2021.04
 jobs:
   python38:
-    executor: my-custom-executor
+    docker:
+      - image: cimg/base:2021.04
     steps:
       - checkout
       - run: |
           command: |
              echo "hello world"
-
-workflows:
-  test-across-python-versions:
-    jobs:
-      - python38
