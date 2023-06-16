@@ -1,11 +1,7 @@
 version: 2.1
-build:
-  jobs:
-    python38:
-      docker:
-        - image: cimg/base:2021.04
+jobs:
+  build:
+    docker:
+      - image: cimg/base:2021.04
       steps:
         - checkout
-        - run: |
-            command: |
-               echo "hello world"
