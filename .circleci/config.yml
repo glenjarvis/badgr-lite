@@ -42,3 +42,4 @@ workflows:
   test-against-python-versions:
     jobs:
       - python38
+      - python39
