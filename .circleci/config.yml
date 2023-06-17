@@ -18,6 +18,7 @@ jobs:
           source /home/circleci/venv/bin/activate
           /home/circleci/venv/bin/poetry -v install > /home/circleci/poetry_output 2> /home/circleci/poetry_error
       - run: |
+          source /home/circleci/venv/bin/activate
           python tests/test_badgr_lite.py
 
 workflows:
