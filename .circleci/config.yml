@@ -1,4 +1,12 @@
+# CircleCI 2.1 configuration file
 version: 2.1
+
+workflows:
+  version: 2
+  test-against-python-versions:
+    jobs:
+      - python38
+      - python39
 
 jobs:
   python38: &test-template
@@ -36,10 +44,3 @@ jobs:
     docker:
       - image: cimg/python:3.9
 
-
-workflows:
-  version: 2
-  test-against-python-versions:
-    jobs:
-      - python38
-      - python39
