@@ -3,13 +3,13 @@ version: 2.1
 
 workflows:
   version: 2
-  test-against-python-versions:
+  test-against-active-python-versions:
     jobs:
-      - python38
-      - python39
+      - Python38
+      - Python39
 
 jobs:
-  python38: &test-template
+  Python38: &test-template
     docker:
       - image: cimg/python:3.8
     steps:
@@ -39,8 +39,13 @@ jobs:
             source /home/circleci/venv/bin/activate
             python tests/test_badgr_lite.py
 
-  python39:
+  Python39:
     <<: *test-template
     docker:
       - image: cimg/python:3.9
+
+  Python310:
+    <<: *test-template
+    docker:
+      - image: cimg/python:3.10
 
