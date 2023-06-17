@@ -7,6 +7,7 @@ workflows:
     jobs:
       - Python38
       - Python39
+      - Python310
 
 jobs:
   Python38: &test-template
