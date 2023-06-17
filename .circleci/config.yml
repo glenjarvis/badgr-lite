@@ -8,10 +8,16 @@ jobs:
       - checkout
       - run: |
           python3 -m venv /home/circleci/venv
+      - run: |
           source /home/circleci/venv/bin/activate
           pip install --upgrade pip
+      - run: |
+          source /home/circleci/venv/bin/activate
           pip install poetry
-          /home/circleci/venv/bin/poetry -v install
+      - run: |
+          source /home/circleci/venv/bin/activate
+          /home/circleci/venv/bin/poetry -v install > /home/circleci/poetry_output 2> /home/circleci/poetry_error
+      - run: |
           python tests/test_badgr_lite.py
 
 workflows:
