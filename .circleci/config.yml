@@ -31,7 +31,7 @@ jobs:
             source /home/circleci/venv/bin/activate
             python tests/test_badgr_lite.py
 
-  Python39:
+  python39:
     <<: *test-template
     docker:
       - image: cimg/python:3.9
