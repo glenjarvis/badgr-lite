@@ -7,21 +7,29 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Testing
+          name: Create virtual environment
           command: |
             python3 -m venv /home/circleci/venv
-      - run: |
-          source /home/circleci/venv/bin/activate
-          pip install --upgrade pip
-      - run: |
-          source /home/circleci/venv/bin/activate
-          pip install poetry
-      - run: |
-          source /home/circleci/venv/bin/activate
-          /home/circleci/venv/bin/poetry -v install > /home/circleci/poetry_output 2> /home/circleci/poetry_error
-      - run: |
-          source /home/circleci/venv/bin/activate
-          python tests/test_badgr_lite.py
+      - run:
+          name: Ensure Pip is upgraded to latest version
+          command: |
+            source /home/circleci/venv/bin/activate
+            pip install --upgrade pip
+      - run:
+          name: Install Poetry in virtualenv (avoid pre-installed Poetry)
+          command: |
+            source /home/circleci/venv/bin/activate
+            pip install poetry
+      - run:
+          name: Use Poetry to install
+          command: |
+            source /home/circleci/venv/bin/activate
+            /home/circleci/venv/bin/poetry -v install > /home/circleci/poetry_output 2> /home/circleci/poetry_error
+      - run:
+          name: Run unit tests
+          command: |
+            source /home/circleci/venv/bin/activate
+            python tests/test_badgr_lite.py
 
 workflows:
   test-suite-against-python-versions:
