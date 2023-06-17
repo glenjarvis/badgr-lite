@@ -32,6 +32,7 @@ jobs:
             python tests/test_badgr_lite.py
 
 workflows:
-  test-suite-against-python-versions:
+  version: 2
+  test-against-python-versions:
     jobs:
       - python38
