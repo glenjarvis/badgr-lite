@@ -6,8 +6,10 @@ jobs:
       - image: cimg/python:3.8
     steps:
       - checkout
-      - run: |
-          python3 -m venv /home/circleci/venv
+      - run:
+          name: Testing
+          command: |
+            python3 -m venv /home/circleci/venv
       - run: |
           source /home/circleci/venv/bin/activate
           pip install --upgrade pip
