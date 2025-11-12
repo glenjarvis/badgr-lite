@@ -9,8 +9,8 @@ Automate awarding Open Badges to recipients without the overhead of a server
      :alt: PyPI Status
 
 
-.. image:: https://img.shields.io/travis/glenjarvis/badgr-lite.svg?branch=develop
-     :target: https://travis-ci.org/glenjarvis/badgr-lite?branch=develop
+.. image:: https://circleci.com/gh/glenjarvis/badgr-lite.svg?style=svg
+     :target: https://circleci.com/gh/glenjarvis/badgr-lite
      :alt: Build Status
 
 
@@ -92,7 +92,7 @@ Sample Command Help:
     $ badgr --token-file token.json list-badges
 
     dTjxL52HQBiSgIp5JuVq5w  https://badgr.io/public/assertions/dTjxL52HQBiSgIp5JuVq5w       Bay Area Python Interest Group TDD Participant
-    6YhFytMUQb2loOMEy63gQA  https://badgr.io/public/assertions/6YhFytMUQb2loOMEy63gQA       Bay Area Python Interest Group TDD Quizmaster
+    6YhFytMUQb2loOMEy63gQA  https://badgr.io/public/assertions/6YhFytMUQb2loOMEy63gQA       Bay Area Python Interest Group TDD Quiz Champion
     zzExTDvOTnOx_R3YhwPf3A  https://badgr.io/public/assertions/zzExTDvOTnOx_R3YhwPf3A       Test Driven Development Fundamentals Champion
     zNjcY70FSn603SO9vMGhBA  https://badgr.io/public/assertions/zNjcY70FSn603SO9vMGhBA       Install Python with Virtual Environments
     ZN0CIo4NR7-GgrliDJzoTw  https://badgr.io/public/assertions/ZN0CIo4NR7-GgrliDJzoTw       Fivvr badge

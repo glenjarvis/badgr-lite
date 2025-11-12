@@ -50,13 +50,28 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr htmlcov/
 	rm -fr .pytest_cache
 
+code-style-check: ## Style Guidelines and check of tests
+	echo "########################"
+	python tests/test_badgr_lite.py
+	echo "########################"
+	flake8 tests/test_badgr_lite.py
+	pylint tests/test_badgr_lite.py
+	pycodestyle tests/test_badgr_lite.py
+	pylint tests/test_badgr_lite.py
+	pycodestyle tests/test_badgr_lite.py
+	mypy badgr_lite/cli.py
+	mypy badgr_lite/exceptions.py
+	mypy badgr_lite/helpers.py
+	mypy badgr_lite/models.py
+
 lint: ## check style with flake8
 	flake8 badgr_lite tests
 
-reqs: ## Update all Pipenv requirements
-	 pipenv update
-	 pipenv lock -r > requirements.txt
-	 pipenv lock -r --dev > requirements-dev.txt
+reqs: ## Update all requirements
+	poetry update
+	poetry export --without-hashes -f requirements.txt -o requirements.txt
+	poetry export --without-hashes --dev -f requirements.txt -o requirements/dev.txt
+	poetry show --tree > requirements/graph.txt
 
 test: ## run tests quickly with the default Python
 	python setup.py test

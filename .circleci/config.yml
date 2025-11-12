@@ -1,8 +1,19 @@
 # Python CircleCI 2.1 configuration file
 #
 version: 2.1
+workflows:
+  version: 2
+  test:
+    jobs:
+      - Python36:
+          context: code_coverage
+      - Python37:
+          context: code_coverage
+      - Python38:
+          context: code_coverage
+
 jobs:
-  install_requirements:
+  Python36: &test-template
     docker:
       - image: circleci/python:3.8
     steps:
@@ -10,73 +21,46 @@ jobs:
 
       - restore_cache:
           keys:
-            - pip-requirements-r4-{{ checksum "Pipfile.lock" }}
+            - pip-requirements-r5-{{ checksum "poetry.lock" }}
             # fallback to using the latest cache if no exact match is found
-            - pip-requirements-r4-
+            - pip-requirements-r5-
 
       - run:
-          name: Install Dependencies
+          name: Setup Virtual Environment with dependencies installed
           command: |
-             pipenv install --dev
-             pipenv check
+             python3 -m venv /home/circleci/venv
+             source /home/circleci/venv/bin/activate
+             pip install --upgrade pip
+             pip install poetry
+             poetry install
 
       - save_cache:
           paths:
-            - /home/circleci/.local/share/virtualenvs/project-zxI9dQ-Q
-          key: pip-requirements-r4-{{ checksum "Pipfile.lock" }}
-
-
-  test:
-    docker:
-      - image: circleci/python:3.8
-    steps:
-      - checkout
-
-      - restore_cache:
-          keys:
-            - pip-requirements-r4-{{ checksum "Pipfile.lock" }}
-            # fallback to using the latest cache if no exact match is found
-            - pip-requirements-r4-
+            - /home/circleci/venv
+          key: pip-requirements-r5-{{ checksum "poetry.lock" }}
 
       - run:
           name: Run Tests
           command: |
-            # It is currently unknown where eQF46Ow3 comes from
-            source $HOME/.local/share/virtualenvs/project-zxI9dQ-Q/bin/activate
-            python setup.py test
-
-  code_coverage:
-    docker:
-      - image: circleci/python:3.8
-
-    steps:
-      - checkout
-
-      - restore_cache:
-          keys:
-            - pip-requirements-r4-{{ checksum "Pipfile.lock" }}
-            # fallback to using the latest cache if no exact match is found
-            - pip-requirements-r4-
+            # Be careful not to cache after following step
+            source /home/circleci/venv/bin/activate
+            poetry run python tests/test_badgr_lite.py
+            make code-style-check
 
       - run:
           name: Calculate and upload code coverage
           command: |
-            source $HOME/.local/share/virtualenvs/project-zxI9dQ-Q/bin/activate
-            # Be careful not to cache after following step
-            pip install .
-            pipenv run coverage run tests/test_badgr_lite.py
-            pipenv run codecov --token $CODECOV_TOKEN
+            source /home/circleci/venv/bin/activate
+            poetry run coverage run tests/test_badgr_lite.py
+            poetry run codecov --token $CODECOV_TOKEN
 
 
-workflows:
-  version: 2
-  full_suite:
-    jobs:
-      - install_requirements
-      - test:
-          requires:
-            - install_requirements
-      - code_coverage:
-          context: code_coverage
-          requires:
-            - install_requirements
+  Python37:
+    <<: *test-template
+    docker:
+      - image: circleci/python:3.7
+
+  Python38:
+    <<: *test-template
+    docker:
+      - image: circleci/python:3.8
