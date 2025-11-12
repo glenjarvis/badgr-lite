@@ -27,9 +27,9 @@ class Badge:
     # There are enough public methods; pylint: disable=R0903
     # Attrs are dynamically assigned;  pylint: disable=E1101
 
-    REQUIRED_JSON = ['entityId', 'expires', 'entityType', 'extensions',
+    REQUIRED_JSON = ['entityId', 'expires',
                      'openBadgeId', 'createdBy', 'issuer', 'image',
-                     'issuerOpenBadgeId', 'createdAt']
+                     'createdAt']
     REQUIRED_ATTRS = [pythonic(attr) for attr in REQUIRED_JSON]
 
     def __init__(self, attrs: dict) -> None:
